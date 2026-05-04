@@ -19,30 +19,31 @@ class InformasiLembagaController extends Controller
 
     // INDEX - Bisa diakses semua (termasuk belum verifikasi)
     public function index()
-    {
-        if (auth()->user()->role == 'admin') {
-            $informasi = InformasiLembaga::with('lembaga')->get();
-        } else {
-            $informasi = InformasiLembaga::with('lembaga')
-                ->whereHas('lembaga', function ($q) {
-                    $q->where('pengguna_id', auth()->id());
-                })->get();
-        }
-        return view('informasi.index', compact('informasi'));
+{
+    if (auth()->user()->role == 'admin') {
+        $informasi = InformasiLembaga::with('lembaga')->get();
+    } else {
+        $informasi = InformasiLembaga::with('lembaga')
+            ->whereHas('lembaga', function ($q) {
+                $q->where('pengguna_id', auth()->id());
+            })->get();
     }
+    return view('informasi.index', compact('informasi'));
+}
+
 
     // CREATE - Hanya untuk yang sudah verifikasi
     public function create()
-    {
-        $redirect = $this->cekVerifikasi();
-        if ($redirect) return $redirect;
+{
+    $redirect = $this->cekVerifikasi();
+    if ($redirect) return $redirect;
 
-        $lembaga = Lembaga::where('pengguna_id', auth()->id())->first();
-        if (!$lembaga) {
-            return redirect()->route('lembaga.create')->with('error', 'Silakan buat profil lembaga terlebih dahulu');
-        }
-        return view('informasi.create', compact('lembaga'));
+    $lembaga = Lembaga::where('pengguna_id', auth()->id())->first();
+    if (!$lembaga) {
+        return redirect()->route('lembaga.create')->with('error', 'Silakan buat profil lembaga terlebih dahulu');
     }
+    return view('informasi.create', compact('lembaga'));
+}
 
     // STORE - Hanya untuk yang sudah verifikasi
     public function store(Request $request)
@@ -130,9 +131,14 @@ class InformasiLembagaController extends Controller
     }
 
     // SHOW - Bisa diakses semua (termasuk belum verifikasi)
-    public function show($id)
-    {
-        $informasi = InformasiLembaga::with('lembaga')->where('lembaga_id', $id)->first();
-        return view('informasi.show', compact('informasi'));
+   public function show($id)
+{
+    $informasi = InformasiLembaga::with('lembaga')->where('lembaga_id', $id)->first();
+    
+    if (!$informasi) {
+        return redirect()->route('lembaga.show', $id)->with('error', 'Belum ada informasi donasi untuk lembaga ini');
     }
+    
+    return view('informasi.show', compact('informasi'));
+}
 }

@@ -1,94 +1,90 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
 <div class="p-6">
-    <div class="mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Dashboard Admin</h2>
-        <p class="text-gray-600">Selamat datang, {{ Auth::user()->name }}</p>
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-700 rounded-t-xl px-6 py-4 mb-6">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                <i class="fas fa-chart-line text-white text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-white">Dashboard Admin</h2>
+                <p class="text-blue-100 text-sm">Selamat datang, {{ Auth::user()->name }}</p>
+            </div>
+        </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- Statistik Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         <!-- Card Total Lembaga -->
-        <div class="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
-            <div class="flex items-center">
-                <div class="p-3 bg-blue-100 rounded-full">
-                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                    </svg>
+        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-blue-100 text-sm">Total Lembaga</p>
+                    <p class="text-3xl font-bold">{{ \App\Models\Lembaga::count() }}</p>
                 </div>
-                <div class="ml-4">
-                    <p class="text-gray-500 text-sm">Total Lembaga</p>
-                    <p class="text-2xl font-bold text-gray-800">{{ \App\Models\Lembaga::count() }}</p>
-                </div>
+                <i class="fas fa-building text-4xl text-white/30"></i>
             </div>
         </div>
 
         <!-- Card Lembaga Aktif -->
-        <div class="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
-            <div class="flex items-center">
-                <div class="p-3 bg-green-100 rounded-full">
-                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
+        <div class="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-emerald-100 text-sm">Lembaga Aktif</p>
+                    <p class="text-3xl font-bold">{{ \App\Models\User::where('role', 'lembaga')->where('status_akun', 'aktif')->count() }}</p>
                 </div>
-                <div class="ml-4">
-                    <p class="text-gray-500 text-sm">Lembaga Aktif</p>
-                    <p class="text-2xl font-bold text-gray-800">{{ \App\Models\User::where('role', 'lembaga')->where('status_akun', 'aktif')->count() }}</p>
+                <i class="fas fa-check-circle text-4xl text-white/30"></i>
+            </div>
+        </div>
+
+        <!-- Card Lembaga Pending -->
+        <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-amber-100 text-sm">Menunggu Verifikasi</p>
+                    <p class="text-3xl font-bold">{{ \App\Models\User::where('role', 'lembaga')->where('status_akun', 'nonaktif')->count() }}</p>
                 </div>
+                <i class="fas fa-clock text-4xl text-white/30"></i>
             </div>
         </div>
 
         <!-- Card Total Kategori -->
-        <div class="bg-white rounded-lg shadow p-6 border-l-4 border-purple-500">
-            <div class="flex items-center">
-                <div class="p-3 bg-purple-100 rounded-full">
-                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l5 5a2 2 0 01.586 1.414V19a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z"></path>
-                    </svg>
+        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-purple-100 text-sm">Total Kategori</p>
+                    <p class="text-3xl font-bold">{{ \App\Models\Kategori::count() }}</p>
                 </div>
-                <div class="ml-4">
-                    <p class="text-gray-500 text-sm">Total Kategori</p>
-                    <p class="text-2xl font-bold text-gray-800">{{ \App\Models\Kategori::count() }}</p>
-                </div>
+                <i class="fas fa-tags text-4xl text-white/30"></i>
             </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Menu Cepat -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-bold text-gray-800 mb-4">Menu Cepat</h3>
-            <div class="space-y-3">
-                <a href="{{ route('verifikasi') }}" class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                    <span class="text-blue-600 mr-3">✓</span>
-                    <span>Verifikasi Akun Lembaga</span>
-                </a>
-                <a href="{{ route('kategori.index') }}" class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                    <span class="text-blue-600 mr-3">🏷️</span>
-                    <span>Kelola Kategori Lembaga</span>
-                </a>
-                <a href="{{ route('lembaga.index') }}" class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                    <span class="text-blue-600 mr-3">🏢</span>
-                    <span>Lihat Semua Lembaga</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- Lembaga Terbaru -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-bold text-gray-800 mb-4">Lembaga Terbaru</h3>
-            <div class="space-y-3">
-                @foreach(\App\Models\Lembaga::with('user')->latest()->limit(5)->get() as $lembaga)
-                <div class="flex justify-between items-center p-2 border-b">
-                    <div>
-                        <p class="font-medium text-gray-800">{{ $lembaga->nama_lembaga }}</p>
-                        <p class="text-sm text-gray-500">{{ $lembaga->user->email ?? '-' }}</p>
-                    </div>
-                    <span class="text-xs {{ $lembaga->user && $lembaga->user->status_akun == 'aktif' ? 'text-green-600' : 'text-red-600' }}">
-                        {{ $lembaga->user && $lembaga->user->status_akun == 'aktif' ? 'Aktif' : 'Nonaktif' }}
-                    </span>
+    <!-- Lembaga Terbaru -->
+    <div class="bg-white rounded-xl shadow-md p-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <i class="fas fa-clock text-blue-500"></i> Lembaga Terbaru
+        </h3>
+        <div class="space-y-3">
+            @forelse(\App\Models\Lembaga::with('user')->latest()->limit(5)->get() as $lembaga_item)
+            <div class="flex items-center justify-between p-3 border-b border-gray-100">
+                <div>
+                    <p class="font-semibold text-gray-800">{{ $lembaga_item->nama_lembaga }}</p>
+                    <p class="text-sm text-gray-500">{{ $lembaga_item->user->email ?? '-' }}</p>
                 </div>
-                @endforeach
+                <span class="text-xs {{ $lembaga_item->user && $lembaga_item->user->status_akun == 'aktif' ? 'text-green-600' : 'text-red-600' }}">
+                    {{ $lembaga_item->user && $lembaga_item->user->status_akun == 'aktif' ? 'Aktif' : 'Nonaktif' }}
+                </span>
             </div>
+            @empty
+            <div class="text-center py-8">
+                <i class="fas fa-building text-4xl text-gray-300 mb-2"></i>
+                <p class="text-gray-500">Belum ada lembaga terdaftar</p>
+            </div>
+            @endforelse
         </div>
     </div>
 </div>
-</x-app-layout>
+@endsection

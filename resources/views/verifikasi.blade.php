@@ -1,0 +1,93 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="p-6">
+    <!-- Header dengan gradasi biru -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-700 rounded-t-xl px-6 py-4 mb-6">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                <i class="fas fa-user-check text-white text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-white">Verifikasi Akun Lembaga</h2>
+                <p class="text-blue-100 text-sm">Aktifkan atau nonaktifkan akun lembaga yang mendaftar</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+        @php
+            $users = \App\Models\User::where('role', 'lembaga')->get();
+        @endphp
+        
+        <!-- Statistik card dengan gradasi -->
+        <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl p-4 mb-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-blue-100 text-sm">Total Lembaga Terdaftar</p>
+                    <p class="text-3xl font-bold text-white">{{ $users->count() }}</p>
+                </div>
+                <i class="fas fa-building text-4xl text-white/30"></i>
+            </div>
+        </div>
+        
+        @if($users->count() > 0)
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+                        <th class="p-3 rounded-tl-lg text-left">Nama Lembaga</th>
+                        <th class="p-3 text-left">Email</th>
+                        <th class="p-3 text-left">Status</th>
+                        <th class="p-3 rounded-tr-lg text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($users as $user)
+                    <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
+                        <td class="p-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-building text-blue-500 text-sm"></i>
+                                </div>
+                                <span class="font-semibold text-gray-800">{{ $user->nama_lembaga ?? $user->name }}</span>
+                            </div>
+                         </td>
+                        <td class="p-3 text-gray-600">{{ $user->email }}</td>
+                        <td class="p-3">
+                            @if($user->status_akun == 'aktif')
+                                <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1 w-fit">
+                                    <i class="fas fa-circle text-[6px] text-green-500"></i> Aktif
+                                </span>
+                            @else
+                                <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1 w-fit">
+                                    <i class="fas fa-circle text-[6px] text-red-500"></i> Nonaktif
+                                </span>
+                            @endif
+                        </td>
+                        <td class="p-3 text-center">
+                            <form action="{{ route('verifikasi.toggle', $user->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="px-4 py-2 rounded-lg text-white font-medium transition-all duration-200 {{ $user->status_akun == 'aktif' ? 'bg-red-500 hover:bg-red-600' : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700' }}">
+                                    {{ $user->status_akun == 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @else
+        <div class="text-center py-12">
+            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-users text-gray-400 text-3xl"></i>
+            </div>
+            <p class="text-gray-500">Belum ada lembaga yang mendaftar</p>
+            <p class="text-sm text-gray-400 mt-1">Silakan daftar sebagai lembaga terlebih dahulu</p>
+        </div>
+        @endif
+    </div>
+</div>
+@endsection

@@ -1,137 +1,322 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                    </a>
-                </div>
+@php
+    $unreadCount = 0;
+@endphp
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    
-                    @if(auth()->user()->role == 'admin')
-                        <x-nav-link :href="route('verifikasi')" :active="request()->routeIs('verifikasi')">
-                            Verifikasi Akun
-                        </x-nav-link>
-                        <x-nav-link :href="route('kategori.index')" :active="request()->routeIs('kategori.*')">
-                            Kelola Kategori
-                        </x-nav-link>
-                        <x-nav-link :href="route('lembaga.index')" :active="request()->routeIs('lembaga.*')">
-                            Semua Lembaga
-                        </x-nav-link>
+<aside class="sidebar">
+    <!-- Logo Premium dengan Efek Biru -->
+    <div class="p-5 border-b border-blue-400/20">
+        <a href="/" class="flex items-center gap-3 group">
+            <div class="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-all duration-300">
+                <span class="text-blue-600 text-xl font-bold">S</span>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-white">SISOREL</h1>
+                <p class="text-[11px] text-blue-200 mt-0.5">Sistem Informasi Sosial</p>
+            </div>
+        </a>
+    </div>
+
+    @auth
+    <!-- User Info Premium -->
+    <div class="mx-3 mt-4 p-3 bg-white/10 rounded-xl border border-white/20">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-md">
+                <span class="text-blue-600 font-bold text-md">{{ substr(Auth::user()->name, 0, 1) }}</span>
+            </div>
+            <div class="flex-1">
+                <p class="font-bold text-white text-sm truncate">{{ Auth::user()->name }}</p>
+                <p class="text-[11px] text-blue-200 mt-0.5">
+                    @if(Auth::user()->role == 'admin')
+                        <i class="fas fa-shield-alt mr-1"></i> Administrator
                     @else
-    <x-nav-link :href="route('lembaga.index')" :active="request()->routeIs('lembaga.*')">
-        Profil Lembaga
-    </x-nav-link>
-    <x-nav-link :href="route('informasi.index')" :active="request()->routeIs('informasi.*') || request()->routeIs('informasi.create') || request()->routeIs('informasi.edit') || request()->routeIs('informasi.show')">
-        Informasi Donasi
-    </x-nav-link>
-@endif
-                </div>
-            </div>
-
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                        <i class="fas fa-building mr-1"></i> Lembaga Sosial
+                    @endif
+                </p>
             </div>
         </div>
     </div>
+    @endauth
 
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            
-            @if(auth()->user()->role == 'admin')
-                <x-responsive-nav-link :href="route('verifikasi')" :active="request()->routeIs('verifikasi')">
-                    Verifikasi Akun
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('kategori.index')" :active="request()->routeIs('kategori.*')">
-                    Kelola Kategori
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('lembaga.index')" :active="request()->routeIs('lembaga.*')">
-                    Semua Lembaga
-                </x-responsive-nav-link>
-            @else
-                <x-responsive-nav-link :href="route('lembaga.index')" :active="request()->routeIs('lembaga.*')">
-                    Profil Lembaga
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('informasi.index')" :active="request()->routeIs('informasi.*')">
-                    Informasi Donasi
-                </x-responsive-nav-link>
+    <!-- Navigation Menu Premium -->
+    <nav class="flex-1 px-2 py-3 space-y-1">
+        <!-- ========== MENU NAVIGASI UTAMA ========== -->
+        <div class="text-[11px] text-blue-200 font-bold uppercase tracking-wider px-3 py-2 mt-1 flex items-center gap-2">
+            <i class="fas fa-th-large text-[11px]"></i>
+            <span>Navigasi</span>
+        </div>
+        
+        <!-- Beranda -->
+        <a href="/" class="nav-item {{ request()->is('/') ? 'active' : '' }}">
+            <div class="nav-icon {{ request()->is('/') ? 'bg-white/20' : 'bg-blue-500/20' }}">
+                <i class="fas fa-home text-sm {{ request()->is('/') ? 'text-white' : 'text-blue-200' }}"></i>
+            </div>
+            <span>Beranda</span>
+            @if(request()->is('/'))
+                <i class="fas fa-circle text-[6px] text-white ml-auto"></i>
             @endif
+        </a>
+        
+        <!-- Tentang -->
+        <a href="{{ route('tentang') }}" class="nav-item {{ request()->routeIs('tentang') ? 'active' : '' }}">
+            <div class="nav-icon {{ request()->routeIs('tentang') ? 'bg-white/20' : 'bg-cyan-500/20' }}">
+                <i class="fas fa-info-circle text-sm {{ request()->routeIs('tentang') ? 'text-white' : 'text-cyan-200' }}"></i>
+            </div>
+            <span>Tentang</span>
+        </a>
+        
+        <!-- Panduan -->
+        <a href="{{ route('panduan') }}" class="nav-item {{ request()->routeIs('panduan') ? 'active' : '' }}">
+            <div class="nav-icon {{ request()->routeIs('panduan') ? 'bg-white/20' : 'bg-indigo-500/20' }}">
+                <i class="fas fa-book-open text-sm {{ request()->routeIs('panduan') ? 'text-white' : 'text-indigo-200' }}"></i>
+            </div>
+            <span>Panduan</span>
+        </a>
+
+        @auth
+        <!-- ========== MENU DASHBOARD ========== -->
+        <div class="h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent my-3"></div>
+        
+        <div class="text-[11px] text-blue-200 font-bold uppercase tracking-wider px-3 py-2 flex items-center gap-2">
+            <i class="fas fa-chart-line text-[11px]"></i>
+            <span>Dashboard</span>
         </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+        
+        <a href="{{ route('dashboard') }}" class="nav-item dashboard-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <div class="nav-icon {{ request()->routeIs('dashboard') ? 'bg-white/20' : 'bg-emerald-500/20' }}">
+                <i class="fas fa-tachometer-alt text-sm {{ request()->routeIs('dashboard') ? 'text-white' : 'text-emerald-200' }}"></i>
             </div>
+            <span>Dashboard</span>
+            @if(request()->routeIs('dashboard'))
+                <i class="fas fa-circle text-[6px] text-white ml-auto"></i>
+            @endif
+        </a>
 
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
+        <!-- ========== MENU PENGELOLAAN ========== -->
+        <div class="h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent my-3"></div>
+        
+        <div class="text-[11px] text-blue-200 font-bold uppercase tracking-wider px-3 py-2 flex items-center gap-2">
+            <i class="fas fa-cog text-[11px]"></i>
+            <span>Pengelolaan</span>
+        </div>
+        
+        @if(auth()->user()->role == 'admin')
+            <a href="{{ route('verifikasi') }}" class="nav-item {{ request()->routeIs('verifikasi') ? 'active' : '' }}">
+                <div class="nav-icon {{ request()->routeIs('verifikasi') ? 'bg-white/20' : 'bg-purple-500/20' }}">
+                    <i class="fas fa-user-check text-sm {{ request()->routeIs('verifikasi') ? 'text-white' : 'text-purple-200' }}"></i>
+                </div>
+                <span>Verifikasi Akun</span>
+                @php $pendingCount = \App\Models\User::where('role', 'lembaga')->where('status_akun', 'pending')->count(); @endphp
+                @if($pendingCount > 0)
+                    <span class="ml-auto bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full animate-pulse">{{ $pendingCount }}</span>
+                @endif
+            </a>
+            <a href="{{ route('kategori.index') }}" class="nav-item {{ request()->routeIs('kategori.*') ? 'active' : '' }}">
+                <div class="nav-icon {{ request()->routeIs('kategori.*') ? 'bg-white/20' : 'bg-amber-500/20' }}">
+                    <i class="fas fa-tags text-sm {{ request()->routeIs('kategori.*') ? 'text-white' : 'text-amber-200' }}"></i>
+                </div>
+                <span>Kelola Kategori</span>
+            </a>
+            <a href="{{ route('lembaga.index') }}" class="nav-item {{ request()->routeIs('lembaga.*') ? 'active' : '' }}">
+                <div class="nav-icon {{ request()->routeIs('lembaga.*') ? 'bg-white/20' : 'bg-blue-500/20' }}">
+                    <i class="fas fa-building text-sm {{ request()->routeIs('lembaga.*') ? 'text-white' : 'text-blue-200' }}"></i>
+                </div>
+                <span>Semua Lembaga</span>
+            </a>
+            <a href="{{ route('informasi.index') }}" class="nav-item {{ request()->routeIs('informasi.*') ? 'active' : '' }}">
+                <div class="nav-icon {{ request()->routeIs('informasi.*') ? 'bg-white/20' : 'bg-rose-500/20' }}">
+                    <i class="fas fa-hand-holding-heart text-sm {{ request()->routeIs('informasi.*') ? 'text-white' : 'text-rose-200' }}"></i>
+                </div>
+                <span>Informasi Donasi</span>
+            </a>
+        @else
+            <a href="{{ route('lembaga.index') }}" class="nav-item {{ request()->routeIs('lembaga.*') ? 'active' : '' }}">
+                <div class="nav-icon {{ request()->routeIs('lembaga.*') ? 'bg-white/20' : 'bg-blue-500/20' }}">
+                    <i class="fas fa-building text-sm {{ request()->routeIs('lembaga.*') ? 'text-white' : 'text-blue-200' }}"></i>
+                </div>
+                <span>Profil Lembaga</span>
+            </a>
+            <a href="{{ route('informasi.index') }}" class="nav-item {{ request()->routeIs('informasi.*') ? 'active' : '' }}">
+                <div class="nav-icon {{ request()->routeIs('informasi.*') ? 'bg-white/20' : 'bg-rose-500/20' }}">
+                    <i class="fas fa-hand-holding-heart text-sm {{ request()->routeIs('informasi.*') ? 'text-white' : 'text-rose-200' }}"></i>
+                </div>
+                <span>Informasi Donasi</span>
+            </a>
+        @endif
 
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
+        <!-- ========== MENU AKUN ========== -->
+        <div class="h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent my-3"></div>
+        
+        <div class="text-[11px] text-blue-200 font-bold uppercase tracking-wider px-3 py-2 flex items-center gap-2">
+            <i class="fas fa-user-circle text-[11px]"></i>
+            <span>Akun</span>
+        </div>
+        
+        <a href="{{ route('profile.edit') }}" class="nav-item {{ request()->routeIs('profile.*') ? 'active' : '' }}">
+            <div class="nav-icon {{ request()->routeIs('profile.*') ? 'bg-white/20' : 'bg-sky-500/20' }}">
+                <i class="fas fa-user-circle text-sm {{ request()->routeIs('profile.*') ? 'text-white' : 'text-sky-200' }}"></i>
             </div>
+            <span>Profile Saya</span>
+        </a>
+        
+        <form method="POST" action="{{ route('logout') }}" class="w-full">
+            @csrf
+            <button type="submit" class="nav-item w-full text-left hover:bg-red-500/20 group">
+                <div class="nav-icon bg-red-500/20">
+                    <i class="fas fa-sign-out-alt text-sm text-red-300"></i>
+                </div>
+                <span class="text-red-300">Logout</span>
+            </button>
+        </form>
+        
+        @else
+        <!-- ========== MENU UNTUK GUEST (BELUM LOGIN) ========== -->
+        <div class="h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent my-3"></div>
+        
+        <div class="text-[11px] text-blue-200 font-bold uppercase tracking-wider px-3 py-2 flex items-center gap-2">
+            <i class="fas fa-key text-[11px]"></i>
+            <span>Akses Akun</span>
+        </div>
+        
+        <a href="{{ route('login') }}" class="nav-item">
+            <div class="nav-icon bg-blue-500/20">
+                <i class="fas fa-sign-in-alt text-sm text-blue-200"></i>
+            </div>
+            <span>Login</span>
+        </a>
+        
+        <a href="{{ route('register') }}" class="nav-item register-item mt-2">
+            <div class="nav-icon bg-white/20">
+                <i class="fas fa-user-plus text-sm text-white"></i>
+            </div>
+            <span class="text-white font-semibold">Daftar Sekarang</span>
+            <i class="fas fa-arrow-right text-white text-xs ml-auto"></i>
+        </a>
+        @endauth
+    </nav>
+
+    <!-- Footer Sidebar -->
+    <div class="p-4 border-t border-blue-400/20 mt-auto">
+        <div class="text-center">
+            <div class="flex justify-center gap-2 mb-2">
+                <div class="w-1.5 h-1.5 bg-blue-300 rounded-full"></div>
+                <div class="w-1.5 h-1.5 bg-cyan-300 rounded-full"></div>
+                <div class="w-1.5 h-1.5 bg-indigo-300 rounded-full"></div>
+            </div>
+            <p class="text-[10px] text-blue-200">
+                <i class="fas fa-heart text-blue-300 text-[9px]"></i> © 2026 SISOREL
+            </p>
+            <p class="text-[9px] text-blue-300 mt-0.5">Membangun Kebaikan Bersama</p>
         </div>
     </div>
-</nav>
+</aside>
+
+<style>
+    /* Sidebar Wrapper - Background Biru Gradasi */
+    .sidebar {
+        background: linear-gradient(180deg, #0f2b5c 0%, #1e3a8a 50%, #2563eb 100%);
+    }
+    
+    /* Navigation Item Styles */
+    .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        margin: 2px 0;
+        border-radius: 12px;
+        color: #bfdbfe;
+        font-weight: 500;
+        font-size: 13px;
+        transition: all 0.25s ease;
+        text-decoration: none;
+        position: relative;
+    }
+    
+    .nav-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s ease;
+    }
+    
+    .nav-item:hover:not(.register-item) {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateX(4px);
+    }
+    
+    .nav-item:hover .nav-icon {
+        background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .nav-item.active {
+        background: white;
+        color: #1e3a8a;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .nav-item.active .nav-icon {
+        background: rgba(37, 99, 235, 0.1);
+    }
+    
+    .nav-item.active i {
+        color: #2563eb;
+    }
+    
+    /* Dashboard Item Khusus */
+    .dashboard-item {
+        border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    
+    .dashboard-item.active {
+        background: linear-gradient(105deg, #10b981, #059669);
+        color: white;
+        border: none;
+    }
+    
+    .dashboard-item.active .nav-icon {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .dashboard-item.active i {
+        color: white;
+    }
+    
+    /* Register Item Khusus */
+    .register-item {
+        background: linear-gradient(105deg, #f59e0b, #d97706);
+        color: white;
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+    }
+    
+    .register-item .nav-icon {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .register-item i {
+        color: white;
+    }
+    
+    .register-item:hover {
+        transform: translateX(4px);
+        background: linear-gradient(105deg, #fbbf24, #f59e0b);
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    }
+    
+    /* Scrollbar sidebar */
+    .sidebar::-webkit-scrollbar {
+        width: 3px;
+    }
+    .sidebar::-webkit-scrollbar-track {
+        background: #1e40af;
+    }
+    .sidebar::-webkit-scrollbar-thumb {
+        background: #60a5fa;
+        border-radius: 10px;
+    }
+    .sidebar::-webkit-scrollbar-thumb:hover {
+        background: #93c5fd;
+    }
+</style>

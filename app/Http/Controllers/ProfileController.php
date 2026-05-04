@@ -49,11 +49,11 @@ class ProfileController extends Controller
     }
 
     // Menampilkan halaman verifikasi
-    public function verifikasi()
-    {
-        $users = User::where('role', 'lembaga')->get();
-        return view('admin.verifikasi', compact('users'));
-    }
+   public function verifikasi()
+{
+    $users = User::where('role', 'lembaga')->get();
+    return view('verifikasi', compact('users'));
+}
 
     // Untuk toggle (aktifkan/nonaktifkan) - PAKAI INI
     public function toggleStatus($id)

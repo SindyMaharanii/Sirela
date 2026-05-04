@@ -2,91 +2,118 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
     <title>Login - SISOREL</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2b5c 0%, #1e3a8a 50%, #2563eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 2rem;
+            width: 100%;
+            max-width: 440px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            outline: none;
         }
     </style>
 </head>
-<body class="font-sans antialiased">
-    <div class="min-h-screen flex items-center justify-center px-4 py-8">
-        <div class="w-full max-w-md">
-            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
-                <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 text-center">
-                    <h1 class="text-2xl font-bold text-white">SISOREL</h1>
-                    <p class="text-blue-100 text-xs mt-1">Sistem Informasi Sosial & Relawan</p>
+<body>
+    <div class="login-card">
+        <!-- BAGIAN ATAS -->
+        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 px-5 pt-5 pb-6">
+            <a href="/" class="inline-flex items-center gap-1.5 text-white/70 hover:text-white mb-4 text-xs">
+                <i class="fas fa-arrow-left text-xs"></i> Kembali
+            </a>
+            
+            <!-- Logo dan teks sejajar -->
+            <div class="flex items-center justify-center gap-3">
+                <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                    <span class="text-white text-xl font-bold">S</span>
                 </div>
-                
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 text-center mb-1">Login</h2>
-                    <p class="text-gray-500 text-center text-xs mb-4">Silakan login untuk melanjutkan</p>
-
-                    @if(session('status'))
-                        <div class="bg-green-100 border border-green-400 text-green-700 px-3 py-2 rounded mb-3 text-xs">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    @if($errors->any())
-                        <div class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-3 text-xs">
-                            @foreach($errors->all() as $error)
-                                <p>{{ $error }}</p>
-                            @endforeach
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="mb-3">
-                            <label for="email" class="block text-gray-700 font-semibold text-sm mb-1">Email</label>
-                            <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus
-                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="block text-gray-700 font-semibold text-sm mb-1">Password</label>
-                            <div class="relative">
-                                <input type="password" name="password" id="password" required
-                                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10">
-                                <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between mb-4">
-                            <label class="flex items-center">
-                                <input type="checkbox" name="remember" class="rounded border-gray-300 text-blue-600 text-sm">
-                                <span class="ml-2 text-xs text-gray-600">Ingat Saya</span>
-                            </label>
-                            @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}" class="text-xs text-blue-600 hover:text-blue-800">Lupa password?</a>
-                            @endif
-                        </div>
-
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition text-sm">
-                            Login
-                        </button>
-
-                        <div class="text-center mt-4 pt-3 border-t">
-                            <p class="text-xs text-gray-600">
-                                Belum punya akun?
-                                <a href="{{ route('register') }}" class="text-blue-600 hover:text-blue-800 font-semibold ml-1">
-                                    Daftar Sekarang
-                                </a>
-                            </p>
-                        </div>
-                    </form>
+                <div class="text-left">
+                    <h1 class="text-lg font-bold text-white">SISOREL</h1>
+                    <p class="text-blue-100 text-[11px]">Sistem Informasi Sosial</p>
                 </div>
             </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="bg-white px-5 pb-6 pt-5">
+            <div class="text-center mb-5">
+                <h2 class="text-xl font-bold text-gray-800">Login</h2>
+                <p class="text-gray-400 text-xs mt-1">Masuk ke akun SISOREL Anda</p>
+                <div class="h-0.5 w-12 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full mx-auto mt-2"></div>
+            </div>
+
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+
+                <div class="mb-3">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1.5">
+                        <i class="fas fa-envelope text-blue-400 mr-1.5 text-xs"></i>Email
+                    </label>
+                    <input type="email" name="email" required 
+                        class="form-input w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:border-blue-400 transition text-sm bg-gray-50 hover:bg-white focus:bg-white"
+                        placeholder="email@anda.com">
+                </div>
+
+                <div class="mb-3">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1.5">
+                        <i class="fas fa-lock text-blue-400 mr-1.5 text-xs"></i>Password
+                    </label>
+                    <div class="relative">
+                        <input type="password" name="password" id="password" required 
+                            class="form-input w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:border-blue-400 transition pr-9 text-sm bg-gray-50 hover:bg-white focus:bg-white"
+                            placeholder="Masukkan password">
+                        <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <i class="fas fa-eye-slash text-gray-400 hover:text-blue-500 transition text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between mb-4">
+                    <label class="flex items-center gap-1.5">
+                        <input type="checkbox" name="remember" class="rounded border-gray-300 text-blue-500 focus:ring-blue-400 w-3.5 h-3.5">
+                        <span class="text-xs text-gray-500">Ingat saya</span>
+                    </label>
+                    <a href="#" class="text-xs text-blue-500 hover:text-blue-600 hover:underline">Lupa password?</a>
+                </div>
+
+                <!-- TOMBOL LOGIN WARNA KUNING/ORANYE -->
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white py-2.5 rounded-xl font-semibold transition shadow-md text-sm">
+                    <i class="fas fa-sign-in-alt mr-1.5 text-xs"></i> Login
+                </button>
+
+                <p class="text-center text-xs text-gray-400 mt-4">
+                    Belum punya akun? 
+                    <a href="{{ route('register') }}" class="text-blue-500 font-semibold hover:text-blue-600 hover:underline">Daftar disini</a>
+                </p>
+            </form>
         </div>
     </div>
 
@@ -97,11 +124,15 @@
             togglePassword.addEventListener('click', function() {
                 const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordInput.setAttribute('type', type);
-                const svg = this.querySelector('svg');
+                const icon = this.querySelector('i');
                 if (type === 'text') {
-                    svg.style.color = '#2563eb';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                    icon.style.color = '#3b82f6';
                 } else {
-                    svg.style.color = '#9ca3af';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                    icon.style.color = '#9ca3af';
                 }
             });
         }
