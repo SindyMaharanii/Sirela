@@ -2,15 +2,15 @@
 
 @section('content')
 <div class="p-6">
-    <!-- Header -->
-    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-t-xl px-6 py-4 mb-6">
+    <!-- Header dengan gradasi biru SAMA seperti sidebar -->
+    <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-t-xl px-6 py-4 mb-6 shadow-md">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                 <i class="fas fa-edit text-white text-xl"></i>
             </div>
             <div>
                 <h2 class="text-xl font-bold text-white">Edit Informasi Donasi</h2>
-                <p class="text-yellow-100 text-sm">Edit data donasi dan anak asuh lembaga</p>
+                <p class="text-blue-100 text-sm">Edit data donasi dan anak asuh lembaga</p>
             </div>
         </div>
     </div>
@@ -24,14 +24,14 @@
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Jumlah Anak Asuh</label>
                 <input type="number" name="jumlah_anak_asuh" value="{{ old('jumlah_anak_asuh', $informasi->jumlah_anak_asuh) }}" 
-                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
             <!-- Rentang Usia -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Rentang Usia</label>
                 <input type="text" name="rentang_usia" value="{{ old('rentang_usia', $informasi->rentang_usia) }}" 
-                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500" 
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
                        placeholder="Contoh: 6-12 tahun">
             </div>
 
@@ -39,29 +39,34 @@
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Profil Anak Asuh</label>
                 <textarea name="profil_anak" rows="3" 
-                          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                           placeholder="Deskripsi singkat tentang anak asuh">{{ old('profil_anak', $informasi->profil_anak) }}</textarea>
             </div>
 
-            <!-- Kebutuhan Donasi dengan satuan "Lainnya" -->
+            <!-- Kebutuhan Donasi dengan satuan "Lainnya" (SAMA PERSIS DENGAN CREATE) -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Kebutuhan Donasi</label>
                 <div id="donasi-list">
                     @php
-                        $donasiList = json_decode($informasi->kebutuhan_donasi_list, true) ?? [];
+                        $donasiList = [];
+                        if(is_string($informasi->kebutuhan_donasi_list)) {
+                            $donasiList = json_decode($informasi->kebutuhan_donasi_list, true) ?? [];
+                        } elseif(is_array($informasi->kebutuhan_donasi_list)) {
+                            $donasiList = $informasi->kebutuhan_donasi_list;
+                        }
                     @endphp
                     
                     @if(count($donasiList) > 0)
                         @foreach($donasiList as $index => $donasi)
                         <div class="donasi-item flex flex-wrap gap-2 mb-2 items-center">
                             <input type="text" name="donasi_nama[]" value="{{ $donasi['nama'] ?? '' }}" 
-                                   class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500" 
+                                   class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
                                    placeholder="Nama barang" style="min-width: 150px;">
-                            <input type="text" name="donasi_jumlah[]" value="{{ $donasi['jumlah'] ?? '' }}" 
-                                   class="w-24 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500" 
+                            <input type="text" name="donasi_jumlah[]" value="{{ $donasi['target'] ?? $donasi['jumlah'] ?? 0 }}" 
+                                   class="w-24 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
                                    placeholder="Jumlah">
                             <div class="flex gap-2">
-                                <select name="donasi_satuan[]" class="satuan-select border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                <select name="donasi_satuan[]" class="satuan-select border border-gray-300 rounded-lg px-3 py-2">
                                     <option value="kg" {{ ($donasi['satuan'] ?? '') == 'kg' ? 'selected' : '' }}>Kg</option>
                                     <option value="liter" {{ ($donasi['satuan'] ?? '') == 'liter' ? 'selected' : '' }}>Liter</option>
                                     <option value="paket" {{ ($donasi['satuan'] ?? '') == 'paket' ? 'selected' : '' }}>Paket</option>
@@ -70,9 +75,9 @@
                                 </select>
                                 <input type="text" name="donasi_satuan_lainnya[]" 
                                        value="{{ !in_array($donasi['satuan'] ?? '', ['kg','liter','paket','unit']) ? ($donasi['satuan'] ?? '') : '' }}" 
-                                       class="satuan-lainnya border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500" 
+                                       class="satuan-lainnya border border-gray-300 rounded-lg px-3 py-2" 
                                        placeholder="Satuan lain"
-                                       style="width: 100px; {{ !in_array($donasi['satuan'] ?? '', ['kg','liter','paket','unit']) && !empty($donasi['satuan']) ? 'display: inline-block;' : 'display: none;' }}">
+                                       style="width: 100px; display: {{ !in_array($donasi['satuan'] ?? '', ['kg','liter','paket','unit']) && !empty($donasi['satuan']) ? 'inline-block' : 'none' }};">
                             </div>
                             <button type="button" onclick="this.closest('.donasi-item').remove()" 
                                     class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition">
@@ -104,7 +109,7 @@
                     @endif
                 </div>
                 <button type="button" id="tambah-donasi" 
-                        class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition inline-flex items-center gap-2">
+                        class="mt-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 rounded-lg transition inline-flex items-center gap-2 shadow-md">
                     <i class="fas fa-plus"></i> Tambah Kebutuhan
                 </button>
             </div>
@@ -112,7 +117,7 @@
             <!-- Status Kolaborasi -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Status Kolaborasi</label>
-                <select name="status_kolaborasi" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                <select name="status_kolaborasi" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="dibuka" {{ ($informasi->status_kolaborasi ?? '') == 'dibuka' ? 'selected' : '' }}>Dibuka</option>
                     <option value="ditutup" {{ ($informasi->status_kolaborasi ?? '') == 'ditutup' ? 'selected' : '' }}>Ditutup</option>
                 </select>
@@ -125,7 +130,7 @@
                     Batal
                 </a>
                 <button type="submit" 
-                        class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-4 py-2 rounded-lg transition">
+                        class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 rounded-lg transition shadow-md">
                     Update
                 </button>
             </div>
@@ -134,7 +139,6 @@
 </div>
 
 <script>
-    // Fungsi untuk menangani pilihan "Lainnya" pada satuan
     function handleSatuanChange(selectElement) {
         const item = selectElement.closest('.donasi-item');
         const lainnyaInput = item.querySelector('.satuan-lainnya');
@@ -146,14 +150,12 @@
         }
     }
 
-    // Event listener untuk semua select satuan yang sudah ada
     document.querySelectorAll('.satuan-select').forEach(select => {
         select.addEventListener('change', function() {
             handleSatuanChange(this);
         });
     });
 
-    // Tombol tambah donasi
     document.getElementById('tambah-donasi').addEventListener('click', function() {
         const container = document.getElementById('donasi-list');
         const newItem = document.createElement('div');
@@ -180,7 +182,6 @@
         `;
         container.appendChild(newItem);
         
-        // Tambahkan event listener untuk select yang baru
         const newSelect = newItem.querySelector('.satuan-select');
         newSelect.addEventListener('change', function() {
             handleSatuanChange(this);

@@ -6,6 +6,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LembagaController;
 use App\Http\Controllers\InformasiLembagaController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\DonasiController;
 
 // =======================
 // 🌍 HALAMAN PUBLIK (Tanpa Login)
@@ -31,12 +32,7 @@ Route::get('/panduan', [PageController::class, 'panduan'])->name('panduan');
 // 🔐 AREA LOGIN (Harus Login)
 // =======================
 Route::middleware(['auth'])->group(function () {
-
-    // Halaman Pending untuk Lembaga Belum Diverifikasi
-    Route::get('/lembaga/pending', function () {
-        return view('lembaga.pending');
-    })->name('lembaga.pending');
-
+    
     // Dashboard (berdasarkan role)
     Route::get('/dashboard', function () {
         if (auth()->user()->role == 'admin') {
@@ -69,11 +65,31 @@ Route::middleware(['auth'])->group(function () {
     // 📄 INFORMASI LEMBAGA (Admin & Lembaga)
     // =======================
     Route::resource('informasi', InformasiLembagaController::class);
+    
+    // ======================= 🔥 TAMBAHKAN INI 🔥 =======================
+    // Update kebutuhan donasi (AJAX) - untuk edit/tambah per item
+    Route::post('/informasi/kebutuhan/update/{id}', [InformasiLembagaController::class, 'updateKebutuhan'])->name('informasi.kebutuhan.update');
+    // ===================================================================
+
+    // =======================
+    // 💰 DONASI (Hanya untuk lembaga yang login)
+    // =======================
+    Route::get('/donasi', [DonasiController::class, 'index'])->name('donasi.index');
+    Route::put('/donasi/konfirmasi/{id}', [DonasiController::class, 'konfirmasi'])->name('donasi.konfirmasi');
+    Route::put('/donasi/update-terkumpul/{id}', [DonasiController::class, 'updateTerkumpulManual'])->name('donasi.updateTerkumpul');
 });
+
+// =======================
+// 💰 DONASI PUBLIK (Tidak perlu login)
+// =======================
+Route::post('/donasi/store', [DonasiController::class, 'store'])->name('donasi.store');
+
+// =======================
+// ROUTE TEST (Opsional)
+// =======================
 Route::get('/verifikasi-test', function () {
     $users = App\Models\User::where('role', 'lembaga')->get();
     
-    // Langsung return JSON biar jelas
     return response()->json([
         'total' => $users->count(),
         'data' => $users->map(function($u) {
@@ -85,4 +101,5 @@ Route::get('/verifikasi-test', function () {
         })
     ]);
 });
+
 require __DIR__.'/auth.php';

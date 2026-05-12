@@ -38,19 +38,19 @@
         
         @if($kategori->count() > 0)
         <div class="overflow-x-auto">
-            <table class="w-full border-collapse">
+            <table class="w-full border-collapse border border-gray-300">
                 <thead>
-                    <tr class="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-                        <th class="p-3 rounded-tl-lg text-left">No</th>
-                        <th class="p-3 text-left">Nama Kategori</th>
-                        <th class="p-3 rounded-tr-lg text-center">Aksi</th>
+                    <tr class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] text-white">
+                        <th class="border border-gray-300 px-4 py-3 text-left">No</th>
+                        <th class="border border-gray-300 px-4 py-3 text-left">Nama Kategori</th>
+                        <th class="border border-gray-300 px-4 py-3 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($kategori as $index => $item)
                     <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
-                        <td class="p-3 text-gray-600">{{ $loop->iteration }}</td>
-                        <td class="p-3">
+                        <td class="border border-gray-300 px-4 py-3 text-gray-600">{{ $loop->iteration }}</td>
+                        <td class="border border-gray-300 px-4 py-3">
                             <div class="flex items-center gap-2">
                                 <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                                     <i class="fas fa-tag text-blue-500 text-sm"></i>
@@ -58,7 +58,7 @@
                                 <span class="font-semibold text-gray-800">{{ $item->nama_kategori }}</span>
                             </div>
                         </td>
-                        <td class="p-3 text-center">
+                        <td class="border border-gray-300 px-4 py-3 text-center">
                             <div class="flex items-center justify-center gap-2">
                                 <a href="{{ route('kategori.edit', $item->kategori_id) }}" 
                                    class="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-lg transition inline-flex items-center" 

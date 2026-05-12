@@ -200,6 +200,7 @@
         </div>
         
         @if(auth()->user()->role == 'admin')
+            <!-- MENU UNTUK ADMIN -->
             <a href="{{ route('verifikasi') }}" class="nav-item {{ request()->routeIs('verifikasi') ? 'active' : '' }}">
                 <i class="fas fa-user-check"></i> Verifikasi Akun
                 @php $pendingCount = \App\Models\User::where('role', 'lembaga')->where('status_akun', 'pending')->count(); @endphp
@@ -213,15 +214,21 @@
             <a href="{{ route('lembaga.index') }}" class="nav-item {{ request()->routeIs('lembaga.*') ? 'active' : '' }}">
                 <i class="fas fa-building"></i> Semua Lembaga
             </a>
-            <a href="{{ route('informasi.index') }}" class="nav-item {{ request()->routeIs('informasi.*') ? 'active' : '' }}">
-                <i class="fas fa-hand-holding-heart"></i> Informasi Donasi
-            </a>
-        @else
+            
+        @elseif(auth()->user()->role == 'lembaga')
+            <!-- MENU UNTUK LEMBAGA - DIPERBAIKI -->
+            @php
+                $userLembaga = \App\Models\Lembaga::where('pengguna_id', auth()->id())->first();
+                $informasiLembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
+            @endphp
             <a href="{{ route('lembaga.index') }}" class="nav-item {{ request()->routeIs('lembaga.*') ? 'active' : '' }}">
                 <i class="fas fa-building"></i> Profil Lembaga
             </a>
-            <a href="{{ route('informasi.index') }}" class="nav-item {{ request()->routeIs('informasi.*') ? 'active' : '' }}">
+            <a href="{{ route('informasi.show', $informasiLembagaId) }}" class="nav-item {{ request()->routeIs('informasi.show') ? 'active' : '' }}">
                 <i class="fas fa-hand-holding-heart"></i> Informasi Donasi
+            </a>
+            <a href="{{ route('donasi.index') }}" class="nav-item {{ request()->routeIs('donasi.*') ? 'active' : '' }}">
+                <i class="fas fa-users"></i> Daftar Donatur
             </a>
         @endif
 
@@ -238,8 +245,8 @@
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="nav-item w-full text-left bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-xl transition-all duration-200 shadow-md mt-2">
-    <i class="fas fa-sign-out-alt"></i> Logout
-</button>
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
         </form>
         
         @else
@@ -286,17 +293,13 @@
         document.getElementById('overlay').style.display = 'none';
     }
     
-    // ========== MEMPERTAHANKAN POSISI SCROLL SIDEBAR ==========
     (function() {
         var sidebar = document.getElementById('sidebar');
         if (sidebar) {
-            // Load posisi scroll yang tersimpan
             var savedScrollTop = localStorage.getItem('sidebarScrollTop');
             if (savedScrollTop !== null) {
                 sidebar.scrollTop = parseInt(savedScrollTop);
             }
-            
-            // Simpan posisi scroll setiap kali user scroll
             sidebar.addEventListener('scroll', function() {
                 localStorage.setItem('sidebarScrollTop', this.scrollTop);
             });

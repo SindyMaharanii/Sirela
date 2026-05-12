@@ -35,76 +35,86 @@
             <!-- TAB PROFIL -->
             <div id="form-profile" class="tab-content">
                 <div id="profile-view">
-                    <!-- Info card dengan gradasi SAMA PERSIS dengan sidebar -->
-                    <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-xl p-5 mb-6 text-white shadow-md">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-id-card text-white text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs text-blue-200 uppercase tracking-wide">Informasi Akun</p>
-                                <p class="text-sm text-blue-200">Data diri Anda yang terdaftar di sistem</p>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- INFO CARD HEADER (BIRU GRADASI) -->
+<div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-xl p-4 mb-6 text-white shadow-md">
+    <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+            <i class="fas fa-id-card text-white text-lg"></i>
+        </div>
+        <div>
+            <p class="text-xs text-blue-200 uppercase tracking-wide">Informasi Akun</p>
+            <p class="text-sm text-blue-200">Data diri Anda yang terdaftar di sistem</p>
+        </div>
+    </div>
+</div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div class="group">
-                            <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
-                                <i class="fas fa-user mr-1 text-blue-400"></i> Nama Lengkap
-                            </label>
-                            <div class="bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 group-hover:border-blue-200 transition">
-                                <p class="text-gray-800 font-medium">{{ $user->name }}</p>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
-                                <i class="fas fa-envelope mr-1 text-blue-400"></i> Email
-                            </label>
-                            <div class="bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 group-hover:border-blue-200 transition">
-                                <p class="text-gray-800 font-medium">{{ $user->email }}</p>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
-                                <i class="fas fa-user-tag mr-1 text-blue-400"></i> Role
-                            </label>
-                            <div class="bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 group-hover:border-blue-200 transition">
-                                @if($user->role == 'admin')
-                                    <p class="text-blue-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> Administrator</p>
-                                @else
-                                    <p class="text-emerald-600 font-medium"><i class="fas fa-building mr-1"></i> Lembaga Sosial</p>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="group">
-                            <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
-                                <i class="fas fa-circle mr-1 text-blue-400"></i> Status Akun
-                            </label>
-                            <div class="bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 group-hover:border-blue-200 transition">
-                                @if($user->status_akun == 'aktif')
-                                    <p class="text-emerald-600 font-medium"><i class="fas fa-check-circle mr-1"></i> Aktif</p>
-                                @else
-                                    <p class="text-rose-600 font-medium"><i class="fas fa-clock mr-1"></i> Nonaktif</p>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="md:col-span-2 group">
-                            <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
-                                <i class="fas fa-calendar-alt mr-1 text-blue-400"></i> Bergabung Sejak
-                            </label>
-                            <div class="bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 group-hover:border-blue-200 transition">
-                                <p class="text-gray-800 font-medium">{{ $user->created_at->format('d F Y') }}</p>
-                            </div>
-                        </div>
-                    </div>
+<!-- FIELD DENGAN GRADASI SOFT BIRU (seperti contoh) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <!-- Nama Lengkap -->
+    <div class="group">
+        <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
+            <i class="fas fa-user mr-1 text-blue-400"></i> Nama Lengkap
+        </label>
+        <div class="bg-gradient-to-br from-blue-100 via-blue-50 to-white rounded-xl px-4 py-3 shadow-sm border border-blue-200 group-hover:shadow-md transition">
+            <p class="text-gray-800 font-medium">{{ $user->name }}</p>
+        </div>
+    </div>
+
+    <!-- Email -->
+    <div class="group">
+        <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
+            <i class="fas fa-envelope mr-1 text-blue-400"></i> Email
+        </label>
+        <div class="bg-gradient-to-br from-blue-100 via-blue-50 to-white rounded-xl px-4 py-3 shadow-sm border border-blue-200 group-hover:shadow-md transition">
+            <p class="text-gray-800 font-medium">{{ $user->email }}</p>
+        </div>
+    </div>
+
+    <!-- Role -->
+    <div class="group">
+        <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
+            <i class="fas fa-user-tag mr-1 text-blue-400"></i> Role
+        </label>
+        <div class="bg-gradient-to-br from-blue-100 via-blue-50 to-white rounded-xl px-4 py-3 shadow-sm border border-blue-200 group-hover:shadow-md transition">
+            @if($user->role == 'admin')
+                <p class="text-blue-600 font-medium"><i class="fas fa-shield-alt mr-1"></i> Administrator</p>
+            @else
+                <p class="text-emerald-600 font-medium"><i class="fas fa-building mr-1"></i> Lembaga Sosial</p>
+            @endif
+        </div>
+    </div>
+
+    <!-- Status Akun -->
+    <div class="group">
+        <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
+            <i class="fas fa-circle mr-1 text-blue-400"></i> Status Akun
+        </label>
+        <div class="bg-gradient-to-br from-blue-100 via-blue-50 to-white rounded-xl px-4 py-3 shadow-sm border border-blue-200 group-hover:shadow-md transition">
+            @if($user->status_akun == 'aktif')
+                <p class="text-emerald-600 font-medium"><i class="fas fa-check-circle mr-1"></i> Aktif</p>
+            @else
+                <p class="text-amber-600 font-medium"><i class="fas fa-hourglass-half mr-1"></i> Nonaktif</p>
+            @endif
+        </div>
+    </div>
+
+    <!-- Bergabung Sejak -->
+    <div class="md:col-span-2 group">
+        <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
+            <i class="fas fa-calendar-alt mr-1 text-blue-400"></i> Bergabung Sejak
+        </label>
+        <div class="bg-gradient-to-br from-blue-100 via-blue-50 to-white rounded-xl px-4 py-3 shadow-sm border border-blue-200 group-hover:shadow-md transition">
+            <p class="text-gray-800 font-medium">{{ $user->created_at->format('d F Y') }}</p>
+        </div>
+    </div>
+</div>
 
                     <div class="mt-8 flex justify-end border-t border-gray-100 pt-6">
-                        <button id="btn-edit-profile" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl transition-all duration-200 shadow-md">
-                            <i class="fas fa-edit text-sm"></i>
-                            <span>Edit Profil</span>
-                        </button>
-                    </div>
+    <button id="btn-edit-profile" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-xl transition-all duration-200 shadow-md hover:shadow-lg">
+        <i class="fas fa-edit text-sm"></i>
+        <span>Edit Profil</span>
+    </button>
+</div>
                 </div>
 
                 <!-- Mode Edit -->
@@ -121,27 +131,33 @@
                         @method('patch')
 
                         <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap</label>
-                            <input type="text" name="name" value="{{ old('name', $user->name) }}" 
-                                   class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
-                            @error('name') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-                        </div>
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap</label>
+    <!-- INPUT DENGAN BACKGROUND GRADASI BIRU SOFT -->
+    <input type="text" name="name" value="{{ old('name', $user->name) }}" 
+           class="w-full bg-gradient-to-br from-blue-100 via-blue-50 to-white border border-blue-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition shadow-sm">
+    @error('name') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+</div>
 
-                        <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                            <input type="email" name="email" value="{{ old('email', $user->email) }}" 
-                                   class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
-                            @error('email') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-                        </div>
+<div class="mb-4">
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+    <!-- INPUT DENGAN BACKGROUND GRADASI BIRU SOFT -->
+    <input type="email" name="email" value="{{ old('email', $user->email) }}" 
+           class="w-full bg-gradient-to-br from-blue-100 via-blue-50 to-white border border-blue-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition shadow-sm">
+    @error('email') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+</div>
 
-                        <div class="flex justify-end gap-3 pt-4">
-                            <button type="button" id="btn-cancel-edit" class="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl transition">
-                                <i class="fas fa-times mr-2"></i> Batal
-                            </button>
-                            <button type="submit" class="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl transition-all duration-200 shadow-md">
-                                <i class="fas fa-save mr-2"></i> Simpan Perubahan
-                            </button>
-                        </div>
+<div class="flex justify-end gap-3 pt-4">
+    <!-- TOMBOL BATAL TETAP ABU-ABU -->
+    <button type="button" id="btn-cancel-edit" class="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl transition">
+        <i class="fas fa-times mr-2"></i> Batal
+    </button>
+    
+    <!-- TOMBOL SIMPAN WARNA KUNING -->
+    <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-xl transition-all duration-200 shadow-md hover:shadow-lg">
+        <i class="fas fa-save text-sm"></i>
+        <span>Simpan Perubahan</span>
+    </button>
+</div>
                     </form>
                 </div>
             </div>
@@ -187,45 +203,45 @@
                         @method('put')
 
                         <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Password Saat Ini</label>
-                            <div class="relative">
-                                <input type="password" name="current_password" id="current_password" 
-                                       class="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                                       placeholder="Masukkan password saat ini" required>
-                                <button type="button" onclick="togglePassword('current_password')" 
-                                        class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-blue-500 transition">
-                                    <i class="fas fa-eye-slash"></i>
-                                </button>
-                            </div>
-                            @error('current_password') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-                        </div>
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Password Saat Ini</label>
+    <div class="relative">
+        <input type="password" name="current_password" id="current_password" 
+               class="w-full bg-gradient-to-br from-blue-100 via-blue-50 to-white border border-blue-200 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition shadow-sm"
+               placeholder="Masukkan password saat ini" required>
+        <button type="button" onclick="togglePassword('current_password')" 
+                class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-blue-500 transition">
+            <i class="fas fa-eye-slash"></i>
+        </button>
+    </div>
+    @error('current_password') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+</div>
 
-                        <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Password Baru</label>
-                            <div class="relative">
-                                <input type="password" name="password" id="password" 
-                                       class="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                                       placeholder="Minimal 8 karakter" required>
-                                <button type="button" onclick="togglePassword('password')" 
-                                        class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-blue-500 transition">
-                                    <i class="fas fa-eye-slash"></i>
-                                </button>
-                            </div>
-                            @error('password') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-                        </div>
+<div class="mb-4">
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Password Baru</label>
+    <div class="relative">
+        <input type="password" name="password" id="password" 
+               class="w-full bg-gradient-to-br from-blue-100 via-blue-50 to-white border border-blue-200 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition shadow-sm"
+               placeholder="Minimal 8 karakter" required>
+        <button type="button" onclick="togglePassword('password')" 
+                class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-blue-500 transition">
+            <i class="fas fa-eye-slash"></i>
+        </button>
+    </div>
+    @error('password') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+</div>
 
-                        <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Konfirmasi Password Baru</label>
-                            <div class="relative">
-                                <input type="password" name="password_confirmation" id="password_confirmation" 
-                                       class="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                                       placeholder="Ulangi password baru" required>
-                                <button type="button" onclick="togglePassword('password_confirmation')" 
-                                        class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-blue-500 transition">
-                                    <i class="fas fa-eye-slash"></i>
-                                </button>
-                            </div>
-                        </div>
+<div class="mb-4">
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Konfirmasi Password Baru</label>
+    <div class="relative">
+        <input type="password" name="password_confirmation" id="password_confirmation" 
+               class="w-full bg-gradient-to-br from-blue-100 via-blue-50 to-white border border-blue-200 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition shadow-sm"
+               placeholder="Ulangi password baru" required>
+        <button type="button" onclick="togglePassword('password_confirmation')" 
+                class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-blue-500 transition">
+            <i class="fas fa-eye-slash"></i>
+        </button>
+    </div>
+</div>
 
                         <div class="flex justify-end gap-3 pt-4">
                             <button type="button" id="btn-cancel-password" class="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl transition">

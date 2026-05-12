@@ -13,8 +13,8 @@ class LembagaController extends Controller
     // Cek status akun (hanya untuk lembaga)
     private function cekVerifikasi()
     {
-        if (Auth::user()->role == 'lembaga' && Auth::user()->status_akun != 'aktif') {
-            return redirect()->route('lembaga.pending')->with('error', 'Akun belum diverifikasi');
+        if (Auth::check() && Auth::user()->role == 'lembaga' && Auth::user()->status_akun != 'aktif') {
+            return redirect()->route('lembaga.index')->with('error', 'Akun belum diverifikasi');
         }
         return null;
     }
@@ -22,75 +22,75 @@ class LembagaController extends Controller
     // Admin: lihat semua lembaga
     // Lembaga: lihat hanya lembaga miliknya sendiri
     public function index()
-{
-    // Cek verifikasi untuk lembaga
-    $redirect = $this->cekVerifikasi();
-    if ($redirect) return $redirect;
+    {
+        // Cek apakah user login
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
 
-    if (Auth::user()->role == 'admin') {
-        // Admin: lihat semua lembaga (ambil dari tabel lembaga, bukan user)
-        $lembaga = Lembaga::with('kategori', 'user', 'informasi')->get();
-        return view('lembaga.index', compact('lembaga'));
-    } else {
-        
-        // Lembaga biasa: lihat hanya milik sendiri
-         $lembaga = Lembaga::with('kategori', 'informasi')
-            ->where('pengguna_id', Auth::id())
-            ->get();
-        return view('lembaga.index', compact('lembaga'));
+        if (Auth::user()->role == 'admin') {
+            // Admin: lihat semua lembaga
+            $lembaga = Lembaga::with('kategori', 'user', 'informasi')->get();
+            return view('lembaga.index', compact('lembaga'));
+        } else {
+            // Lembaga biasa: lihat hanya milik sendiri
+            $lembaga = Lembaga::with('kategori', 'informasi')
+                ->where('pengguna_id', Auth::id())
+                ->get();
+            return view('lembaga.index', compact('lembaga'));
+        }
     }
-}
 
     // HANYA lembaga yang bisa create (setelah login)
     public function create()
-{
-    // Cek verifikasi
-    $redirect = $this->cekVerifikasi();
-    if ($redirect) return $redirect;
+    {
+        // Cek verifikasi
+        $redirect = $this->cekVerifikasi();
+        if ($redirect) return $redirect;
 
-    // Cek apakah lembaga ini sudah punya profil?
-    $existingLembaga = Lembaga::where('pengguna_id', Auth::id())->first();
-    if ($existingLembaga) {
-        return redirect()->route('lembaga.index')->with('error', 'Anda sudah memiliki profil lembaga');
+        // Cek apakah lembaga ini sudah punya profil?
+        $existingLembaga = Lembaga::where('pengguna_id', Auth::id())->first();
+        if ($existingLembaga) {
+            return redirect()->route('lembaga.index')->with('error', 'Anda sudah memiliki profil lembaga');
+        }
+        
+        $kategori = Kategori::all();
+        return view('lembaga.create', compact('kategori'));
     }
-    
-    $kategori = Kategori::all(); // ← Pastikan ini ada
-    return view('lembaga.create', compact('kategori'));
-}
 
     public function store(Request $request)
-{
-    // Cek verifikasi
-    $redirect = $this->cekVerifikasi();
-    if ($redirect) return $redirect;
+    {
+        // Cek verifikasi
+        $redirect = $this->cekVerifikasi();
+        if ($redirect) return $redirect;
 
-    $request->validate([
-        'nama_lembaga' => 'required|string|max:255',
-    ]);
+        $request->validate([
+            'nama_lembaga' => 'required|string|max:255',
+        ]);
 
-    // Cek lagi apakah sudah punya profil
-    $existingLembaga = Lembaga::where('pengguna_id', Auth::id())->first();
-    if ($existingLembaga) {
-        return redirect()->route('lembaga.index')->with('error', 'Anda sudah memiliki profil lembaga');
+        // Cek lagi apakah sudah punya profil
+        $existingLembaga = Lembaga::where('pengguna_id', Auth::id())->first();
+        if ($existingLembaga) {
+            return redirect()->route('lembaga.index')->with('error', 'Anda sudah memiliki profil lembaga');
+        }
+
+        $lembaga = Lembaga::create([
+            'pengguna_id' => Auth::id(),
+            'nama_lembaga' => $request->nama_lembaga,
+            'alamat' => $request->alamat,
+            'lokasi' => $request->lokasi,
+            'kontak' => $request->kontak,
+            'visi' => $request->visi,
+            'misi' => $request->misi,
+            'deskripsi' => $request->deskripsi,
+        ]);
+
+        if ($request->has('kategori_id')) {
+            $lembaga->kategori()->attach($request->kategori_id);
+        }
+
+        return redirect()->route('dashboard')->with('success', 'Profil lembaga berhasil dibuat');
     }
-
-    $lembaga = Lembaga::create([
-        'pengguna_id' => Auth::id(),
-        'nama_lembaga' => $request->nama_lembaga,
-        'alamat' => $request->alamat,
-        'lokasi' => $request->lokasi,
-        'kontak' => $request->kontak,
-        'visi' => $request->visi,
-        'misi' => $request->misi,
-        'deskripsi' => $request->deskripsi,
-    ]);
-
-    if ($request->has('kategori_id')) {
-        $lembaga->kategori()->attach($request->kategori_id);
-    }
-
-    return redirect()->route('dashboard')->with('success', 'Profil lembaga berhasil dibuat');
-}
 
     // Edit hanya untuk lembaga yang punya profil ini
     public function edit($id)
@@ -156,6 +156,6 @@ class LembagaController extends Controller
     public function show($id)
 {
     $lembaga = Lembaga::with('kategori', 'user', 'informasi')->findOrFail($id);
-    return view('lembaga.show', compact('lembaga'));
+    return view('public.show', compact('lembaga')); // ← pakai file public.show
 }
 }

@@ -33,43 +33,46 @@
         
         @if($users->count() > 0)
         <div class="overflow-x-auto">
-            <table class="w-full border-collapse">
+            <table class="w-full border-collapse border border-gray-300">
                 <thead>
-                    <tr class="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-                        <th class="p-3 rounded-tl-lg text-left">Nama Lembaga</th>
-                        <th class="p-3 text-left">Email</th>
-                        <th class="p-3 text-left">Status</th>
-                        <th class="p-3 rounded-tr-lg text-center">Aksi</th>
+                    <tr class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] text-white">
+                        <th class="border border-gray-300 px-4 py-3 text-left">Nama Lembaga</th>
+                        <th class="border border-gray-300 px-4 py-3 text-left">Email</th>
+                        <th class="border border-gray-300 px-4 py-3 text-left">Status</th>
+                        <th class="border border-gray-300 px-4 py-3 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($users as $user)
                     <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
-                        <td class="p-3">
+                        <td class="border border-gray-300 px-4 py-3">
                             <div class="flex items-center gap-2">
                                 <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                                     <i class="fas fa-building text-blue-500 text-sm"></i>
                                 </div>
                                 <span class="font-semibold text-gray-800">{{ $user->nama_lembaga ?? $user->name }}</span>
                             </div>
-                         </td>
-                        <td class="p-3 text-gray-600">{{ $user->email }}</td>
-                        <td class="p-3">
+                        </td>
+                        <td class="border border-gray-300 px-4 py-3 text-gray-600">{{ $user->email }}</td>
+                        <td class="border border-gray-300 px-4 py-3">
                             @if($user->status_akun == 'aktif')
-                                <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1 w-fit">
+                                <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold inline-flex items-center gap-1">
                                     <i class="fas fa-circle text-[6px] text-green-500"></i> Aktif
                                 </span>
                             @else
-                                <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1 w-fit">
+                                <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-semibold inline-flex items-center gap-1">
                                     <i class="fas fa-circle text-[6px] text-red-500"></i> Nonaktif
                                 </span>
                             @endif
                         </td>
-                        <td class="p-3 text-center">
+                        <td class="border border-gray-300 px-4 py-3 text-center">
                             <form action="{{ route('verifikasi.toggle', $user->id) }}" method="POST" class="inline">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="px-4 py-2 rounded-lg text-white font-medium transition-all duration-200 {{ $user->status_akun == 'aktif' ? 'bg-red-500 hover:bg-red-600' : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700' }}">
+                                <button type="submit" class="px-4 py-2 rounded-lg text-white font-medium transition-all duration-200 
+                                    {{ $user->status_akun == 'aktif' 
+                                        ? 'bg-red-500 hover:bg-red-600' 
+                                        : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700' }}">
                                     {{ $user->status_akun == 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }}
                                 </button>
                             </form>

@@ -110,10 +110,15 @@ class InformasiLembagaController extends Controller
             for ($i = 0; $i < count($request->donasi_nama); $i++) {
                 if (!empty($request->donasi_nama[$i])) {
                     $donasiList[] = [
-                        'nama' => $request->donasi_nama[$i],
-                        'jumlah' => $request->donasi_jumlah[$i] ?? '',
-                        'satuan' => $request->donasi_satuan[$i] ?? 'unit'
-                    ];
+    'id' => uniqid(),
+    'nama' => $request->donasi_nama[$i],
+    'target' => (int)($request->donasi_jumlah[$i] ?? 0),
+    'jumlah' => $request->donasi_jumlah[$i] ?? 0,
+    'terkumpul' => 0,
+    'satuan' => ($request->donasi_satuan[$i] == 'lainnya') ? ($request->donasi_satuan_lainnya[$i] ?? 'unit') : $request->donasi_satuan[$i],
+    'prioritas' => 'sedang',
+    'jenis' => 'barang'
+];
                 }
             }
         }
@@ -140,5 +145,20 @@ class InformasiLembagaController extends Controller
     }
     
     return view('informasi.show', compact('informasi'));
+}
+public function updateKebutuhan(Request $request, $id)
+{
+    $informasi = InformasiLembaga::findOrFail($id);
+    
+    if (auth()->user()->role == 'lembaga' && $informasi->lembaga->pengguna_id != auth()->id()) {
+        return response()->json(['error' => 'Unauthorized'], 403);
+    }
+    
+    $informasi->update([
+        'kebutuhan_donasi_list' => json_encode($request->kebutuhan_list, JSON_UNESCAPED_UNICODE),
+        'tanggal_update' => now()
+    ]);
+    
+    return response()->json(['success' => true]);
 }
 }

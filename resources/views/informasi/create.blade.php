@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="p-6">
-    <!-- Header -->
-    <div class="bg-gradient-to-r from-blue-600 to-blue-700 rounded-t-xl px-6 py-4 mb-6">
+    <!-- Header dengan gradasi biru SAMA seperti sidebar -->
+    <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-t-xl px-6 py-4 mb-6 shadow-md">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                 <i class="fas fa-plus text-white text-xl"></i>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <button type="button" id="tambah-donasi" 
-                        class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition inline-flex items-center gap-2">
+                        class="mt-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 rounded-lg transition inline-flex items-center gap-2 shadow-md">
                     <i class="fas fa-plus"></i> Tambah Kebutuhan
                 </button>
             </div>
@@ -88,8 +88,9 @@
                    class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition">
                     Batal
                 </a>
+                <!-- TOMBOL SIMPAN WARNA KUNING/ORANYE GRADASI -->
                 <button type="submit" 
-                        class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg transition">
+                        class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 rounded-lg transition shadow-md">
                     Simpan
                 </button>
             </div>
