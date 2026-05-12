@@ -219,11 +219,21 @@
             <!-- MENU UNTUK LEMBAGA - DIPERBAIKI -->
             @php
                 $userLembaga = \App\Models\Lembaga::where('pengguna_id', auth()->id())->first();
+                $lembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
                 $informasiLembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
             @endphp
-            <a href="{{ route('lembaga.index') }}" class="nav-item {{ request()->routeIs('lembaga.*') ? 'active' : '' }}">
-                <i class="fas fa-building"></i> Profil Lembaga
-            </a>
+            
+            <!-- PROFIL LEMBAGA - SEKARANG PAKAI ROUTE SHOW atau EDIT -->
+            @if($lembagaId)
+                <a href="{{ route('lembaga.show', $lembagaId) }}" class="nav-item {{ request()->routeIs('lembaga.show') ? 'active' : '' }}">
+                    <i class="fas fa-building"></i> Profil Lembaga
+                </a>
+            @else
+                <a href="{{ route('lembaga.create') }}" class="nav-item">
+                    <i class="fas fa-building"></i> Buat Profil Lembaga
+                </a>
+            @endif
+            
             <a href="{{ route('informasi.show', $informasiLembagaId) }}" class="nav-item {{ request()->routeIs('informasi.show') ? 'active' : '' }}">
                 <i class="fas fa-hand-holding-heart"></i> Informasi Donasi
             </a>
