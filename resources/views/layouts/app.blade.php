@@ -216,23 +216,21 @@
             </a>
             
         @elseif(auth()->user()->role == 'lembaga')
-            <!-- MENU UNTUK LEMBAGA - DIPERBAIKI -->
-            @php
-                $userLembaga = \App\Models\Lembaga::where('pengguna_id', auth()->id())->first();
-                $lembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
-                $informasiLembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
-            @endphp
-            
-            <!-- PROFIL LEMBAGA - SEKARANG PAKAI ROUTE SHOW atau EDIT -->
-            @if($lembagaId)
-                <a href="{{ route('lembaga.show', $lembagaId) }}" class="nav-item {{ request()->routeIs('lembaga.show') ? 'active' : '' }}">
-                    <i class="fas fa-building"></i> Profil Lembaga
-                </a>
-            @else
-                <a href="{{ route('lembaga.create') }}" class="nav-item">
-                    <i class="fas fa-building"></i> Buat Profil Lembaga
-                </a>
-            @endif
+    @php
+        $userLembaga = \App\Models\Lembaga::where('pengguna_id', auth()->id())->first();
+        $lembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
+        $informasiLembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
+    @endphp
+    
+    @if($lembagaId)
+        <a href="{{ route('lembaga.index') }}" class="nav-item {{ request()->routeIs('lembaga.index') ? 'active' : '' }}">
+            <i class="fas fa-building"></i> Profil Lembaga
+        </a>
+    @else
+        <a href="{{ route('lembaga.create') }}" class="nav-item">
+            <i class="fas fa-building"></i> Buat Profil Lembaga
+        </a>
+    @endif
             
             <a href="{{ route('informasi.show', $informasiLembagaId) }}" class="nav-item {{ request()->routeIs('informasi.show') ? 'active' : '' }}">
                 <i class="fas fa-hand-holding-heart"></i> Informasi Donasi
@@ -299,26 +297,26 @@
 
 <script>
     function closeSidebar() {
-        document.getElementById('sidebar').classList.remove('open');
-        document.getElementById('overlay').style.display = 'none';
+        var sidebar = document.getElementById('sidebar');
+        var overlay = document.getElementById('overlay');
+        if (sidebar) sidebar.classList.remove('open');
+        if (overlay) overlay.style.display = 'none';
     }
-    
+
+    // PERBAIKAN: Sidebar tidak akan refresh aneh saat klik tombol kembali/panah browser
     (function() {
         var sidebar = document.getElementById('sidebar');
         if (sidebar) {
-            var savedScrollTop = localStorage.getItem('sidebarScrollTop');
-            if (savedScrollTop !== null) {
-                sidebar.scrollTop = parseInt(savedScrollTop);
-            }
-            sidebar.addEventListener('scroll', function() {
-                localStorage.setItem('sidebarScrollTop', this.scrollTop);
-            });
+            // Reset scroll position ke atas setiap halaman dimuat
+            sidebar.scrollTop = 0;
         }
     })();
     
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    if(sidebar) {
+    // Event listener untuk sidebar dan overlay
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('overlay');
+    
+    if (sidebar && overlay) {
         sidebar.addEventListener('transitionend', function() {
             if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
                 overlay.style.display = 'block';
@@ -327,10 +325,27 @@
             }
         });
     }
+    
     window.addEventListener('resize', function() {
+        var sidebar = document.getElementById('sidebar');
+        var overlay = document.getElementById('overlay');
         if (window.innerWidth > 768 && sidebar) {
             sidebar.classList.remove('open');
-            overlay.style.display = 'none';
+            if (overlay) overlay.style.display = 'none';
+        }
+    });
+    
+    // Toggle sidebar untuk mobile
+    document.querySelector('.menu-toggle')?.addEventListener('click', function() {
+        var sidebar = document.getElementById('sidebar');
+        var overlay = document.getElementById('overlay');
+        if (sidebar) {
+            sidebar.classList.toggle('open');
+            if (sidebar.classList.contains('open') && window.innerWidth <= 768) {
+                if (overlay) overlay.style.display = 'block';
+            } else {
+                if (overlay) overlay.style.display = 'none';
+            }
         }
     });
 </script>

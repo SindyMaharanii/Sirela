@@ -22,24 +22,20 @@ class LembagaController extends Controller
     // Admin: lihat semua lembaga
     // Lembaga: lihat hanya lembaga miliknya sendiri
     public function index()
-    {
-        // Cek apakah user login
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-
-        if (Auth::user()->role == 'admin') {
-            // Admin: lihat semua lembaga
-            $lembaga = Lembaga::with('kategori', 'user', 'informasi')->get();
-            return view('lembaga.index', compact('lembaga'));
-        } else {
-            // Lembaga biasa: lihat hanya milik sendiri
-            $lembaga = Lembaga::with('kategori', 'informasi')
-                ->where('pengguna_id', Auth::id())
-                ->get();
-            return view('lembaga.index', compact('lembaga'));
-        }
+{
+    if (!Auth::check()) {
+        return redirect()->route('login');
     }
+
+    if (Auth::user()->role == 'admin') {
+        $lembaga = Lembaga::with('kategori', 'user', 'informasi')->get();
+        return view('lembaga.index', compact('lembaga'));
+    } else {
+        // Untuk role LEMBAGA: ambil data lembaga miliknya
+        $lembaga = Lembaga::with('kategori', 'informasi')->where('pengguna_id', Auth::id())->first();
+        return view('lembaga.index', compact('lembaga'));
+    }
+}
 
     // HANYA lembaga yang bisa create (setelah login)
     public function create()
