@@ -54,6 +54,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/verifikasi', [ProfileController::class, 'verifikasi'])->name('verifikasi');
         Route::put('/verifikasi/{id}', [ProfileController::class, 'toggleStatus'])->name('verifikasi.toggle');
         Route::resource('kategori', KategoriController::class);
+        Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('/admin/detail-lembaga/{id}', [App\Http\Controllers\AdminController::class, 'detailLembaga'])->name('admin.detail.lembaga');
+    });
     });
 
     // =======================
