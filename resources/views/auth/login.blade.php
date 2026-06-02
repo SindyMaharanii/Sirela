@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
-    <title>Login - SISOREL</title>
+    <title>Login - SIRELA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -54,7 +54,7 @@
                     <span class="text-white text-xl font-bold">S</span>
                 </div>
                 <div class="text-left">
-                    <h1 class="text-lg font-bold text-white">SISOREL</h1>
+                    <h1 class="text-lg font-bold text-white">SIRELA</h1>
                     <p class="text-blue-100 text-[11px]">Sistem Informasi Sosial</p>
                 </div>
             </div>
@@ -63,7 +63,7 @@
         <div class="bg-white px-5 pb-6 pt-5">
             <div class="text-center mb-5">
                 <h2 class="text-xl font-bold text-gray-800">Login</h2>
-                <p class="text-gray-400 text-xs mt-1">Masuk ke akun SISOREL Anda</p>
+                <p class="text-gray-400 text-xs mt-1">Masuk ke akun SIRELA Anda</p>
                 <div class="h-0.5 w-12 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full mx-auto mt-2"></div>
             </div>
 
