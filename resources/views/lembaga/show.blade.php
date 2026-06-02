@@ -3,12 +3,10 @@
 @section('content')
 <div class="p-6">
     <div class="max-w-6xl mx-auto">
-        <!-- Tombol Kembali -->
         <a href="{{ route('lembaga.index') }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-4 transition group">
             <i class="fas fa-arrow-left group-hover:-translate-x-1 transition"></i> Kembali ke Daftar Lembaga
         </a>
 
-        <!-- Header Profil -->
         <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-lg overflow-hidden mb-6">
             <div class="px-6 py-6">
                 <div class="flex flex-wrap justify-between items-start gap-4">
@@ -65,11 +63,8 @@
             </div>
         </div>
 
-        <!-- Konten Utama 2 Kolom -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Kolom Kiri (Informasi Dasar & Kontak) -->
             <div class="lg:col-span-1 space-y-5">
-                <!-- Card Informasi Dasar -->
                 <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                     <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
                         <div class="w-8 h-8 bg-blue-100 rounded-xl flex items-center justify-center">
@@ -93,7 +88,6 @@
                     </div>
                 </div>
 
-                <!-- Card Info Pengguna -->
                 <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                     <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
                         <div class="w-8 h-8 bg-purple-100 rounded-xl flex items-center justify-center">
@@ -130,9 +124,7 @@
                 </div>
             </div>
 
-            <!-- Kolom Kanan (Kategori, Visi, Misi, Deskripsi) -->
             <div class="lg:col-span-2 space-y-5">
-                <!-- Card Kategori -->
                 <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                     <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
                         <div class="w-8 h-8 bg-emerald-100 rounded-xl flex items-center justify-center">
@@ -151,7 +143,6 @@
                     </div>
                 </div>
 
-                <!-- Card Visi -->
                 @if($lembaga->visi)
                 <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                     <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
@@ -164,7 +155,6 @@
                 </div>
                 @endif
 
-                <!-- Card Misi -->
                 @if($lembaga->misi)
                 <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                     <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
@@ -191,7 +181,6 @@
                 </div>
                 @endif
 
-                <!-- Card Deskripsi -->
                 @if($lembaga->deskripsi)
                 <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                     <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
@@ -206,8 +195,6 @@
             </div>
         </div>
 
-        <!-- ==================== CARD DATA LEGALITAS & PENGURUS ==================== -->
-        <!-- Card ini hanya TAMPAK untuk ADMIN (karena data sensitif) -->
         @if(Auth::user()->role == 'admin')
         <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100 mt-6">
             <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
@@ -219,13 +206,11 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Alamat Lengkap -->
                 <div class="col-span-2">
                     <p class="text-xs text-gray-400 uppercase tracking-wider">📍 Alamat Lengkap</p>
                     <p class="text-gray-800 font-medium">{{ $lembaga->user->alamat ?? '-' }}</p>
                 </div>
 
-                <!-- Provinsi, Kota, Kode Pos -->
                 <div>
                     <p class="text-xs text-gray-400 uppercase tracking-wider">Provinsi</p>
                     <p class="text-gray-800 font-medium">{{ $lembaga->user->provinsi ?? '-' }}</p>
@@ -358,7 +343,7 @@
             </div>
             @endif
 
-            <!-- KHUSUS KOMUNITAS -->
+            <!-- Komunitas -->
             @if(($lembaga->user->jenis_lembaga ?? '') == 'komunitas')
             <div class="mt-4 pt-3 border-t border-gray-100">
                 <p class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">

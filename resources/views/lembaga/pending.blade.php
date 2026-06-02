@@ -1,42 +1,49 @@
-<x-app-layout>
-<div class="p-6">
-    <div class="bg-yellow-50 border-l-4 border-yellow-500 rounded-lg p-6 text-center max-w-2xl mx-auto">
-        <div class="text-6xl mb-4">⏳</div>
-        <h2 class="text-2xl font-bold text-yellow-800 mb-2">Akun Belum Diverifikasi</h2>
-        <p class="text-yellow-700 mb-4">
-            Akun Anda masih dalam proses verifikasi oleh admin.
-        </p>
-        <p class="text-gray-600 text-sm mb-6">
-            Fitur seperti membuat profil lembaga, mengelola informasi donasi, dan mengedit data 
-            hanya dapat diakses setelah akun Anda diverifikasi.
-        </p>
-        <div class="bg-gray-100 rounded-lg p-4 text-left">
-            <p class="font-semibold text-gray-700 mb-2">📌 Yang bisa Anda lakukan saat ini:</p>
-            <ul class="list-disc ml-5 text-gray-600 text-sm">
-                <li>Menunggu verifikasi dari admin</li>
-                <li>Menghubungi admin untuk mempercepat verifikasi</li>
-                <li>Logout dan login kembali setelah diverifikasi</li>
-            </ul>
+@extends('layouts.app')
+
+@section('content')
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-5">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                    <i class="fas fa-clock text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-white">Menunggu Verifikasi</h1>
+                    <p class="text-amber-100 text-sm">Akun Anda belum diaktifkan oleh administrator</p>
+                </div>
+            </div>
         </div>
-        <div class="mt-6">
+
+        <div class="p-8 text-center">
+            <div class="w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-5">
+                <i class="fas fa-hourglass-half text-amber-500 text-5xl"></i>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-3">Akun Belum Diverifikasi</h2>
+            
+            <p class="text-gray-600 mb-4 max-w-md mx-auto">
+                Akun Anda masih menunggu verifikasi dari administrator. 
+                Silakan tunggu proses verifikasi.
+            </p>
+
+            <div class="bg-blue-50 rounded-xl p-5 mb-6 max-w-sm mx-auto text-left">
+                <p class="font-semibold text-blue-800 mb-3">📌 Fitur setelah verifikasi:</p>
+                <ul class="space-y-2 text-sm text-gray-700">
+                    <li><i class="fas fa-check-circle text-green-500 text-xs"></i> Membuat / Mengedit Profil Lembaga</li>
+                    <li><i class="fas fa-check-circle text-green-500 text-xs"></i> Mengelola Informasi Donasi & Anak Asuh</li>
+                    <li><i class="fas fa-check-circle text-green-500 text-xs"></i> Melihat dan Mengkonfirmasi Donasi</li>
+                </ul>
+            </div>
+
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <div class="mt-6">
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <div class="mt-6">
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" 
-                style="background-color: #2563eb !important; color: white !important; font-weight: 500 !important; padding: 10px 24px !important; border-radius: 8px !important; border: none !important; cursor: pointer !important;">
-            Logout
-        </button>
-    </form>
-</div>
-    </form>
-</div>
+                <button type="submit" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-8 py-3 rounded-xl font-semibold shadow-md inline-flex items-center gap-2">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </form>
+            <p class="text-xs text-gray-400 mt-4">Hubungi admin: admin@sisorel.com</p>
         </div>
     </div>
 </div>
-</x-app-layout>
+@endsection

@@ -10,9 +10,12 @@ class CekStatusAkun
 {
     public function handle(Request $request, Closure $next)
     {
-        // Cek jika user login dan role lembaga
         if (Auth::check() && Auth::user()->role === 'lembaga') {
-            // Jika status akun NONAKTIF, redirect ke halaman khusus
+            
+            if ($request->route()->getName() === 'lembaga.pending') {
+                return $next($request);
+            }
+
             if (Auth::user()->status_akun !== 'aktif') {
                 return redirect()->route('lembaga.pending');
             }

@@ -8,9 +8,6 @@ use App\Models\Lembaga;
 
 class AdminController extends Controller
 {
-    /**
-     * Menampilkan detail lengkap data registrasi lembaga (khusus admin)
-     */
     public function detailLembaga($id)
     {
         // Ambil data user (lembaga) lengkap

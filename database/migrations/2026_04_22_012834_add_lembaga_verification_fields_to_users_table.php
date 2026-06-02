@@ -9,10 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // Pilih jenis lembaga (WAJIB)
             $table->enum('jenis_lembaga', ['pemerintah', 'swasta', 'komunitas'])->nullable()->after('status_akun');
             
-            // ========== FIELD UMUM SEMUA LEMBAGA (WAJIB) ==========
+            // ========== FIELD UMUM ==========
             $table->string('nama_lembaga')->nullable();
             $table->string('tahun_berdiri')->nullable();
             $table->text('alamat')->nullable();
@@ -23,14 +22,14 @@ return new class extends Migration
             $table->string('email_lembaga')->nullable();
             $table->string('website')->nullable(); // OPSIONAL
             
-            // ========== UNTUK LEMBAGA PEMERINTAH (WAJIB) ==========
+            // ========== LEMBAGA PEMERINTAH  ==========
             $table->string('kementerian')->nullable();
             $table->string('eselon')->nullable();
             $table->string('nomor_sotk')->nullable();
             $table->string('nip_pimpinan')->nullable();
             $table->string('file_sotk')->nullable();
             
-            // ========== UNTUK LEMBAGA SWASTA (WAJIB) ==========
+            // ========== LEMBAGA SWASTA ==========
             $table->string('tipe_swasta')->nullable();
             $table->string('nomor_akta')->nullable();
             $table->string('npwp_lembaga')->nullable();
@@ -41,7 +40,7 @@ return new class extends Migration
             $table->string('file_npwp')->nullable();
             $table->string('file_ktp_pimpinan')->nullable();
             
-            // ========== UNTUK KOMUNITAS (WAJIB) ==========
+            // ========== UNTUK KOMUNITAS ==========
             $table->string('nomor_sk')->nullable();
             $table->date('tanggal_sk')->nullable();
             $table->string('nama_koordinator')->nullable();

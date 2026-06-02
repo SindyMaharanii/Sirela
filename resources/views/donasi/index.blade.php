@@ -36,6 +36,7 @@
                         <th class="border border-gray-300 px-4 py-3 text-left">Donatur</th>
                         <th class="border border-gray-300 px-4 py-3 text-left">Kebutuhan</th>
                         <th class="border border-gray-300 px-4 py-3 text-center">Jumlah/Nominal</th>
+                        <th class="border border-gray-300 px-4 py-3 text-center">Pesan/Doa</th>
                         <th class="border border-gray-300 px-4 py-3 text-center">Status</th>
                         <th class="border border-gray-300 px-4 py-3 text-center">Aksi</th>
                     </tr>
@@ -64,6 +65,11 @@
                             @else
                                 <span class="font-semibold text-green-600">Rp {{ number_format($d->nominal_uang, 0, ',', '.') }}</span>
                             @endif
+                        </td>
+                        <td class="border border-gray-300 px-4 py-3 text-center">
+                            <div class="max-w-xs">
+                                <p class="text-gray-600 text-sm break-words">{{ $d->pesan ?? '-' }}</p>
+                            </div>
                         </td>
                         <td class="border border-gray-300 px-4 py-3 text-center">
                             @if($d->status == 'pending')
@@ -96,7 +102,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="border border-gray-300 p-8 text-center text-gray-500">
+                        <td colspan="8" class="border border-gray-300 p-8 text-center text-gray-500">
                             <i class="fas fa-inbox text-4xl mb-2"></i>
                             <p>Belum ada donatur yang mendaftar</p>
                             <p class="text-xs text-gray-400 mt-1">Donatur akan muncul setelah ada yang mengisi form donasi</p>

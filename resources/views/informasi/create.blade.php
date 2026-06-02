@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="p-6">
-    <!-- Header dengan gradasi biru SAMA seperti sidebar -->
     <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-t-xl px-6 py-4 mb-6 shadow-md">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
@@ -19,14 +18,12 @@
         <form action="{{ route('informasi.store') }}" method="POST">
             @csrf
 
-            <!-- Jumlah Anak Asuh -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Jumlah Anak Asuh</label>
                 <input type="number" name="jumlah_anak_asuh" value="{{ old('jumlah_anak_asuh') }}" 
                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
-            <!-- Rentang Usia -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Rentang Usia</label>
                 <input type="text" name="rentang_usia" value="{{ old('rentang_usia') }}" 
@@ -34,7 +31,6 @@
                        placeholder="Contoh: 6-12 tahun">
             </div>
 
-            <!-- Profil Anak Asuh -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Profil Anak Asuh</label>
                 <textarea name="profil_anak" rows="3" 
@@ -42,7 +38,6 @@
                           placeholder="Deskripsi singkat tentang anak asuh">{{ old('profil_anak') }}</textarea>
             </div>
 
-            <!-- Kebutuhan Donasi dengan satuan "Lainnya" -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Kebutuhan Donasi</label>
                 <div id="donasi-list">
@@ -73,7 +68,6 @@
                 </button>
             </div>
 
-            <!-- Status Kolaborasi -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Status Kolaborasi</label>
                 <select name="status_kolaborasi" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -82,13 +76,11 @@
                 </select>
             </div>
 
-            <!-- Tombol Aksi -->
             <div class="flex justify-end gap-3 mt-6 pt-4 border-t">
                 <a href="{{ route('informasi.index') }}" 
                    class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition">
                     Batal
                 </a>
-                <!-- TOMBOL SIMPAN WARNA KUNING/ORANYE GRADASI -->
                 <button type="submit" 
                         class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 rounded-lg transition shadow-md">
                     Simpan
@@ -99,7 +91,6 @@
 </div>
 
 <script>
-    // Fungsi untuk menangani pilihan "Lainnya" pada satuan
     function handleSatuanChange(selectElement) {
         const item = selectElement.closest('.donasi-item');
         const lainnyaInput = item.querySelector('.satuan-lainnya');
@@ -111,14 +102,12 @@
         }
     }
 
-    // Event listener untuk semua select satuan yang sudah ada
     document.querySelectorAll('.satuan-select').forEach(select => {
         select.addEventListener('change', function() {
             handleSatuanChange(this);
         });
     });
 
-    // Tombol tambah donasi
     document.getElementById('tambah-donasi').addEventListener('click', function() {
         const container = document.getElementById('donasi-list');
         const newItem = document.createElement('div');
@@ -145,7 +134,6 @@
         `;
         container.appendChild(newItem);
         
-        // Tambahkan event listener untuk select yang baru
         const newSelect = newItem.querySelector('.satuan-select');
         newSelect.addEventListener('change', function() {
             handleSatuanChange(this);

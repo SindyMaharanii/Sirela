@@ -5,11 +5,9 @@
     <div class="max-w-5xl mx-auto">
         <a href="{{ route('lembaga.show', $informasi->lembaga_id) }}" class="text-blue-600 mb-4 inline-block">← Kembali ke Profil Lembaga</a>
 
-        <!-- ==================== BAGIAN 1: DATA ANAK ASUH & STATUS ==================== -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
             <div class="bg-gradient-to-r from-teal-500 to-emerald-600 px-6 py-4 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-white">Data Anak Asuh & Status Kolaborasi</h2>
-                <!-- Tombol EDIT untuk bagian Data Anak Asuh & Status -->
                 <a href="{{ route('informasi.edit', $informasi->informasi_id) }}" 
                    class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition flex items-center gap-2">
                     <i class="fas fa-edit"></i> Edit Informasi
@@ -31,7 +29,6 @@
                     </div>
                 </div>
                 
-                <!-- Status Kolaborasi -->
                 @if($informasi->status_kolaborasi == 'dibuka')
                     <div class="bg-green-50 border border-green-200 rounded-xl p-3 text-center">
                         <span class="text-green-700 font-semibold">✓ Dibuka untuk Kolaborasi</span>
@@ -51,11 +48,9 @@
             </div>
         </div>
 
-        <!-- ==================== BAGIAN 2: DAFTAR KEBUTUHAN DONASI ==================== -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
             <div class="bg-gradient-to-r from-rose-500 to-pink-600 px-6 py-4 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-white">Daftar Kebutuhan Donasi</h2>
-                <!-- Tombol TAMBAH untuk Kebutuhan Donasi -->
                 <button onclick="bukaModalTambah()" 
                         class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition flex items-center gap-2">
                     <i class="fas fa-plus"></i> Tambah Kebutuhan
@@ -124,7 +119,6 @@
     </div>
 </div>
 
-<!-- MODAL TAMBAH/EDIT KEBUTUHAN DONASI -->
 <div id="modalKebutuhan" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 hidden">
     <div class="bg-white rounded-xl max-w-md w-full shadow-xl">
         <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] px-6 py-4 rounded-t-xl flex justify-between items-center">

@@ -2,7 +2,6 @@
 
 <?php $__env->startSection('content'); ?>
 <div class="p-6">
-    <!-- Header dengan gradasi biru -->
     <div class="bg-gradient-to-r from-blue-600 to-blue-700 rounded-t-xl px-6 py-4 mb-6">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
@@ -19,8 +18,7 @@
         <?php
             $users = \App\Models\User::where('role', 'lembaga')->get();
         ?>
-        
-        <!-- Statistik card dengan gradasi -->
+   
         <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl p-4 mb-6">
             <div class="flex items-center justify-between">
                 <div>
@@ -45,7 +43,7 @@
                 <tbody>
                     <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <?php
-                        // Ambil data lembaga yang terhubung dengan user ini
+                        // Ambil data lembaga 
                         $lembagaUser = \App\Models\Lembaga::where('pengguna_id', $user->id)->first();
                     ?>
                     <tr class="border-b border-gray-200 hover:bg-blue-50 transition">

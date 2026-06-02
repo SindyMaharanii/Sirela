@@ -1,95 +1,106 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-6">
-    <div class="max-w-4xl mx-auto">
-        <!-- Header Card -->
-        <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-t-xl px-6 py-4">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                    <i class="fas fa-edit text-white text-xl"></i>
+@php
+    $user = Auth::user();
+    $lembaga = \App\Models\Lembaga::where('pengguna_id', $user->id)->first();
+@endphp
+
+@if($user->status_akun == 'aktif' && $lembaga)
+<div class="max-w-6xl mx-auto">
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-lg overflow-hidden mb-6">
+        <div class="px-6 py-6">
+            <div class="flex flex-wrap justify-between items-start gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                        <i class="fas fa-building text-white text-3xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-white">{{ $lembaga->nama_lembaga }}</h1>
+                    </div>
                 </div>
-                <div>
-                    <h2 class="text-xl font-bold text-white">Edit Profil Lembaga</h2>
-                    <p class="text-yellow-100 text-sm">Perbarui informasi profil lembaga Anda</p>
+                <a href="{{ route('lembaga.edit', $lembaga->lembaga_id) }}" class="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-5 py-2 rounded-xl inline-flex items-center gap-2">
+                    <i class="fas fa-edit"></i> Edit Profil Lembaga
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-1 space-y-5">
+            <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
+                <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
+                    <div class="w-8 h-8 bg-blue-100 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-info-circle text-blue-500 text-sm"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800">Informasi Dasar</h3>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <p class="text-xs text-gray-400">📍 Lokasi</p>
+                        <p class="text-gray-800 font-medium">{{ $lembaga->lokasi ?? $lembaga->alamat ?? 'Tidak tersedia' }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-400">📞 Kontak</p>
+                        <p class="text-gray-800 font-medium">{{ $lembaga->kontak ?? 'Tidak tersedia' }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
+                <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
+                    <div class="w-8 h-8 bg-emerald-100 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-tags text-emerald-500 text-sm"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800">Kategori</h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    @forelse($lembaga->kategori as $kat)
+                        <span class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1.5 rounded-lg text-sm">{{ $kat->nama_kategori }}</span>
+                    @empty
+                        <span class="text-gray-500 text-sm">-</span>
+                    @endforelse
                 </div>
             </div>
         </div>
 
-        <!-- Form Card -->
-        <div class="bg-white rounded-b-xl shadow-lg p-6">
-            <form action="{{ route('lembaga.update', $lembaga->lembaga_id) }}" method="POST">
-                @csrf
-                @method('PUT')
-
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">Nama Lembaga <span class="text-red-500">*</span></label>
-                    <input type="text" name="nama_lembaga" value="{{ $lembaga->nama_lembaga }}" 
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
+        <div class="lg:col-span-2 space-y-5">
+            @if($lembaga->visi)
+            <div class="bg-white rounded-2xl shadow-md p-5">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-eye text-indigo-500"></i>
+                    <h3 class="font-bold">Visi</h3>
                 </div>
+                <p class="text-gray-700">{{ $lembaga->visi }}</p>
+            </div>
+            @endif
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">Alamat</label>
-                    <textarea name="alamat" rows="2" 
-                              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">{{ $lembaga->alamat }}</textarea>
+            @if($lembaga->misi)
+            <div class="bg-white rounded-2xl shadow-md p-5">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-bullseye text-rose-500"></i>
+                    <h3 class="font-bold">Misi</h3>
                 </div>
+                <p class="text-gray-700">{{ $lembaga->misi }}</p>
+            </div>
+            @endif
 
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">Lokasi</label>
-                    <input type="text" name="lokasi" value="{{ $lembaga->lokasi }}" 
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Contoh: Jakarta, Bandung, Surabaya">
+            @if($lembaga->deskripsi)
+            <div class="bg-white rounded-2xl shadow-md p-5">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-file-alt text-cyan-500"></i>
+                    <h3 class="font-bold">Deskripsi</h3>
                 </div>
-
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">Kontak</label>
-                    <input type="text" name="kontak" value="{{ $lembaga->kontak }}" 
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Nomor telepon / WhatsApp">
-                </div>
-
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">Visi</label>
-                    <textarea name="visi" rows="3" 
-                              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">{{ $lembaga->visi }}</textarea>
-                </div>
-
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">Misi</label>
-                    <textarea name="misi" rows="3" 
-                              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">{{ $lembaga->misi }}</textarea>
-                </div>
-
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">Deskripsi</label>
-                    <textarea name="deskripsi" rows="3" 
-                              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">{{ $lembaga->deskripsi }}</textarea>
-                </div>
-
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">Kategori</label>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2 p-3 bg-gray-50 rounded-lg">
-                        @foreach($kategori as $k)
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" name="kategori_id[]" value="{{ $k->kategori_id }}" 
-                                   @if($lembaga->kategori->contains($k->kategori_id)) checked @endif
-                                   class="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500">
-                            <span class="text-sm text-gray-700">{{ $k->nama_kategori }}</span>
-                        </label>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="flex justify-end gap-3 pt-4 border-t">
-                    <a href="{{ route('lembaga.index') }}" 
-                       class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition">
-                        Batal
-                    </a>
-                    <button type="submit" 
-                            class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-6 py-2 rounded-lg transition">
-                        <i class="fas fa-save"></i> Update
-                    </button>
-                </div>
-            </form>
+                <p class="text-gray-700">{{ $lembaga->deskripsi }}</p>
+            </div>
+            @endif
         </div>
     </div>
 </div>
+@elseif($user->status_akun == 'aktif' && !$lembaga)
+<div class="bg-white rounded-xl shadow-md p-8 text-center">
+    <h4 class="text-xl font-bold text-gray-800 mb-2">Belum Ada Profil Lembaga</h4>
+    <a href="{{ route('lembaga.create') }}" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-lg">Buat Profil Lembaga</a>
+</div>
+@endif
 @endsection

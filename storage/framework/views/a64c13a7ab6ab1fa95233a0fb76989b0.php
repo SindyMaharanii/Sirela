@@ -34,7 +34,6 @@
             <!-- TAB MASYARAKAT -->
             <div id="tab-publik" class="tab-content">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <!-- Card 1 - Mencari Lembaga -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-blue-100 via-blue-50 to-white rounded-xl p-5 border border-blue-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-blue-300 to-cyan-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
@@ -48,7 +47,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 2 - Lihat Detail -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-cyan-100 via-cyan-50 to-white rounded-xl p-5 border border-cyan-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-cyan-300 to-blue-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
@@ -62,7 +60,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 3 - Donasi & Progress -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-green-100 via-green-50 to-white rounded-xl p-5 border border-green-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-green-300 to-emerald-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
@@ -71,12 +68,11 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-green-800 text-lg mb-1">Donasi & Progress</h3>
-                                <p class="text-green-700/70 text-sm leading-relaxed">Pilih kebutuhan donasi (Beras 50kg, Susu 20 box, dll), isi form, dan pantau progress donasi (target vs terkumpul). Lembaga akan menghubungi Anda.</p>
+                                <p class="text-green-700/70 text-sm leading-relaxed">Pilih kebutuhan donasi (Beras 50kg, Susu 20 box, dll), isi form, dan pantau progress donasi (target). Lembaga akan menghubungi Anda.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Card 4 - Daftar Lembaga -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-purple-100 via-purple-50 to-white rounded-xl p-5 border border-purple-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-purple-300 to-pink-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
@@ -95,7 +91,6 @@
             <!-- TAB LEMBAGA -->
             <div id="tab-lembaga" class="tab-content hidden">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <!-- Card 1 - Isi Profil Lembaga -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-blue-100 via-blue-50 to-white rounded-xl p-5 border border-blue-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-blue-300 to-cyan-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
@@ -109,7 +104,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 2 - Kelola Donasi -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-cyan-100 via-cyan-50 to-white rounded-xl p-5 border border-cyan-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-cyan-300 to-blue-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
@@ -123,7 +117,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 3 - Edit/Tambah Kebutuhan -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-amber-100 via-amber-50 to-white rounded-xl p-5 border border-amber-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-amber-300 to-orange-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
@@ -137,7 +130,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 4 - Daftar Donatur -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-indigo-100 via-indigo-50 to-white rounded-xl p-5 border border-indigo-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-indigo-300 to-blue-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
@@ -156,7 +148,6 @@
             <!-- TAB ADMIN -->
             <div id="tab-admin" class="tab-content hidden">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <!-- Card 1 - Verifikasi Akun -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-blue-100 via-blue-50 to-white rounded-xl p-5 border border-blue-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-blue-300 to-cyan-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
@@ -170,7 +161,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 2 - Kelola Kategori -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-cyan-100 via-cyan-50 to-white rounded-xl p-5 border border-cyan-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-cyan-300 to-blue-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
@@ -198,7 +188,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 4 - Informasi Donasi -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-purple-100 via-purple-50 to-white rounded-xl p-5 border border-purple-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-purple-300 to-pink-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">

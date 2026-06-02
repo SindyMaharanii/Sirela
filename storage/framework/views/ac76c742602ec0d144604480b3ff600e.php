@@ -2,7 +2,6 @@
 
 <?php $__env->startSection('content'); ?>
 <div class="p-6">
-    <!-- Header dengan gradasi biru -->
     <div class="bg-gradient-to-r from-blue-600 to-blue-700 rounded-t-xl px-6 py-4 mb-6">
         <div class="flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -25,7 +24,6 @@
             $kategori = \App\Models\Kategori::all();
         ?>
         
-        <!-- Statistik card -->
         <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl p-4 mb-6">
             <div class="flex items-center justify-between">
                 <div>

@@ -44,13 +44,11 @@
 </head>
 <body>
     <div class="login-card">
-        <!-- BAGIAN ATAS -->
         <div class="bg-gradient-to-r from-blue-500 to-indigo-600 px-5 pt-5 pb-6">
             <a href="/" class="inline-flex items-center gap-1.5 text-white/70 hover:text-white mb-4 text-xs">
                 <i class="fas fa-arrow-left text-xs"></i> Kembali
             </a>
             
-            <!-- Logo dan teks sejajar -->
             <div class="flex items-center justify-center gap-3">
                 <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
                     <span class="text-white text-xl font-bold">S</span>
@@ -62,7 +60,6 @@
             </div>
         </div>
 
-        <!-- FORM -->
         <div class="bg-white px-5 pb-6 pt-5">
             <div class="text-center mb-5">
                 <h2 class="text-xl font-bold text-gray-800">Login</h2>
@@ -104,7 +101,6 @@
                     <a href="#" class="text-xs text-blue-500 hover:text-blue-600 hover:underline">Lupa password?</a>
                 </div>
 
-                <!-- TOMBOL LOGIN WARNA KUNING/ORANYE -->
                 <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white py-2.5 rounded-xl font-semibold transition shadow-md text-sm">
                     <i class="fas fa-sign-in-alt mr-1.5 text-xs"></i> Login
                 </button>

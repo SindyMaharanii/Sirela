@@ -10,7 +10,6 @@ use App\Models\User;
 
 class LembagaController extends Controller
 {
-    // Cek status akun (hanya untuk lembaga)
     private function cekVerifikasi()
     {
         if (Auth::check() && Auth::user()->role == 'lembaga' && Auth::user()->status_akun != 'aktif') {
@@ -19,8 +18,6 @@ class LembagaController extends Controller
         return null;
     }
 
-    // Admin: lihat semua lembaga
-    // Lembaga: lihat hanya lembaga miliknya sendiri
     public function index()
 {
     if (!Auth::check()) {
@@ -31,20 +28,16 @@ class LembagaController extends Controller
         $lembaga = Lembaga::with('kategori', 'user', 'informasi')->get();
         return view('lembaga.index', compact('lembaga'));
     } else {
-        // Untuk role LEMBAGA: ambil data lembaga miliknya
         $lembaga = Lembaga::with('kategori', 'informasi')->where('pengguna_id', Auth::id())->first();
         return view('lembaga.index', compact('lembaga'));
     }
 }
 
-    // HANYA lembaga yang bisa create (setelah login)
     public function create()
     {
-        // Cek verifikasi
         $redirect = $this->cekVerifikasi();
         if ($redirect) return $redirect;
 
-        // Cek apakah lembaga ini sudah punya profil?
         $existingLembaga = Lembaga::where('pengguna_id', Auth::id())->first();
         if ($existingLembaga) {
             return redirect()->route('lembaga.index')->with('error', 'Anda sudah memiliki profil lembaga');
@@ -56,7 +49,6 @@ class LembagaController extends Controller
 
     public function store(Request $request)
     {
-        // Cek verifikasi
         $redirect = $this->cekVerifikasi();
         if ($redirect) return $redirect;
 
@@ -64,7 +56,6 @@ class LembagaController extends Controller
             'nama_lembaga' => 'required|string|max:255',
         ]);
 
-        // Cek lagi apakah sudah punya profil
         $existingLembaga = Lembaga::where('pengguna_id', Auth::id())->first();
         if ($existingLembaga) {
             return redirect()->route('lembaga.index')->with('error', 'Anda sudah memiliki profil lembaga');
@@ -88,16 +79,13 @@ class LembagaController extends Controller
         return redirect()->route('dashboard')->with('success', 'Profil lembaga berhasil dibuat');
     }
 
-    // Edit hanya untuk lembaga yang punya profil ini
     public function edit($id)
     {
-        // Cek verifikasi
         $redirect = $this->cekVerifikasi();
         if ($redirect) return $redirect;
 
         $lembaga = Lembaga::with('kategori')->findOrFail($id);
         
-        // Hanya pemilik lembaga yang bisa edit
         if ($lembaga->pengguna_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses untuk mengedit lembaga ini');
         }
@@ -114,7 +102,6 @@ class LembagaController extends Controller
 
         $lembaga = Lembaga::findOrFail($id);
         
-        // Hanya pemilik lembaga yang bisa update
         if ($lembaga->pengguna_id != Auth::id()) {
             abort(403, 'Anda tidak memiliki akses untuk mengupdate lembaga ini');
         }
@@ -134,10 +121,9 @@ class LembagaController extends Controller
         return redirect()->route('lembaga.index')->with('success', 'Profil lembaga berhasil diupdate');
     }
 
-    // Hanya admin yang bisa hapus
+    
     public function destroy($id)
     {
-        // Hanya admin yang bisa menghapus lembaga
         if (Auth::user()->role != 'admin') {
             abort(403, 'Hanya admin yang dapat menghapus lembaga');
         }
@@ -147,11 +133,12 @@ class LembagaController extends Controller
         
         return redirect()->route('lembaga.index')->with('success', 'Lembaga berhasil dihapus');
     }
-
-    // Show untuk public dan internal
     public function show($id)
 {
     $lembaga = Lembaga::with('kategori', 'user', 'informasi')->findOrFail($id);
-    return view('public.show', compact('lembaga')); // ← pakai file public.show
+    if ($lembaga->user && $lembaga->user->status_akun !== 'aktif') {
+        return redirect('/')->with('error', 'Lembaga ini sedang tidak aktif.');
+    }
+    return view('public.show', compact('lembaga'));
 }
 }

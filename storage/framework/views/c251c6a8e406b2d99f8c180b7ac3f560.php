@@ -2,7 +2,6 @@
 
 <?php $__env->startSection('content'); ?>
 <div class="max-w-5xl mx-auto">
-    <!-- Hero Section dengan Gradasi Biru Kreatif -->
     <div class="text-center mb-12 relative">
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-200 via-cyan-200 to-indigo-200 rounded-full blur-3xl opacity-30 -z-10 animate-pulse"></div>
         <div class="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-r from-blue-300 to-indigo-300 rounded-full blur-3xl opacity-20 -z-10"></div>
@@ -19,7 +18,6 @@
         <div class="w-24 h-1 bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 rounded-full mx-auto mt-5"></div>
     </div>
 
-    <!-- Deskripsi dengan Gradasi Biru Mewah -->
     <div class="bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 rounded-2xl shadow-xl p-8 mb-8 relative overflow-hidden group">
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-gradient-to-br from-cyan-300 to-blue-300 rounded-full blur-3xl opacity-30 group-hover:scale-150 transition-transform duration-700"></div>
         <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-gradient-to-br from-indigo-300 to-blue-300 rounded-full blur-3xl opacity-20 group-hover:scale-150 transition-transform duration-700"></div>
@@ -55,7 +53,6 @@
         </div>
     </div>
 
-    <!-- Visi & Misi dengan Nuansa Biru Mewah -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <!-- Visi Card -->
         <div class="group relative overflow-hidden bg-gradient-to-br from-blue-100 via-blue-50 to-white rounded-xl p-6 border border-blue-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
@@ -77,7 +74,6 @@
             </div>
         </div>
 
-        <!-- Misi Card -->
         <div class="group relative overflow-hidden bg-gradient-to-br from-indigo-100 via-indigo-50 to-white rounded-xl p-6 border border-indigo-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
             <div class="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-indigo-300 to-blue-200 rounded-br-3xl opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
             <div class="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-cyan-200 to-transparent rounded-tl-3xl opacity-20"></div>
@@ -121,7 +117,6 @@
         </div>
     </div>
 
-    <!-- Fitur Unggulan -->
     <div class="bg-gradient-to-br from-white via-blue-50/50 to-white rounded-2xl shadow-xl border border-blue-100 p-6 mb-8 relative overflow-hidden">
         <div class="text-center mb-6">
             <div class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-cyan-100 px-4 py-2 rounded-full shadow-inner">
@@ -149,7 +144,7 @@
                 <div class="w-7 h-7 bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
                     <i class="fas fa-check text-white text-xs"></i>
                 </div>
-                <span class="text-sm text-indigo-800">Progress bar donasi (target vs terkumpul) untuk transparansi</span>
+                <span class="text-sm text-indigo-800">Progress bar donasi (target) untuk transparansi</span>
             </div>
             <div class="flex items-start gap-3 p-3 bg-gradient-to-r from-green-100/60 to-transparent rounded-xl">
                 <div class="w-7 h-7 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
@@ -172,7 +167,6 @@
         </div>
     </div>
 
-    <!-- Kontak -->
     <div class="text-center">
         <div class="inline-flex items-center gap-5 bg-gradient-to-r from-white via-blue-50/50 to-white rounded-full px-6 py-3 shadow-lg border border-blue-200 hover:shadow-xl transition-all duration-300 hover:scale-105">
             <div class="w-12 h-12 bg-gradient-to-br from-blue-500 via-cyan-500 to-indigo-600 rounded-full flex items-center justify-center animate-pulse shadow-md">

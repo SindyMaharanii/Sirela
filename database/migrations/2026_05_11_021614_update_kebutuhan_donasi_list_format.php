@@ -9,7 +9,6 @@ return new class extends Migration
 {
     public function up()
     {
-        // Ambil semua data
         $semuaInformasi = InformasiLembaga::all();
         
         foreach ($semuaInformasi as $info) {
@@ -30,7 +29,6 @@ return new class extends Migration
                         'status' => 'aktif'
                     ];
                     
-                    // Jika satuan Rp atau uang, set jenis = uang
                     if (in_array($newItem['satuan'], ['Rp', 'rupiah', 'uang'])) {
                         $newItem['jenis'] = 'uang';
                     }

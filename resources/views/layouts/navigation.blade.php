@@ -3,7 +3,6 @@
 @endphp
 
 <aside class="sidebar">
-    <!-- Logo Premium dengan Efek Biru -->
     <div class="p-5 border-b border-blue-400/20">
         <a href="/" class="flex items-center gap-3 group">
             <div class="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-all duration-300">
@@ -17,7 +16,6 @@
     </div>
 
     @auth
-    <!-- User Info Premium -->
     <div class="mx-3 mt-4 p-3 bg-white/10 rounded-xl border border-white/20">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-md">
@@ -37,15 +35,12 @@
     </div>
     @endauth
 
-    <!-- Navigation Menu Premium -->
     <nav class="flex-1 px-2 py-3 space-y-1">
-        <!-- ========== MENU NAVIGASI UTAMA ========== -->
         <div class="text-[11px] text-blue-200 font-bold uppercase tracking-wider px-3 py-2 mt-1 flex items-center gap-2">
             <i class="fas fa-th-large text-[11px]"></i>
             <span>Navigasi</span>
         </div>
         
-        <!-- Beranda -->
         <a href="/" class="nav-item {{ request()->is('/') ? 'active' : '' }}">
             <div class="nav-icon {{ request()->is('/') ? 'bg-white/20' : 'bg-blue-500/20' }}">
                 <i class="fas fa-home text-sm {{ request()->is('/') ? 'text-white' : 'text-blue-200' }}"></i>
@@ -56,7 +51,6 @@
             @endif
         </a>
         
-        <!-- Tentang -->
         <a href="{{ route('tentang') }}" class="nav-item {{ request()->routeIs('tentang') ? 'active' : '' }}">
             <div class="nav-icon {{ request()->routeIs('tentang') ? 'bg-white/20' : 'bg-cyan-500/20' }}">
                 <i class="fas fa-info-circle text-sm {{ request()->routeIs('tentang') ? 'text-white' : 'text-cyan-200' }}"></i>
@@ -64,7 +58,6 @@
             <span>Tentang</span>
         </a>
         
-        <!-- Panduan -->
         <a href="{{ route('panduan') }}" class="nav-item {{ request()->routeIs('panduan') ? 'active' : '' }}">
             <div class="nav-icon {{ request()->routeIs('panduan') ? 'bg-white/20' : 'bg-indigo-500/20' }}">
                 <i class="fas fa-book-open text-sm {{ request()->routeIs('panduan') ? 'text-white' : 'text-indigo-200' }}"></i>
@@ -73,7 +66,6 @@
         </a>
 
         @auth
-        <!-- ========== MENU DASHBOARD ========== -->
         <div class="h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent my-3"></div>
         
         <div class="text-[11px] text-blue-200 font-bold uppercase tracking-wider px-3 py-2 flex items-center gap-2">
@@ -91,7 +83,6 @@
             @endif
         </a>
 
-        <!-- ========== MENU PENGELOLAAN ========== -->
         <div class="h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent my-3"></div>
         
         <div class="text-[11px] text-blue-200 font-bold uppercase tracking-wider px-3 py-2 flex items-center gap-2">
@@ -143,7 +134,6 @@
             </a>
         @endif
 
-        <!-- ========== MENU AKUN ========== -->
         <div class="h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent my-3"></div>
         
         <div class="text-[11px] text-blue-200 font-bold uppercase tracking-wider px-3 py-2 flex items-center gap-2">
@@ -169,7 +159,6 @@
         </form>
         
         @else
-        <!-- ========== MENU UNTUK GUEST (BELUM LOGIN) ========== -->
         <div class="h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent my-3"></div>
         
         <div class="text-[11px] text-blue-200 font-bold uppercase tracking-wider px-3 py-2 flex items-center gap-2">
@@ -194,7 +183,6 @@
         @endauth
     </nav>
 
-    <!-- Footer Sidebar -->
     <div class="p-4 border-t border-blue-400/20 mt-auto">
         <div class="text-center">
             <div class="flex justify-center gap-2 mb-2">
@@ -211,12 +199,10 @@
 </aside>
 
 <style>
-    /* Sidebar Wrapper - Background Biru Gradasi */
     .sidebar {
         background: linear-gradient(180deg, #0f2b5c 0%, #1e3a8a 50%, #2563eb 100%);
     }
     
-    /* Navigation Item Styles */
     .nav-item {
         display: flex;
         align-items: center;
@@ -265,7 +251,6 @@
         color: #2563eb;
     }
     
-    /* Dashboard Item Khusus */
     .dashboard-item {
         border: 1px solid rgba(16, 185, 129, 0.3);
     }
@@ -284,7 +269,6 @@
         color: white;
     }
     
-    /* Register Item Khusus */
     .register-item {
         background: linear-gradient(105deg, #f59e0b, #d97706);
         color: white;
@@ -305,7 +289,6 @@
         box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
     }
     
-    /* Scrollbar sidebar */
     .sidebar::-webkit-scrollbar {
         width: 3px;
     }

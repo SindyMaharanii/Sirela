@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Hero Section dengan Gradasi Biru Kreatif -->
 <section class="relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 rounded-2xl mb-10 text-white">
     <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
     <div class="absolute bottom-0 left-0 w-64 h-64 bg-indigo-400/20 rounded-full blur-3xl"></div>
@@ -19,11 +18,9 @@
     </div>
 </section>
 
-<!-- STATISTIK - Versi Gradasi Kreatif & Keren -->
 <section class="mb-12">
     <div class="container mx-auto px-6">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
-            <!-- Card 1 - Lembaga Terdaftar (Sunset Blue) -->
             <div class="group relative overflow-hidden rounded-2xl p-5 text-center text-white shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 cursor-pointer">
                 <div class="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400"></div>
                 <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl group-hover:scale-150 transition duration-500"></div>
@@ -37,7 +34,6 @@
                 </div>
             </div>
 
-            <!-- Card 2 - Lembaga Aktif (Ocean to Teal) -->
             <div class="group relative overflow-hidden rounded-2xl p-5 text-center text-white shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 cursor-pointer">
                 <div class="absolute inset-0 bg-gradient-to-br from-teal-500 via-emerald-500 to-green-400"></div>
                 <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl group-hover:scale-150 transition duration-500"></div>
@@ -51,7 +47,6 @@
                 </div>
             </div>
 
-            <!-- Card 3 - Kategori Lembaga (Sunset to Pink) -->
             <div class="group relative overflow-hidden rounded-2xl p-5 text-center text-white shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 cursor-pointer">
                 <div class="absolute inset-0 bg-gradient-to-br from-purple-600 via-pink-500 to-rose-400"></div>
                 <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl group-hover:scale-150 transition duration-500"></div>
@@ -65,7 +60,6 @@
                 </div>
             </div>
 
-            <!-- Card 4 - Kebutuhan Donasi (Midnight to Purple) -->
             <div class="group relative overflow-hidden rounded-2xl p-5 text-center text-white shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 cursor-pointer">
                 <div class="absolute inset-0 bg-gradient-to-br from-indigo-700 via-purple-600 to-violet-500"></div>
                 <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl group-hover:scale-150 transition duration-500"></div>
@@ -108,7 +102,6 @@
             </p>
         </div>
 
-        <!-- Filter Bar -->
         <div class="bg-white rounded-2xl shadow-md p-5 mb-8 border border-blue-100">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <input type="text" id="searchInput" placeholder="🔍 Cari lembaga, kategori, atau lokasi..." class="border border-gray-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -203,7 +196,6 @@
         display: none;
     }
     
-    /* Register Button - Sama seperti di Sidebar */
     .register-btn {
         background: linear-gradient(105deg, #f59e0b, #d97706);
         color: white;

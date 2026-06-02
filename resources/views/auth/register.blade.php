@@ -67,7 +67,6 @@
 </head>
 <body class="py-10">
     <div class="max-w-4xl mx-auto px-4">
-        <!-- Header -->
         <div class="text-center mb-6">
             <a href="/" class="inline-flex items-center gap-2 text-white/80 hover:text-white mb-4 text-sm">
                 <i class="fas fa-arrow-left"></i> Kembali ke Beranda
@@ -83,7 +82,6 @@
             </div>
         </div>
 
-        <!-- Progress Step -->
         <div class="relative flex justify-between mb-8 px-4">
             <div class="absolute top-5 left-0 right-0 h-0.5 bg-white/30 -z-0 rounded-full"></div>
             <div class="flex-1 text-center relative z-10">
@@ -123,12 +121,10 @@
         </div>
         @endif
 
-        <!-- Form Card -->
         <div class="register-card shadow-2xl overflow-hidden">
             <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" id="registerForm">
                 @csrf
                 <div class="p-8">
-                    <!-- STEP 1: PILIH JENIS LEMBAGA -->
                     <div id="step1" class="form-step">
                         <div class="text-center mb-6">
                             <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md">
@@ -161,7 +157,6 @@
                         <input type="hidden" name="jenis_lembaga" id="jenis_lembaga" required>
                     </div>
 
-                    <!-- STEP 2: DATA LEMBAGA -->
                     <div id="step2" class="form-step hidden">
                         <div class="mb-6">
                             <h2 class="text-xl font-bold text-gray-800">Data Lembaga</h2>
@@ -229,14 +224,12 @@
                         </div>
                     </div>
 
-                    <!-- STEP 3: LEGALITAS -->
                     <div id="step3" class="form-step hidden">
                         <div class="mb-6">
                             <h2 class="text-xl font-bold text-gray-800">Data Legalitas</h2>
                             <p class="text-gray-500 text-sm">Dokumen legal dan bukti keabsahan lembaga (semua wajib diisi)</p>
                         </div>
                         
-                        <!-- FORM PEMERINTAH -->
                         <div id="form-pemerintah" class="legal-form hidden space-y-4">
                             <div class="bg-blue-50 rounded-xl p-4 mb-4">
                                 <div class="flex items-center gap-2 mb-3"><i class="fas fa-building text-blue-600"></i><h3 class="font-bold text-blue-800">Data Lembaga Pemerintah (WAJIB)</h3></div>
@@ -250,7 +243,6 @@
                             </div>
                         </div>
                         
-                        <!-- FORM SWASTA -->
                         <div id="form-swasta" class="legal-form hidden space-y-4">
                             <div class="bg-green-50 rounded-xl p-4 mb-4">
                                 <div class="flex items-center gap-2 mb-3"><i class="fas fa-handshake text-green-600"></i><h3 class="font-bold text-green-800">Data Lembaga Swasta (WAJIB)</h3></div>
@@ -268,7 +260,6 @@
                             </div>
                         </div>
                         
-                        <!-- FORM KOMUNITAS -->
                         <div id="form-komunitas" class="legal-form hidden space-y-4">
                             <div class="bg-purple-50 rounded-xl p-4 mb-4">
                                 <div class="flex items-center gap-2 mb-3"><i class="fas fa-users text-purple-600"></i><h3 class="font-bold text-purple-800">Data Komunitas Sosial (WAJIB)</h3></div>
@@ -285,7 +276,6 @@
                         </div>
                     </div>
 
-                    <!-- STEP 4: AKUN LOGIN -->
                     <div id="step4" class="form-step hidden">
                         <div class="mb-6">
                             <h2 class="text-xl font-bold text-gray-800">Buat Akun Login</h2>
@@ -305,7 +295,6 @@
                         </div>
                     </div>
 
-                    <!-- Navigation Buttons -->
                     <div class="flex justify-between mt-8 pt-6 border-t border-gray-200">
                         <button type="button" id="prevBtn" class="px-6 py-2.5 bg-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-300 transition hidden">
                             <i class="fas fa-arrow-left mr-2"></i> Sebelumnya

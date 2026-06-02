@@ -3,7 +3,6 @@
 @section('content')
 <div class="p-6">
     @if(Auth::user()->role == 'admin')
-        <!-- ==================== TAMPILAN UNTUK ADMIN ==================== -->
         <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-t-xl px-6 py-4 mb-6 shadow-md">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
@@ -21,7 +20,6 @@
                 $semuaLembaga = \App\Models\Lembaga::with('user', 'kategori', 'informasi')->get();
             @endphp
             
-            <!-- Statistik card -->
             <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl p-4 m-4">
                 <div class="flex items-center justify-between">
                     <div>
@@ -105,47 +103,40 @@
         </div>
 
     @else
-        <!-- ==================== TAMPILAN UNTUK LEMBAGA (BIASA) ==================== -->
         @php
-            $lembaga = \App\Models\Lembaga::with('kategori', 'informasi')->where('pengguna_id', Auth::id())->first();
+            $lembaga = \App\Models\Lembaga::where('pengguna_id', Auth::id())->first();
         @endphp
 
         @if(!$lembaga)
-            <!-- Belum punya profil -->
-            <div class="max-w-6xl mx-auto">
-                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                    <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 px-6 py-5">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                                <i class="fas fa-building text-white text-xl"></i>
-                            </div>
-                            <div>
-                                <h1 class="text-2xl font-bold text-white">Profil Lembaga</h1>
-                                <p class="text-blue-100 text-sm">Informasi profil lembaga Anda</p>
-                            </div>
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 px-6 py-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                            <i class="fas fa-building text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold text-white">Profil Lembaga</h1>
+                            <p class="text-blue-100 text-sm">Informasi profil lembaga Anda</p>
                         </div>
                     </div>
-                    <div class="p-8 text-center">
-                        <div class="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-building text-blue-500 text-4xl"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-800 mb-2">Belum Ada Profil Lembaga</h4>
-                        <p class="text-gray-500 mb-6">Silakan buat profil lembaga Anda terlebih dahulu.</p>
-                        <a href="{{ route('lembaga.create') }}" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 py-3 rounded-xl inline-flex items-center gap-2 transition shadow-md">
-                            <i class="fas fa-plus"></i> Buat Profil Lembaga
-                        </a>
+                </div>
+                <div class="p-8 text-center">
+                    <div class="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-building text-blue-500 text-4xl"></i>
                     </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">Belum Ada Profil Lembaga</h4>
+                    <p class="text-gray-500 mb-6">Silakan buat profil lembaga Anda terlebih dahulu.</p>
+                    <a href="{{ route('lembaga.create') }}" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 py-3 rounded-xl inline-flex items-center gap-2 transition shadow-md">
+                        <i class="fas fa-plus"></i> Buat Profil Lembaga
+                    </a>
                 </div>
             </div>
         @else
-            <!-- TAMPILAN PROFIL LEMBAGA (Seperti halaman detail masyarakat) + TOMBOL EDIT -->
             <div class="max-w-6xl mx-auto">
-                <!-- Tombol Kembali ke Dashboard -->
                 <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-4 transition group">
                     <i class="fas fa-arrow-left group-hover:-translate-x-1 transition"></i> Kembali ke Dashboard
                 </a>
 
-                <!-- Header Profil -->
                 <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-lg overflow-hidden mb-6">
                     <div class="px-6 py-6">
                         <div class="flex flex-wrap justify-between items-start gap-4">
@@ -181,7 +172,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- TOMBOL EDIT -->
                             <a href="{{ route('lembaga.edit', $lembaga->lembaga_id) }}" 
                                class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-5 py-2 rounded-xl transition-all duration-200 inline-flex items-center gap-2 shadow-md hover:shadow-lg">
                                 <i class="fas fa-edit"></i> Edit Profil Lembaga
@@ -190,11 +180,8 @@
                     </div>
                 </div>
 
-                <!-- Konten Utama 2 Kolom -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Kolom Kiri (Informasi Dasar & Kontak) -->
                     <div class="lg:col-span-1 space-y-5">
-                        <!-- Card Informasi Dasar -->
                         <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                             <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
                                 <div class="w-8 h-8 bg-blue-100 rounded-xl flex items-center justify-center">
@@ -222,7 +209,6 @@
                             </div>
                         </div>
 
-                        <!-- Card Kategori -->
                         <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                             <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
                                 <div class="w-8 h-8 bg-emerald-100 rounded-xl flex items-center justify-center">
@@ -242,9 +228,7 @@
                         </div>
                     </div>
 
-                    <!-- Kolom Kanan (Visi, Misi, Deskripsi) -->
                     <div class="lg:col-span-2 space-y-5">
-                        <!-- Card Visi -->
                         @if($lembaga->visi)
                         <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                             <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
@@ -257,7 +241,6 @@
                         </div>
                         @endif
 
-                        <!-- Card Misi -->
                         @if($lembaga->misi)
                         <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                             <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
@@ -284,7 +267,6 @@
                         </div>
                         @endif
 
-                        <!-- Card Deskripsi -->
                         @if($lembaga->deskripsi)
                         <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                             <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">

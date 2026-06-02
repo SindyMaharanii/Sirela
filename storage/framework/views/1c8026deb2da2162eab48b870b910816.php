@@ -2,7 +2,6 @@
 
 <?php $__env->startSection('content'); ?>
 <div class="p-6">
-    <!-- Header dengan gradasi biru SAMA seperti sidebar -->
     <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-t-xl px-6 py-4 mb-6 shadow-md">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
@@ -15,12 +14,18 @@
         </div>
     </div>
 
+    <?php if(session('error')): ?>
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded">
+            <?php echo e(session('error')); ?>
+
+        </div>
+    <?php endif; ?>
+
     <?php
         $lembaga = \App\Models\Lembaga::where('pengguna_id', Auth::id())->first();
     ?>
 
     <?php if(Auth::user()->status_akun != 'aktif'): ?>
-        <!-- HALAMAN MENUNGGU VERIFIKASI -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
             <div class="bg-gradient-to-r from-amber-500 to-orange-500 px-5 py-3">
                 <div class="flex items-center gap-2">
@@ -28,25 +33,21 @@
                     <h3 class="text-lg font-bold text-white">Menunggu Verifikasi</h3>
                 </div>
             </div>
-
             <div class="p-5 text-center">
                 <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-user-check text-amber-500 text-3xl"></i>
                 </div>
-
                 <h4 class="text-xl font-bold text-gray-800 mb-2">Akun Belum Diverifikasi</h4>
                 <p class="text-gray-500 text-sm mb-5 max-w-md mx-auto">
                     Akun Anda masih menunggu verifikasi dari administrator. 
                     Silakan tunggu proses verifikasi.
                 </p>
-
                 <div class="bg-amber-50 rounded-xl p-4 mb-5 max-w-sm mx-auto">
                     <div class="flex items-center justify-between">
                         <span class="text-sm text-gray-600">Status Akun:</span>
                         <span class="text-xs bg-amber-200 text-amber-800 px-2 py-1 rounded-full font-medium">Menunggu Verifikasi</span>
                     </div>
                 </div>
-
                 <div class="bg-blue-50 rounded-xl p-4 mb-5 max-w-sm mx-auto text-left">
                     <p class="font-semibold text-blue-800 text-sm mb-2 flex items-center gap-2">
                         <i class="fas fa-star text-yellow-500 text-xs"></i> Fitur setelah verifikasi:
@@ -63,7 +64,6 @@
                         </li>
                     </ul>
                 </div>
-
                 <form method="POST" action="<?php echo e(route('logout')); ?>">
                     <?php echo csrf_field(); ?>
                     <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-lg transition shadow-md">
@@ -71,7 +71,6 @@
                         <span>Logout</span>
                     </button>
                 </form>
-
                 <p class="text-xs text-gray-400 mt-5">
                     <i class="fas fa-envelope mr-1"></i> Hubungi admin: 
                     <a href="mailto:admin@sisorel.com" class="text-blue-500 hover:underline">admin@sisorel.com</a>
@@ -79,7 +78,6 @@
             </div>
         </div>
     <?php elseif(!$lembaga): ?>
-        <!-- Belum Punya Profil Lembaga -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
             <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] px-5 py-3">
                 <div class="flex items-center gap-2">
@@ -99,7 +97,6 @@
             </div>
         </div>
     <?php else: ?>
-        <!-- Statistik Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
             <div class="bg-gradient-to-r from-[#0f2b5c] to-[#1e3a8a] rounded-xl p-5 text-white shadow-lg">
                 <div class="flex items-center justify-between">
@@ -110,7 +107,6 @@
                     <i class="fas fa-child text-4xl text-white/30"></i>
                 </div>
             </div>
-
             <div class="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl p-5 text-white shadow-lg">
                 <div class="flex items-center justify-between">
                     <div>
@@ -125,7 +121,6 @@
                     <i class="fas fa-boxes text-4xl text-white/30"></i>
                 </div>
             </div>
-
             <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl p-5 text-white shadow-lg">
                 <div class="flex items-center justify-between">
                     <div>
@@ -136,8 +131,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Profil & Informasi -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="bg-white rounded-xl shadow-md p-6">
                 <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
@@ -150,7 +143,6 @@
                     <i class="fas fa-edit"></i> Edit Profil
                 </a>
             </div>
-
             <div class="bg-white rounded-xl shadow-md p-6">
                 <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                     <i class="fas fa-hand-holding-heart text-green-500"></i> Informasi Donasi

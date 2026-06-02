@@ -2,7 +2,6 @@
 
 <?php $__env->startSection('content'); ?>
 <div class="p-6">
-    <!-- Header dengan gradasi biru SAMA seperti sidebar -->
     <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-t-xl px-6 py-4 mb-6 shadow-md">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
@@ -20,14 +19,12 @@
             <?php echo csrf_field(); ?>
             <?php echo method_field('PUT'); ?>
 
-            <!-- Jumlah Anak Asuh -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Jumlah Anak Asuh</label>
                 <input type="number" name="jumlah_anak_asuh" value="<?php echo e(old('jumlah_anak_asuh', $informasi->jumlah_anak_asuh)); ?>" 
                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
-            <!-- Rentang Usia -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Rentang Usia</label>
                 <input type="text" name="rentang_usia" value="<?php echo e(old('rentang_usia', $informasi->rentang_usia)); ?>" 
@@ -35,7 +32,6 @@
                        placeholder="Contoh: 6-12 tahun">
             </div>
 
-            <!-- Profil Anak Asuh -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Profil Anak Asuh</label>
                 <textarea name="profil_anak" rows="3" 
@@ -43,7 +39,6 @@
                           placeholder="Deskripsi singkat tentang anak asuh"><?php echo e(old('profil_anak', $informasi->profil_anak)); ?></textarea>
             </div>
 
-            <!-- Kebutuhan Donasi dengan satuan "Lainnya" (SAMA PERSIS DENGAN CREATE) -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Kebutuhan Donasi</label>
                 <div id="donasi-list">
@@ -114,7 +109,6 @@
                 </button>
             </div>
 
-            <!-- Status Kolaborasi -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Status Kolaborasi</label>
                 <select name="status_kolaborasi" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -123,7 +117,6 @@
                 </select>
             </div>
 
-            <!-- Tombol Aksi -->
             <div class="flex justify-end gap-3 mt-6 pt-4 border-t">
                 <a href="<?php echo e(route('informasi.index')); ?>" 
                    class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition">

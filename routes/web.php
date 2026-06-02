@@ -8,88 +8,60 @@ use App\Http\Controllers\InformasiLembagaController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\DonasiController;
 
-// =======================
-// 🌍 HALAMAN PUBLIK (Tanpa Login)
-// =======================
-
-// Halaman Utama (Landing Page)
 Route::get('/', function () {
-    $lembaga = \App\Models\Lembaga::with('kategori', 'informasi')->get();
+    $lembaga = \App\Models\Lembaga::whereHas('user', function($q) {
+        $q->where('status_akun', 'aktif');
+    })->with('kategori', 'informasi')->get();
     return view('index', compact('lembaga'));
 })->name('home');
 
-// Halaman Detail Lembaga untuk Publik
 Route::get('/public/lembaga/{id}', function ($id) {
     $lembaga = \App\Models\Lembaga::with('kategori', 'informasi')->findOrFail($id);
+    if ($lembaga->user && $lembaga->user->status_akun !== 'aktif') {
+        return redirect('/')->with('error', 'Lembaga ini sedang tidak aktif.');
+    }
     return view('public.show', compact('lembaga'));
 })->name('public.lembaga.show');
 
-// Halaman Statis (Tentang & Panduan)
 Route::get('/tentang', [PageController::class, 'tentang'])->name('tentang');
 Route::get('/panduan', [PageController::class, 'panduan'])->name('panduan');
 
-// =======================
-// 🔐 AREA LOGIN (Harus Login)
-// =======================
+Route::get('/lembaga/pending', function () {
+    return view('lembaga.pending');
+})->name('lembaga.pending');
+
 Route::middleware(['auth'])->group(function () {
     
-    // Dashboard (berdasarkan role)
     Route::get('/dashboard', function () {
         if (auth()->user()->role == 'admin') {
             return view('dashboard');
         } else {
-            return view('lembaga.dashboard');
+            $lembaga = \App\Models\Lembaga::where('pengguna_id', auth()->id())->first();
+            return view('lembaga.dashboard', compact('lembaga'));
         }
     })->name('dashboard');
 
-    // Profile Pengguna
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    // =======================
-    // 📊 KHUSUS ADMIN
-    // =======================
-    Route::middleware(['auth', 'admin'])->group(function () {
+    
+    Route::middleware(['admin'])->group(function () {
         Route::get('/verifikasi', [ProfileController::class, 'verifikasi'])->name('verifikasi');
         Route::put('/verifikasi/{id}', [ProfileController::class, 'toggleStatus'])->name('verifikasi.toggle');
         Route::resource('kategori', KategoriController::class);
-        Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/admin/detail-lembaga/{id}', [App\Http\Controllers\AdminController::class, 'detailLembaga'])->name('admin.detail.lembaga');
     });
-    });
 
-    // =======================
-    // 🏢 LEMBAGA (Admin & Lembaga)
-    // =======================
     Route::resource('lembaga', LembagaController::class);
-    
-    // =======================
-    // 📄 INFORMASI LEMBAGA (Admin & Lembaga)
-    // =======================
     Route::resource('informasi', InformasiLembagaController::class);
-    
-    // ======================= 🔥 TAMBAHKAN INI 🔥 =======================
-    // Update kebutuhan donasi (AJAX) - untuk edit/tambah per item
     Route::post('/informasi/kebutuhan/update/{id}', [InformasiLembagaController::class, 'updateKebutuhan'])->name('informasi.kebutuhan.update');
-    // ===================================================================
-
-    // =======================
-    // 💰 DONASI (Hanya untuk lembaga yang login)
-    // =======================
     Route::get('/donasi', [DonasiController::class, 'index'])->name('donasi.index');
     Route::put('/donasi/konfirmasi/{id}', [DonasiController::class, 'konfirmasi'])->name('donasi.konfirmasi');
     Route::put('/donasi/update-terkumpul/{id}', [DonasiController::class, 'updateTerkumpulManual'])->name('donasi.updateTerkumpul');
 });
 
-// =======================
-// 💰 DONASI PUBLIK (Tidak perlu login)
-// =======================
 Route::post('/donasi/store', [DonasiController::class, 'store'])->name('donasi.store');
 
-// =======================
-// ROUTE TEST (Opsional)
-// =======================
 Route::get('/verifikasi-test', function () {
     $users = App\Models\User::where('role', 'lembaga')->get();
     

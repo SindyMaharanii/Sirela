@@ -1,6 +1,5 @@
 <?php $__env->startSection('content'); ?>
 <div class="p-6 max-w-5xl mx-auto">
-    <!-- Header dengan gradasi SAMA PERSIS dengan sidebar (tapi horizontal) -->
     <div class="relative mb-8">
         <div class="relative bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-2xl px-6 py-5 shadow-lg">
             <div class="flex items-center gap-4">
@@ -15,9 +14,7 @@
         </div>
     </div>
 
-    <!-- Card Utama -->
     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-        <!-- Tab Navigation -->
         <div class="border-b border-gray-100 px-4">
             <div class="flex gap-1">
                 <button id="tab-profile" class="tab-btn active px-5 py-3 text-sm font-medium transition-all duration-200 rounded-t-lg">
@@ -33,7 +30,6 @@
             <!-- TAB PROFIL -->
             <div id="form-profile" class="tab-content">
                 <div id="profile-view">
-                    <!-- INFO CARD HEADER (BIRU GRADASI) -->
 <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-xl p-4 mb-6 text-white shadow-md">
     <div class="flex items-center gap-3">
         <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
@@ -46,9 +42,7 @@
     </div>
 </div>
 
-<!-- FIELD DENGAN GRADASI SOFT BIRU (seperti contoh) -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-    <!-- Nama Lengkap -->
     <div class="group">
         <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
             <i class="fas fa-user mr-1 text-blue-400"></i> Nama Lengkap
@@ -58,7 +52,6 @@
         </div>
     </div>
 
-    <!-- Email -->
     <div class="group">
         <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
             <i class="fas fa-envelope mr-1 text-blue-400"></i> Email
@@ -68,7 +61,6 @@
         </div>
     </div>
 
-    <!-- Role -->
     <div class="group">
         <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
             <i class="fas fa-user-tag mr-1 text-blue-400"></i> Role
@@ -82,7 +74,6 @@
         </div>
     </div>
 
-    <!-- Status Akun -->
     <div class="group">
         <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
             <i class="fas fa-circle mr-1 text-blue-400"></i> Status Akun
@@ -96,7 +87,6 @@
         </div>
     </div>
 
-    <!-- Bergabung Sejak -->
     <div class="md:col-span-2 group">
         <label class="block text-xs text-gray-400 uppercase tracking-wide mb-1">
             <i class="fas fa-calendar-alt mr-1 text-blue-400"></i> Bergabung Sejak
@@ -115,7 +105,6 @@
 </div>
                 </div>
 
-                <!-- Mode Edit -->
                 <div id="profile-edit" class="hidden">
                     <div class="bg-amber-50 rounded-xl p-4 mb-6 border border-amber-100">
                         <div class="flex items-center gap-3">
@@ -130,7 +119,6 @@
 
                         <div class="mb-4">
     <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap</label>
-    <!-- INPUT DENGAN BACKGROUND GRADASI BIRU SOFT -->
     <input type="text" name="name" value="<?php echo e(old('name', $user->name)); ?>" 
            class="w-full bg-gradient-to-br from-blue-100 via-blue-50 to-white border border-blue-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition shadow-sm">
     <?php $__errorArgs = ['name'];
@@ -145,7 +133,6 @@ unset($__errorArgs, $__bag); ?>
 
 <div class="mb-4">
     <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-    <!-- INPUT DENGAN BACKGROUND GRADASI BIRU SOFT -->
     <input type="email" name="email" value="<?php echo e(old('email', $user->email)); ?>" 
            class="w-full bg-gradient-to-br from-blue-100 via-blue-50 to-white border border-blue-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition shadow-sm">
     <?php $__errorArgs = ['email'];
@@ -159,12 +146,10 @@ unset($__errorArgs, $__bag); ?>
 </div>
 
 <div class="flex justify-end gap-3 pt-4">
-    <!-- TOMBOL BATAL TETAP ABU-ABU -->
     <button type="button" id="btn-cancel-edit" class="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl transition">
         <i class="fas fa-times mr-2"></i> Batal
     </button>
     
-    <!-- TOMBOL SIMPAN WARNA KUNING -->
     <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-xl transition-all duration-200 shadow-md hover:shadow-lg">
         <i class="fas fa-save text-sm"></i>
         <span>Simpan Perubahan</span>
@@ -174,10 +159,8 @@ unset($__errorArgs, $__bag); ?>
                 </div>
             </div>
 
-            <!-- TAB KEAMANAN -->
             <div id="form-password" class="tab-content hidden">
                 <div id="password-view">
-                    <!-- Keamanan card dengan gradasi SAMA PERSIS dengan sidebar -->
                     <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-xl p-5 mb-6 text-white shadow-md">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">

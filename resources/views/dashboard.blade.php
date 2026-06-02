@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="p-6">
-    <!-- Header -->
     <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] rounded-t-xl px-6 py-4 mb-6 shadow-md">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
@@ -15,9 +14,7 @@
         </div>
     </div>
 
-    <!-- Statistik Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-        <!-- Card Total Lembaga -->
         <div class="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition duration-500"></div>
             <div class="relative z-10 flex items-center justify-between">
@@ -32,7 +29,6 @@
             </div>
         </div>
 
-        <!-- Card Lembaga Aktif -->
         <div class="group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition duration-500"></div>
             <div class="relative z-10 flex items-center justify-between">
@@ -47,7 +43,6 @@
             </div>
         </div>
 
-        <!-- Card Lembaga Pending (Perlu Verifikasi) -->
         <div class="group relative overflow-hidden bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition duration-500"></div>
             <div class="relative z-10 flex items-center justify-between">
@@ -62,7 +57,6 @@
             </div>
         </div>
 
-        <!-- Card Total Kategori -->
         <div class="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition duration-500"></div>
             <div class="relative z-10 flex items-center justify-between">
@@ -80,7 +74,6 @@
 
     <!-- Aksi Cepat -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <!-- Verifikasi Akun - Card Aksi -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
             <div class="bg-gradient-to-r from-amber-500 to-orange-500 px-5 py-3">
                 <div class="flex items-center gap-2">
@@ -100,7 +93,6 @@
             </div>
         </div>
 
-        <!-- Kelola Kategori - Card Aksi -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
             <div class="bg-gradient-to-r from-purple-500 to-purple-600 px-5 py-3">
                 <div class="flex items-center gap-2">
@@ -121,7 +113,6 @@
         </div>
     </div>
 
-    <!-- Lembaga Terbaru yang Perlu Diperhatikan -->
     <div class="bg-white rounded-xl shadow-md overflow-hidden">
         <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] px-5 py-3">
             <div class="flex items-center gap-2">

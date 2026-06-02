@@ -8,7 +8,6 @@ use App\Models\Lembaga;
 
 class InformasiLembagaController extends Controller
 {
-    // Cek status akun untuk aksi yang butuh verifikasi (create, edit, update, delete)
     private function cekVerifikasi()
     {
         if (auth()->user()->role == 'lembaga' && auth()->user()->status_akun != 'aktif') {
@@ -17,7 +16,6 @@ class InformasiLembagaController extends Controller
         return null;
     }
 
-    // INDEX - Bisa diakses semua (termasuk belum verifikasi)
     public function index()
 {
     if (auth()->user()->role == 'admin') {
@@ -31,8 +29,6 @@ class InformasiLembagaController extends Controller
     return view('informasi.index', compact('informasi'));
 }
 
-
-    // CREATE - Hanya untuk yang sudah verifikasi
     public function create()
 {
     $redirect = $this->cekVerifikasi();
@@ -45,7 +41,6 @@ class InformasiLembagaController extends Controller
     return view('informasi.create', compact('lembaga'));
 }
 
-    // STORE - Hanya untuk yang sudah verifikasi
     public function store(Request $request)
     {
         $redirect = $this->cekVerifikasi();
@@ -81,7 +76,6 @@ class InformasiLembagaController extends Controller
         return redirect('/informasi')->with('success', 'Informasi berhasil disimpan');
     }
 
-    // EDIT - Hanya untuk yang sudah verifikasi
     public function edit($id)
     {
         $redirect = $this->cekVerifikasi();
@@ -94,7 +88,6 @@ class InformasiLembagaController extends Controller
         return view('informasi.edit', compact('informasi'));
     }
 
-    // UPDATE - Hanya untuk yang sudah verifikasi
     public function update(Request $request, $id)
     {
         $redirect = $this->cekVerifikasi();
@@ -135,7 +128,6 @@ class InformasiLembagaController extends Controller
         return redirect('/informasi')->with('success', 'Informasi berhasil diupdate');
     }
 
-    // SHOW - Bisa diakses semua (termasuk belum verifikasi)
    public function show($id)
 {
     $informasi = InformasiLembaga::with('lembaga')->where('lembaga_id', $id)->first();

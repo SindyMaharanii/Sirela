@@ -3,12 +3,10 @@
 @section('content')
 <div class="p-6">
     <div class="max-w-5xl mx-auto">
-        <!-- Tombol Kembali -->
         <a href="{{ route('verifikasi') }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-4 transition group">
             <i class="fas fa-arrow-left group-hover:-translate-x-1 transition"></i> Kembali ke Verifikasi Akun
         </a>
 
-        <!-- Header Profil -->
         <div class="bg-gradient-to-r from-purple-600 to-indigo-700 rounded-2xl shadow-lg overflow-hidden mb-6">
             <div class="px-6 py-6">
                 <div class="flex items-center gap-4">
@@ -23,7 +21,6 @@
             </div>
         </div>
 
-        <!-- ==================== DATA REGISTRASI LENGKAP ==================== -->
         <div class="bg-white rounded-2xl shadow-md overflow-hidden">
             <div class="bg-gradient-to-r from-purple-500 to-purple-600 px-6 py-3">
                 <h2 class="text-lg font-bold text-white flex items-center gap-2">
@@ -32,7 +29,6 @@
             </div>
             <div class="p-6">
                 
-                <!-- ========== DATA AKUN LOGIN ========== -->
                 <div class="mb-6 pb-4 border-b border-gray-200">
                     <h3 class="text-md font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <i class="fas fa-user-circle text-blue-500"></i> Akun Login
@@ -65,7 +61,6 @@
                     </div>
                 </div>
 
-                <!-- ========== DATA LEMBAGA (DARI REGISTRASI) ========== -->
                 <div class="mb-6 pb-4 border-b border-gray-200">
                     <h3 class="text-md font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <i class="fas fa-building text-emerald-500"></i> Data Lembaga (Registrasi)
@@ -120,14 +115,12 @@
                     </div>
                 </div>
 
-                <!-- ========== DATA LEGALITAS & PENGURUS ========== -->
                 <div class="mb-6 pb-4 border-b border-gray-200">
                     <h3 class="text-md font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <i class="fas fa-gavel text-purple-500"></i> Data Legalitas & Pengurus
                     </h3>
 
                     @if($user->jenis_lembaga == 'pemerintah')
-                        <!-- DATA PEMERINTAH -->
                         <div class="bg-blue-50 rounded-xl p-4">
                             <p class="font-semibold text-blue-800 mb-3">📋 Data Lembaga Pemerintah</p>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -161,7 +154,6 @@
                         </div>
 
                     @elseif($user->jenis_lembaga == 'swasta')
-                        <!-- DATA SWASTA -->
                         <div class="bg-green-50 rounded-xl p-4">
                             <p class="font-semibold text-green-800 mb-3">📋 Data Lembaga Swasta</p>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -217,7 +209,6 @@
                         </div>
 
                     @elseif($user->jenis_lembaga == 'komunitas')
-                        <!-- DATA KOMUNITAS -->
                         <div class="bg-purple-50 rounded-xl p-4">
                             <p class="font-semibold text-purple-800 mb-3">📋 Data Komunitas Sosial</p>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -264,7 +255,6 @@
                     @endif
                 </div>
 
-                <!-- ========== DATA DARI TABEL LEMBAGA (Visi, Misi, dll) ========== -->
                 @if($lembaga)
                 <div class="mb-6 pb-4 border-b border-gray-200">
                     <h3 class="text-md font-bold text-gray-800 mb-3 flex items-center gap-2">

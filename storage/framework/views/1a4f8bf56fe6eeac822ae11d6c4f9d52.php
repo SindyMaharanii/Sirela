@@ -200,7 +200,6 @@
         </div>
         
         <?php if(auth()->user()->role == 'admin'): ?>
-            <!-- MENU UNTUK ADMIN -->
             <a href="<?php echo e(route('verifikasi')); ?>" class="nav-item <?php echo e(request()->routeIs('verifikasi') ? 'active' : ''); ?>">
                 <i class="fas fa-user-check"></i> Verifikasi Akun
                 <?php $pendingCount = \App\Models\User::where('role', 'lembaga')->where('status_akun', 'pending')->count(); ?>
@@ -216,25 +215,25 @@
             </a>
             
         <?php elseif(auth()->user()->role == 'lembaga'): ?>
-    <?php
-        $userLembaga = \App\Models\Lembaga::where('pengguna_id', auth()->id())->first();
-        $lembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
-        $informasiLembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
-    ?>
-    
-    <?php if($lembagaId): ?>
-        <a href="<?php echo e(route('lembaga.index')); ?>" class="nav-item <?php echo e(request()->routeIs('lembaga.index') ? 'active' : ''); ?>">
-            <i class="fas fa-building"></i> Profil Lembaga
-        </a>
-    <?php else: ?>
-        <a href="<?php echo e(route('lembaga.create')); ?>" class="nav-item">
-            <i class="fas fa-building"></i> Buat Profil Lembaga
-        </a>
-    <?php endif; ?>
+            <?php
+                $userLembaga = \App\Models\Lembaga::where('pengguna_id', auth()->id())->first();
+                $lembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
+                $informasiLembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
+            ?>
             
-            <a href="<?php echo e(route('informasi.show', $informasiLembagaId)); ?>" class="nav-item <?php echo e(request()->routeIs('informasi.show') ? 'active' : ''); ?>">
-                <i class="fas fa-hand-holding-heart"></i> Informasi Donasi
-            </a>
+            <?php if($lembagaId): ?>
+                <a href="<?php echo e(route('lembaga.index')); ?>" class="nav-item <?php echo e(request()->routeIs('lembaga.index') ? 'active' : ''); ?>">
+                    <i class="fas fa-building"></i> Profil Lembaga
+                </a>
+            <?php else: ?>
+                <a href="<?php echo e(route('lembaga.create')); ?>" class="nav-item">
+                    <i class="fas fa-building"></i> Buat Profil Lembaga
+                </a>
+            <?php endif; ?>
+                    
+            <a href="<?php echo e(route('informasi.index')); ?>" class="nav-item <?php echo e(request()->routeIs('informasi.*') ? 'active' : ''); ?>">
+    <i class="fas fa-hand-holding-heart"></i> Informasi Donasi
+</a>
             <a href="<?php echo e(route('donasi.index')); ?>" class="nav-item <?php echo e(request()->routeIs('donasi.*') ? 'active' : ''); ?>">
                 <i class="fas fa-users"></i> Daftar Donatur
             </a>
@@ -303,16 +302,13 @@
         if (overlay) overlay.style.display = 'none';
     }
 
-    // PERBAIKAN: Sidebar tidak akan refresh aneh saat klik tombol kembali/panah browser
     (function() {
         var sidebar = document.getElementById('sidebar');
         if (sidebar) {
-            // Reset scroll position ke atas setiap halaman dimuat
             sidebar.scrollTop = 0;
         }
     })();
     
-    // Event listener untuk sidebar dan overlay
     var sidebar = document.getElementById('sidebar');
     var overlay = document.getElementById('overlay');
     
@@ -335,7 +331,6 @@
         }
     });
     
-    // Toggle sidebar untuk mobile
     document.querySelector('.menu-toggle')?.addEventListener('click', function() {
         var sidebar = document.getElementById('sidebar');
         var overlay = document.getElementById('overlay');
