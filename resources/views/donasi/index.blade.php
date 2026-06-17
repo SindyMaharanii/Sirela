@@ -36,15 +36,57 @@
                         <th class="border border-gray-300 px-4 py-3 text-left">Donatur</th>
                         <th class="border border-gray-300 px-4 py-3 text-left">Kebutuhan</th>
                         <th class="border border-gray-300 px-4 py-3 text-center">Jumlah/Nominal</th>
-                        <th class="border border-gray-300 px-4 py-3 text-center">Pesan/Doa</th>
                         <th class="border border-gray-300 px-4 py-3 text-center">Status</th>
                         <th class="border border-gray-300 px-4 py-3 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($donasi as $index => $d)
+                    @php
+                        // GABUNGKAN SEMUA DONASI (BARANG + UANG)
+                        $semuaDonasi = collect();
+                        
+                        foreach ($donasiBarang as $item) {
+                            $semuaDonasi->push((object)[
+                                'created_at' => $item->created_at,
+                                'donasi_id' => $item->donasi_id,
+                                'nama_donatur' => $item->nama_donatur,
+                                'no_hp' => $item->no_hp,
+                                'kebutuhan_nama' => $item->kebutuhan_nama,
+                                'jumlah' => $item->jumlah_barang,
+                                'satuan' => $item->satuan_barang,
+                                'status' => $item->status,
+                                'jenis' => 'barang',
+                                'nama_rekening' => null,
+                                'nama_bank' => null,
+                                'bukti_transfer' => null,
+                            ]);
+                        }
+                        
+                        foreach ($donasiUang as $item) {
+                            $semuaDonasi->push((object)[
+                                'created_at' => $item->created_at,
+                                'donasi_id' => $item->donasi_id,
+                                'nama_donatur' => $item->nama_donatur,
+                                'no_hp' => $item->no_hp,
+                                'kebutuhan_nama' => $item->kebutuhan_nama,
+                                'jumlah' => $item->nominal_uang,
+                                'satuan' => 'Rp',
+                                'status' => $item->status,
+                                'jenis' => 'uang',
+                                'nama_rekening' => $item->nama_rekening,
+                                'nama_bank' => $item->nama_bank,
+                                'bukti_transfer' => $item->bukti_transfer,
+                            ]);
+                        }
+                        
+                        // URUTKAN DARI YANG TERBARU KE TERLAMA
+                        $semuaDonasi = $semuaDonasi->sortByDesc('created_at');
+                        $no = 1;
+                    @endphp
+                    
+                    @foreach($semuaDonasi as $d)
                     <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
-                        <td class="border border-gray-300 px-4 py-3 text-gray-600">{{ $loop->iteration }}</td>
+                        <td class="border border-gray-300 px-4 py-3 text-gray-600">{{ $no++ }}</td>
                         <td class="border border-gray-300 px-4 py-3 text-gray-600">
                             {{ \Carbon\Carbon::parse($d->created_at)->setTimezone('Asia/Jakarta')->format('d/m/Y H:i:s') }}
                             <span class="text-xs text-gray-400">WIB</span>
@@ -53,45 +95,54 @@
                             <div>
                                 <p class="font-semibold text-gray-800">{{ $d->nama_donatur }}</p>
                                 <p class="text-xs text-gray-500">{{ $d->no_hp }}</p>
-                                @if($d->email)
-                                    <p class="text-xs text-gray-400">{{ $d->email }}</p>
+                                @if($d->jenis == 'uang' && $d->nama_rekening)
+                                    <p class="text-xs text-gray-400">Rek: {{ $d->nama_rekening }} ({{ $d->nama_bank }})</p>
                                 @endif
                             </div>
                         </td>
                         <td class="border border-gray-300 px-4 py-3 text-gray-600">{{ $d->kebutuhan_nama }}</td>
                         <td class="border border-gray-300 px-4 py-3 text-center">
-                            @if($d->kebutuhan_jenis == 'barang')
-                                <span class="font-semibold text-blue-600">{{ number_format($d->jumlah_barang, 0, ',', '.') }} {{ $d->satuan_barang }}</span>
+                            @if($d->jenis == 'barang')
+                                <span class="font-semibold text-blue-600">{{ number_format((float)$d->jumlah, 0, ',', '.') }} {{ $d->satuan }}</span>
                             @else
-                                <span class="font-semibold text-green-600">Rp {{ number_format($d->nominal_uang, 0, ',', '.') }}</span>
+                                <span class="font-semibold text-green-600">Rp {{ number_format((float)$d->jumlah, 0, ',', '.') }}</span>
                             @endif
-                        </td>
-                        <td class="border border-gray-300 px-4 py-3 text-center">
-                            <div class="max-w-xs">
-                                <p class="text-gray-600 text-sm break-words">{{ $d->pesan ?? '-' }}</p>
-                            </div>
                         </td>
                         <td class="border border-gray-300 px-4 py-3 text-center">
                             @if($d->status == 'pending')
                                 <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs">Pending</span>
                             @elseif($d->status == 'dikonfirmasi')
                                 <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">Dikonfirmasi</span>
-                            @elseif($d->status == 'selesai')
-                                <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Selesai</span>
                             @else
-                                <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs">Batal</span>
+                                <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Selesai</span>
                             @endif
                         </td>
                         <td class="border border-gray-300 px-4 py-3 text-center">
-                            <div class="flex items-center justify-center gap-2">
+                            <div class="flex items-center justify-center gap-2 flex-wrap">
                                 @if($d->status == 'pending')
-                                <form action="{{ route('donasi.konfirmasi', $d->donasi_id) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm transition">
-                                        Konfirmasi
-                                    </button>
-                                </form>
+                                    @if($d->jenis == 'barang')
+                                    <form action="{{ route('donasi.konfirmasi.barang', $d->donasi_id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm transition">
+                                            Konfirmasi
+                                        </button>
+                                    </form>
+                                    @else
+                                    <form action="{{ route('donasi.konfirmasi.uang', $d->donasi_id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm transition">
+                                            Konfirmasi
+                                        </button>
+                                    </form>
+                                    @endif
+                                @endif
+                                @if($d->jenis == 'uang' && $d->bukti_transfer)
+                                    <a href="{{ Storage::url($d->bukti_transfer) }}" target="_blank" 
+                                       class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-lg text-sm inline-flex items-center gap-1 transition">
+                                        <i class="fas fa-image"></i> Bukti
+                                    </a>
                                 @endif
                                 <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $d->no_hp) }}" target="_blank"
                                    class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg text-sm inline-flex items-center gap-1 transition">
@@ -100,15 +151,17 @@
                             </div>
                         </td>
                     </tr>
-                    @empty
+                    @endforeach
+                    
+                    @if($semuaDonasi->count() == 0)
                     <tr>
-                        <td colspan="8" class="border border-gray-300 p-8 text-center text-gray-500">
+                        <td colspan="7" class="border border-gray-300 p-8 text-center text-gray-500">
                             <i class="fas fa-inbox text-4xl mb-2"></i>
                             <p>Belum ada donatur yang mendaftar</p>
                             <p class="text-xs text-gray-400 mt-1">Donatur akan muncul setelah ada yang mengisi form donasi</p>
                         </td>
                     </tr>
-                    @endforelse
+                    @endif
                 </tbody>
             </table>
         </div>

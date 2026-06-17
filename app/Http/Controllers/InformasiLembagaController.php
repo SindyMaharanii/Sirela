@@ -42,39 +42,48 @@ class InformasiLembagaController extends Controller
 }
 
     public function store(Request $request)
-    {
-        $redirect = $this->cekVerifikasi();
-        if ($redirect) return $redirect;
+{
+    $redirect = $this->cekVerifikasi();
+    if ($redirect) return $redirect;
 
-        $lembaga = Lembaga::where('pengguna_id', auth()->id())->first();
+    $lembaga = Lembaga::where('pengguna_id', auth()->id())->first();
 
-        $donasiList = [];
-        if ($request->has('donasi_nama')) {
-            for ($i = 0; $i < count($request->donasi_nama); $i++) {
-                if (!empty($request->donasi_nama[$i])) {
-                    $donasiList[] = [
-                        'nama' => $request->donasi_nama[$i],
-                        'jumlah' => $request->donasi_jumlah[$i] ?? '',
-                        'satuan' => $request->donasi_satuan[$i] ?? 'unit'
-                    ];
-                }
+    $donasiList = [];
+    if ($request->has('donasi_nama')) {
+        for ($i = 0; $i < count($request->donasi_nama); $i++) {
+            if (!empty($request->donasi_nama[$i])) {
+                $satuan = ($request->donasi_satuan[$i] == 'lainnya') 
+                    ? ($request->donasi_satuan_lainnya[$i] ?? 'unit') 
+                    : $request->donasi_satuan[$i];
+                
+                $donasiList[] = [
+                    'id' => uniqid(),
+                    'nama' => $request->donasi_nama[$i],
+                    'target' => (int)($request->donasi_jumlah[$i] ?? 0),
+                    'jumlah' => $request->donasi_jumlah[$i] ?? 0,
+                    'terkumpul' => 0,
+                    'satuan' => $satuan,
+                    'prioritas' => $request->donasi_prioritas[$i] ?? 'sedang',
+                    'jenis' => (in_array($satuan, ['Rp', 'rupiah', 'uang'])) ? 'uang' : 'barang'
+                ];
             }
         }
-
-        InformasiLembaga::updateOrCreate(
-            ['lembaga_id' => $lembaga->lembaga_id],
-            [
-                'jumlah_anak_asuh' => $request->jumlah_anak_asuh,
-                'rentang_usia' => $request->rentang_usia,
-                'profil_anak' => $request->profil_anak,
-                'kebutuhan_donasi_list' => json_encode($donasiList),
-                'status_kolaborasi' => $request->status_kolaborasi,
-                'tanggal_update' => now()
-            ]
-        );
-
-        return redirect('/informasi')->with('success', 'Informasi berhasil disimpan');
     }
+
+    InformasiLembaga::updateOrCreate(
+        ['lembaga_id' => $lembaga->lembaga_id],
+        [
+            'jumlah_anak_asuh' => $request->jumlah_anak_asuh,
+            'rentang_usia' => $request->rentang_usia,
+            'profil_anak' => $request->profil_anak,
+            'kebutuhan_donasi_list' => json_encode($donasiList, JSON_UNESCAPED_UNICODE),
+            'status_kolaborasi' => $request->status_kolaborasi,
+            'tanggal_update' => now()
+        ]
+    );
+
+    return redirect('/informasi')->with('success', 'Informasi berhasil disimpan');
+}
 
     public function edit($id)
     {
@@ -89,44 +98,48 @@ class InformasiLembagaController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $redirect = $this->cekVerifikasi();
-        if ($redirect) return $redirect;
+{
+    $redirect = $this->cekVerifikasi();
+    if ($redirect) return $redirect;
 
-        $informasi = InformasiLembaga::findOrFail($id);
-        if (auth()->user()->role == 'lembaga' && $informasi->lembaga->pengguna_id != auth()->id()) {
-            abort(403);
-        }
+    $informasi = InformasiLembaga::findOrFail($id);
+    if (auth()->user()->role == 'lembaga' && $informasi->lembaga->pengguna_id != auth()->id()) {
+        abort(403);
+    }
 
-        $donasiList = [];
-        if ($request->has('donasi_nama')) {
-            for ($i = 0; $i < count($request->donasi_nama); $i++) {
-                if (!empty($request->donasi_nama[$i])) {
-                    $donasiList[] = [
-    'id' => uniqid(),
-    'nama' => $request->donasi_nama[$i],
-    'target' => (int)($request->donasi_jumlah[$i] ?? 0),
-    'jumlah' => $request->donasi_jumlah[$i] ?? 0,
-    'terkumpul' => 0,
-    'satuan' => ($request->donasi_satuan[$i] == 'lainnya') ? ($request->donasi_satuan_lainnya[$i] ?? 'unit') : $request->donasi_satuan[$i],
-    'prioritas' => 'sedang',
-    'jenis' => 'barang'
-];
-                }
+    $donasiList = [];
+    if ($request->has('donasi_nama')) {
+        for ($i = 0; $i < count($request->donasi_nama); $i++) {
+            if (!empty($request->donasi_nama[$i])) {
+                $satuan = ($request->donasi_satuan[$i] == 'lainnya') 
+                    ? ($request->donasi_satuan_lainnya[$i] ?? 'unit') 
+                    : $request->donasi_satuan[$i];
+                
+                $donasiList[] = [
+                    'id' => uniqid(),
+                    'nama' => $request->donasi_nama[$i],
+                    'target' => (int)($request->donasi_jumlah[$i] ?? 0),
+                    'jumlah' => $request->donasi_jumlah[$i] ?? 0,
+                    'terkumpul' => 0,
+                    'satuan' => $satuan,
+                    'prioritas' => $request->donasi_prioritas[$i] ?? 'sedang',
+                    'jenis' => (in_array($satuan, ['Rp', 'rupiah', 'uang'])) ? 'uang' : 'barang'
+                ];
             }
         }
-
-        $informasi->update([
-            'jumlah_anak_asuh' => $request->jumlah_anak_asuh,
-            'rentang_usia' => $request->rentang_usia,
-            'profil_anak' => $request->profil_anak,
-            'kebutuhan_donasi_list' => json_encode($donasiList),
-            'status_kolaborasi' => $request->status_kolaborasi,
-            'tanggal_update' => now()
-        ]);
-
-        return redirect('/informasi')->with('success', 'Informasi berhasil diupdate');
     }
+
+    $informasi->update([
+        'jumlah_anak_asuh' => $request->jumlah_anak_asuh,
+        'rentang_usia' => $request->rentang_usia,
+        'profil_anak' => $request->profil_anak,
+        'kebutuhan_donasi_list' => json_encode($donasiList, JSON_UNESCAPED_UNICODE),
+        'status_kolaborasi' => $request->status_kolaborasi,
+        'tanggal_update' => now()
+    ]);
+
+    return redirect('/informasi')->with('success', 'Informasi berhasil diupdate');
+}
 
    public function show($id)
 {

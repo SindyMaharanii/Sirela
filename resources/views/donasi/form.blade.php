@@ -7,7 +7,7 @@
             </button>
         </div>
         
-        <form action="{{ route('donasi.store.public') }}" method="POST" id="formDonasi">
+        <form action="{{ route('donasi.store') }}" method="POST" id="formDonasi">
             @csrf
             <input type="hidden" name="informasi_id" value="{{ $informasiId }}">
             <input type="hidden" name="lembaga_id" id="lembaga_id" value="">
@@ -24,14 +24,21 @@
             @if($kebutuhanJenis == 'barang')
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Jumlah Barang ({{ $satuan }})</label>
-                <input type="number" name="jumlah_barang" step="0.01" required
-                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" name="jumlah_barang" id="jumlah_barang" required
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       placeholder="0"
+                       onkeypress="return hanyaAngka(event)"
+                       onkeyup="formatRibuan(this)">
             </div>
             @else
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Nominal Donasi (Rp)</label>
-                <input type="number" name="nominal_uang" required
-                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" name="nominal_uang" id="nominal_uang" required
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       placeholder="0"
+                       onkeypress="return hanyaAngka(event)"
+                       onkeyup="formatRibuan(this)">
+                <p class="text-xs text-gray-400 mt-1">Cukup ketik angka, akan otomatis terformat (contoh: 50000000 → 50.000.000)</p>
             </div>
             @endif
             
@@ -48,12 +55,6 @@
             </div>
             
             <div class="mb-4">
-                <label class="block text-gray-700 font-semibold mb-2">Email (Opsional)</label>
-                <input type="email" name="email"
-                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-            
-            <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">Pesan/Doa</label>
                 <textarea name="pesan" rows="3"
                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -62,7 +63,7 @@
             
             <div class="bg-blue-50 rounded-lg p-3 mb-4 text-sm text-blue-700">
                 <i class="fas fa-info-circle mr-1"></i> 
-                Setelah submit, lembaga akan menghubungi Anda via WhatsApp/Telepon untuk konfirmasi alamat pengiriman atau rekening transfer.
+                Setelah submit, lembaga akan menghubungi Anda via WhatsApp/Telepon untuk konfirmasi.
             </div>
             
             <div class="flex gap-3">
@@ -71,7 +72,7 @@
                     Batal
                 </button>
                 <button type="submit"
-                        class="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 rounded-lg transition hover:shadow-lg">
+                        class="flex-1 bg-gradient-to-r from-amber-500 to-orange-600 text-white py-2 rounded-lg transition hover:shadow-lg">
                     Kirim Donasi
                 </button>
             </div>
@@ -80,6 +81,46 @@
 </div>
 
 <script>
+    // Fungsi hanya menerima angka
+    function hanyaAngka(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+    
+    // Fungsi format angka dengan titik ribuan
+    function formatRibuan(input) {
+        // Hapus semua titik yang sudah ada
+        let value = input.value.replace(/\./g, '');
+        if (value === '') value = '0';
+        let number = parseInt(value);
+        if (isNaN(number)) number = 0;
+        
+        // Simpan nilai asli (tanpa titik) ke attribute data-raw
+        input.setAttribute('data-raw', number);
+        
+        // Tampilkan dengan format titik ribuan
+        input.value = number.toLocaleString('id-ID');
+    }
+    
+    // Sebelum submit, ubah nilai input kembali ke angka tanpa titik
+    document.getElementById('formDonasi').addEventListener('submit', function(e) {
+        const jumlahBarang = document.getElementById('jumlah_barang');
+        const nominalUang = document.getElementById('nominal_uang');
+        
+        if (jumlahBarang) {
+            let rawValue = jumlahBarang.getAttribute('data-raw') || jumlahBarang.value.replace(/\./g, '');
+            jumlahBarang.value = rawValue;
+        }
+        
+        if (nominalUang) {
+            let rawValue = nominalUang.getAttribute('data-raw') || nominalUang.value.replace(/\./g, '');
+            nominalUang.value = rawValue;
+        }
+    });
+    
     // Ambil lembaga_id dari halaman
     document.addEventListener('DOMContentLoaded', function() {
         const lembagaId = document.querySelector('meta[name="lembaga-id"]')?.content;
@@ -89,6 +130,7 @@
     });
     
     function closeModal() {
-        document.getElementById('modalDonasi').remove();
+        const modal = document.getElementById('modalDonasi');
+        if (modal) modal.remove();
     }
 </script>

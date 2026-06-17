@@ -12,7 +12,7 @@
         </div>
         <h1 class="text-4xl md:text-5xl font-extrabold mb-4">
             <span class="bg-gradient-to-r from-blue-600 via-cyan-600 to-indigo-600 bg-clip-text text-transparent">Tentang</span>
-            <span class="bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent"> SISOREL</span>
+            <span class="bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent"> SIRELA</span>
         </h1>
         <p class="text-blue-600/70 text-lg max-w-2xl mx-auto">Platform Informasi Kegiatan Sosial dan Relawan yang menghubungkan kebaikan</p>
         <div class="w-24 h-1 bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 rounded-full mx-auto mt-5"></div>
@@ -33,15 +33,15 @@
             <div class="flex justify-center mb-3">
                 <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
                     <i class="fas fa-quote-left text-cyan-200 text-xs"></i>
-                    <span class="text-cyan-100 text-xs font-medium">SISOREL</span>
+                    <span class="text-cyan-100 text-xs font-medium">SIRELA</span>
                     <i class="fas fa-quote-right text-cyan-200 text-xs"></i>
                 </div>
             </div>
             <p class="text-white leading-relaxed text-center text-lg">
-                (Sistem Informasi Kegiatan Sosial dan Relawan) adalah platform digital yang menghubungkan 
-                lembaga sosial dengan masyarakat, relawan, dan donatur. Kami menyediakan wadah bagi lembaga sosial untuk mempublikasikan 
-                profil, <span class="text-cyan-200 font-semibold">kebutuhan donasi spesifik</span>, dan status kolaborasi secara 
-                <span class="text-cyan-200 font-semibold border-b border-cyan-300/50">terstruktur dan transparan</span>.
+                (Sistem Informasi Relawan dan Lembaga Sosial) adalah platform digital yang menghubungkan 
+                lembaga sosial dengan masyarakat, relawan, dan donatur. SIRELA menyediakan wadah bagi lembaga sosial untuk mempublikasikan 
+                profil, <span class="text-cyan-200 font-semibold">kebutuhan donasi spesifik (barang & uang)</span>, status kolaborasi, serta 
+                <span class="text-cyan-200 font-semibold border-b border-cyan-300/50">progress donasi secara real-time</span>.
             </p>
             <div class="flex justify-center mt-5">
                 <div class="flex gap-1">
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <p class="text-blue-800/70 leading-relaxed">
-                    Menjadi platform terdepan dalam menghubungkan lembaga sosial dengan masyarakat untuk menciptakan ekosistem kebaikan yang berkelanjutan di Indonesia.
+                    Menjadi platform terdepan dalam menghubungkan lembaga sosial dengan masyarakat, donatur, dan relawan untuk menciptakan ekosistem kebaikan yang berkelanjutan dan transparan di Indonesia.
                 </p>
             </div>
         </div>
@@ -92,25 +92,31 @@
                         <div class="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                             <i class="fas fa-check text-white text-[10px]"></i>
                         </div>
-                        <span class="text-indigo-800/70 text-sm">Memudahkan lembaga sosial dalam mempublikasikan informasi</span>
+                        <span class="text-indigo-800/70 text-sm">Memudahkan lembaga sosial dalam mempublikasikan profil dan kebutuhan donasi (barang & uang)</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <div class="w-5 h-5 bg-cyan-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                             <i class="fas fa-check text-white text-[10px]"></i>
                         </div>
-                        <span class="text-indigo-800/70 text-sm">Menjembatani donatur dengan lembaga yang membutuhkan</span>
+                        <span class="text-indigo-800/70 text-sm">Menjembatani donatur dengan lembaga yang membutuhkan melalui sistem donasi yang terstruktur</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <div class="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                             <i class="fas fa-check text-white text-[10px]"></i>
                         </div>
-                        <span class="text-indigo-800/70 text-sm">Meningkatkan transparansi kegiatan sosial dengan progress donasi</span>
+                        <span class="text-indigo-800/70 text-sm">Meningkatkan transparansi kegiatan sosial dengan progress donasi (target vs terkumpul) maksimal 100%</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <div class="w-5 h-5 bg-cyan-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                             <i class="fas fa-check text-white text-[10px]"></i>
                         </div>
-                        <span class="text-indigo-800/70 text-sm">Memberdayakan relawan melalui informasi yang akurat</span>
+                        <span class="text-indigo-800/70 text-sm">Memberdayakan relawan dan donatur melalui informasi yang akurat dan bukti transfer yang transparan</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <div class="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="fas fa-check text-white text-[10px]"></i>
+                        </div>
+                        <span class="text-indigo-800/70 text-sm">Mendukung pencapaian SDGs (Sustainable Development Goals) melalui kegiatan sosial yang terukur</span>
                     </li>
                 </ul>
             </div>
@@ -124,7 +130,7 @@
                 <span class="text-sm font-semibold text-blue-700">Fitur Unggulan</span>
                 <i class="fas fa-star text-blue-500 text-sm"></i>
             </div>
-            <h2 class="text-2xl font-bold text-gray-800 mt-3">Fitur Unggulan SISOREL</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mt-3">Fitur Unggulan SIRELA</h2>
             <div class="w-20 h-0.5 bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 rounded-full mx-auto mt-3"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -132,37 +138,49 @@
                 <div class="w-7 h-7 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
                     <i class="fas fa-check text-white text-xs"></i>
                 </div>
-                <span class="text-sm text-blue-800">Pencarian & filter lembaga berdasarkan kategori, lokasi, dan status kolaborasi</span>
+                <span class="text-sm text-blue-800">Pencarian & filter lembaga berdasarkan kategori, lokasi, dan status kolaborasi (Dibuka/Ditutup)</span>
             </div>
             <div class="flex items-start gap-3 p-3 bg-gradient-to-r from-cyan-100/60 to-transparent rounded-xl">
                 <div class="w-7 h-7 bg-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
                     <i class="fas fa-check text-white text-xs"></i>
                 </div>
-                <span class="text-sm text-cyan-800">Donatur dapat memilih kebutuhan donasi spesifik (Beras 50kg, Susu 20 box, dll)</span>
+                <span class="text-sm text-cyan-800">Donatur dapat memilih kebutuhan donasi spesifik (barang atau uang) dengan prioritas (Tinggi/Sedang/Rendah)</span>
             </div>
             <div class="flex items-start gap-3 p-3 bg-gradient-to-r from-indigo-100/60 to-transparent rounded-xl">
                 <div class="w-7 h-7 bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
                     <i class="fas fa-check text-white text-xs"></i>
                 </div>
-                <span class="text-sm text-indigo-800">Progress bar donasi (target) untuk transparansi</span>
+                <span class="text-sm text-indigo-800">Progress bar donasi (target vs terkumpul) maksimal 100% untuk transparansi</span>
             </div>
             <div class="flex items-start gap-3 p-3 bg-gradient-to-r from-green-100/60 to-transparent rounded-xl">
                 <div class="w-7 h-7 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
                     <i class="fas fa-check text-white text-xs"></i>
                 </div>
-                <span class="text-sm text-green-800">Verifikasi akun lembaga oleh admin untuk menjaga kredibilitas</span>
+                <span class="text-sm text-green-800">Verifikasi akun lembaga oleh admin untuk menjaga kredibilitas dan keamanan</span>
             </div>
             <div class="flex items-start gap-3 p-3 bg-gradient-to-r from-purple-100/60 to-transparent rounded-xl">
                 <div class="w-7 h-7 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
                     <i class="fas fa-check text-white text-xs"></i>
                 </div>
-                <span class="text-sm text-purple-800">Lembaga dapat mengelola profil dan informasi donasi secara mandiri</span>
+                <span class="text-sm text-purple-800">Lembaga dapat mengelola profil dan informasi donasi (termasuk prioritas) secara mandiri</span>
             </div>
             <div class="flex items-start gap-3 p-3 bg-gradient-to-r from-amber-100/60 to-transparent rounded-xl">
                 <div class="w-7 h-7 bg-amber-500 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
                     <i class="fas fa-check text-white text-xs"></i>
                 </div>
-                <span class="text-sm text-amber-800">Privasi data donatur dan anak asuh terjaga dengan baik</span>
+                <span class="text-sm text-amber-800">Privasi data donatur dan anak asuh terjaga, bukti transfer aman tersimpan</span>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-gradient-to-r from-rose-100/60 to-transparent rounded-xl">
+                <div class="w-7 h-7 bg-rose-500 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
+                    <i class="fas fa-check text-white text-xs"></i>
+                </div>
+                <span class="text-sm text-rose-800">Donasi uang wajib upload bukti transfer untuk verifikasi lembaga</span>
+            </div>
+            <div class="flex items-start gap-3 p-3 bg-gradient-to-r from-teal-100/60 to-transparent rounded-xl">
+                <div class="w-7 h-7 bg-teal-500 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
+                    <i class="fas fa-check text-white text-xs"></i>
+                </div>
+                <span class="text-sm text-teal-800">Laporan donasi dapat diunduh dalam format Excel dan PDF</span>
             </div>
         </div>
     </div>
@@ -174,7 +192,7 @@
             </div>
             <div class="text-left">
                 <p class="text-xs text-gray-400">Butuh bantuan? Hubungi kami</p>
-                <a href="mailto:maharanisindy@gmail.com" class="text-blue-600 font-semibold text-sm hover:underline">maharanisindy@gmail.com</a>
+                <a href="mailto:admin@gmail.com" class="text-blue-600 font-semibold text-sm hover:underline">admin@gmail.com</a>
             </div>
             <div class="w-px h-8 bg-gradient-to-b from-blue-200 to-cyan-200"></div>
             <div class="flex gap-2">
@@ -188,7 +206,7 @@
             <div class="w-4 h-0.5 bg-cyan-300 rounded-full"></div>
             <div class="w-8 h-0.5 bg-indigo-300 rounded-full"></div>
         </div>
-        <p class="text-xs text-gray-400 mt-3">© 2026 SISOREL - Membangun Kebaikan Bersama</p>
+        <p class="text-xs text-gray-400 mt-3">© 2026 SIRELA - Membangun Kebaikan Bersama</p>
     </div>
 </div>
 <?php $__env->stopSection(); ?>

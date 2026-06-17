@@ -80,7 +80,6 @@
 <section id="lembaga" class="mb-12">
     <div class="container mx-auto px-6">
         <div class="text-center mb-10">
-            <!-- Icon animasi -->
             <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl mb-4 mx-auto shadow-lg hover:scale-110 transition-transform duration-300 cursor-pointer">
                 <i class="fas fa-handshake text-white text-2xl"></i>
             </div>
@@ -179,7 +178,7 @@
 <section class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-2xl text-white py-12 mb-8">
     <div class="container mx-auto px-6 text-center">
         <h2 class="text-3xl font-bold mb-4">Siap Menjadi Bagian dari Perubahan?</h2>
-        <p class="text-blue-100 mb-6 max-w-2xl mx-auto">Bergabunglah dengan SISOREL dan mulailah berbagi kebaikan bersama ribuan lembaga sosial dan relawan</p>
+        <p class="text-blue-100 mb-6 max-w-2xl mx-auto">Bergabunglah dengan SIRELA dan mulailah berbagi kebaikan bersama ribuan lembaga sosial dan relawan</p>
         <div class="flex flex-wrap justify-center gap-4">
             <a href="{{ route('register') }}" class="register-btn inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold transition-all hover:scale-105">
                 <i class="fas fa-user-plus"></i> Daftar Jadi Lembaga

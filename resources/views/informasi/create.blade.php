@@ -43,7 +43,7 @@
                 <div id="donasi-list">
                     <div class="donasi-item flex flex-wrap gap-2 mb-2 items-center">
                         <input type="text" name="donasi_nama[]" class="flex-1 border border-gray-300 rounded-lg px-3 py-2" placeholder="Nama barang" style="min-width: 150px;">
-                        <input type="text" name="donasi_jumlah[]" class="w-24 border border-gray-300 rounded-lg px-3 py-2" placeholder="Jumlah">
+                        <input type="text" name="donasi_jumlah[]" class="w-32 border border-gray-300 rounded-lg px-3 py-2" placeholder="Jumlah">
                         <div class="flex gap-2">
                             <select name="donasi_satuan[]" class="satuan-select border border-gray-300 rounded-lg px-3 py-2">
                                 <option value="kg">Kg</option>
@@ -56,6 +56,12 @@
                                    class="satuan-lainnya border border-gray-300 rounded-lg px-3 py-2" 
                                    placeholder="Satuan lain" style="width: 100px; display: none;">
                         </div>
+                        <!-- DROPDOWN PRIORITAS -->
+                        <select name="donasi_prioritas[]" class="border border-gray-300 rounded-lg px-3 py-2">
+                            <option value="tinggi">Tinggi</option>
+                            <option value="sedang" selected>Sedang</option>
+                            <option value="rendah">Rendah</option>
+                        </select>
                         <button type="button" onclick="this.closest('.donasi-item').remove()" 
                                 class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition">
                             Hapus
@@ -114,7 +120,7 @@
         newItem.className = 'donasi-item flex flex-wrap gap-2 mb-2 items-center';
         newItem.innerHTML = `
             <input type="text" name="donasi_nama[]" class="flex-1 border border-gray-300 rounded-lg px-3 py-2" placeholder="Nama barang" style="min-width: 150px;">
-            <input type="text" name="donasi_jumlah[]" class="w-24 border border-gray-300 rounded-lg px-3 py-2" placeholder="Jumlah">
+            <input type="text" name="donasi_jumlah[]" class="w-32 border border-gray-300 rounded-lg px-3 py-2" placeholder="Jumlah">
             <div class="flex gap-2">
                 <select name="donasi_satuan[]" class="satuan-select border border-gray-300 rounded-lg px-3 py-2">
                     <option value="kg">Kg</option>
@@ -127,6 +133,11 @@
                        class="satuan-lainnya border border-gray-300 rounded-lg px-3 py-2" 
                        placeholder="Satuan lain" style="width: 100px; display: none;">
             </div>
+            <select name="donasi_prioritas[]" class="border border-gray-300 rounded-lg px-3 py-2">
+                <option value="tinggi">Tinggi</option>
+                <option value="sedang" selected>Sedang</option>
+                <option value="rendah">Rendah</option>
+            </select>
             <button type="button" onclick="this.closest('.donasi-item').remove()" 
                     class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition">
                 Hapus

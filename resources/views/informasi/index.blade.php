@@ -115,10 +115,12 @@
                     <div>
                         <p class="font-semibold text-gray-700 mb-2">Daftar Kebutuhan Donasi</p>
                         @php
-                            $donasiList = [];
-                            if(is_string($item->kebutuhan_donasi_list)) {
-                                $donasiList = json_decode($item->kebutuhan_donasi_list, true);
-                                if(!is_array($donasiList)) $donasiList = [];
+                            $donasiList = $item->kebutuhan_donasi_list ?? [];
+                            if (is_string($donasiList)) {
+                                $donasiList = json_decode($donasiList, true);
+                            }
+                            if (!is_array($donasiList)) {
+                                $donasiList = [];
                             }
                         @endphp
                         @if(count($donasiList) > 0)
@@ -128,14 +130,35 @@
                                     <th class="border border-gray-300 px-4 py-2 text-left">Nama Kebutuhan</th>
                                     <th class="border border-gray-300 px-4 py-2 text-center">Jumlah</th>
                                     <th class="border border-gray-300 px-4 py-2 text-center">Satuan</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center">Prioritas</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($donasiList as $idx => $d)
+                                @php
+                                    $target = $d['target'] ?? $d['jumlah'] ?? 0;
+                                    $jenis = $d['jenis'] ?? 'barang';
+                                    $prioritas = $d['prioritas'] ?? 'sedang';
+                                @endphp
                                 <tr class="{{ $idx%2==0 ? 'bg-white' : 'bg-gray-50' }}">
                                     <td class="border border-gray-300 px-4 py-2">{{ $d['nama'] ?? '-' }}</td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $d['target'] ?? 0 }}</td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $d['satuan'] ?? 'unit' }}</td>
+                                    <td class="border border-gray-300 px-4 py-2 text-center">
+                                        @if($jenis == 'uang')
+                                            Rp {{ number_format($target, 0, ',', '.') }}
+                                        @else
+                                            {{ number_format($target, 0, ',', '.') }}
+                                        @endif
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $d['satuan'] ?? ($jenis == 'uang' ? 'Rupiah' : 'unit') }}</td>
+                                    <td class="border border-gray-300 px-4 py-2 text-center">
+                                        @if($prioritas == 'tinggi')
+                                            <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs">Tinggi</span>
+                                        @elseif($prioritas == 'rendah')
+                                            <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Rendah</span>
+                                        @else
+                                            <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs">Sedang</span>
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -156,13 +179,14 @@
             @endforelse
         </div>
     @else
+        {{-- ROLE LEMBAGA (BUKAN ADMIN) --}}
         <div class="space-y-6">
             @forelse($informasi as $item)
             <div class="bg-white rounded-xl shadow-md overflow-hidden">
                 <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] px-5 py-3">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-bold text-white">{{ $item->lembaga->nama_lembaga ?? 'Lembaga' }}</h3>
-                        <a href="{{ route('informasi.edit', $item->informasi_id) }}" class="bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded-lg text-sm">Edit</a>
+                        <a href="{{ route('informasi.edit', $item->informasi_id) }}" class="bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded-lg text-sm">Edit Informasi</a>
                     </div>
                 </div>
                 <div class="p-5">
@@ -194,36 +218,59 @@
                     <div>
                         <p class="font-semibold text-gray-700 mb-2">Daftar Kebutuhan Donasi</p>
                         @php
-                            $donasiList = [];
-                            if(is_string($item->kebutuhan_donasi_list)) {
-                                $donasiList = json_decode($item->kebutuhan_donasi_list, true);
-                                if(!is_array($donasiList)) $donasiList = [];
+                            $donasiList = $item->kebutuhan_donasi_list ?? [];
+                            if (is_string($donasiList)) {
+                                $donasiList = json_decode($donasiList, true);
+                            }
+                            if (!is_array($donasiList)) {
+                                $donasiList = [];
                             }
                         @endphp
                         @if(count($donasiList) > 0)
-                        <table class="w-full border-collapse border border-gray-300">
-                            <thead>
-                                <tr class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] text-white">
-                                    <th class="border border-gray-300 px-4 py-2 text-left">Nama Kebutuhan</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-center">Jumlah</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-center">Satuan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($donasiList as $idx => $d)
-                                <tr class="{{ $idx%2==0 ? 'bg-white' : 'bg-gray-50' }}">
-                                    <td class="border border-gray-300 px-4 py-2">{{ $d['nama'] ?? '-' }}</td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $d['target'] ?? 0 }}</td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center">{{ $d['satuan'] ?? 'unit' }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        @else
-                        <div class="bg-gray-50 p-4 text-center rounded-lg">
-                            <p class="text-gray-500">Belum ada data kebutuhan donasi</p>
-                        </div>
-                        @endif
+<table class="w-full border-collapse border border-gray-300">
+    <thead>
+        <tr class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] text-white">
+            <th class="border border-gray-300 px-4 py-2 text-left">Nama Kebutuhan</th>
+            <th class="border border-gray-300 px-4 py-2 text-center">Jumlah</th>
+            <th class="border border-gray-300 px-4 py-2 text-center">Satuan</th>
+            <th class="border border-gray-300 px-4 py-2 text-center">Prioritas</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($donasiList as $idx => $d)
+        @php
+            $target = $d['target'] ?? $d['jumlah'] ?? 0;
+            $jenis = $d['jenis'] ?? 'barang';
+            $prioritas = $d['prioritas'] ?? 'sedang';
+        @endphp
+        <tr class="{{ $idx%2==0 ? 'bg-white' : 'bg-gray-50' }}">
+            <td class="border border-gray-300 px-4 py-2">{{ $d['nama'] ?? '-' }}</td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+                @if($jenis == 'uang')
+                    Rp {{ number_format($target, 0, ',', '.') }}
+                @else
+                    {{ number_format($target, 0, ',', '.') }}
+                @endif
+            </td>
+            <td class="border border-gray-300 px-4 py-2 text-center">{{ $d['satuan'] ?? ($jenis == 'uang' ? 'Rupiah' : 'unit') }}</td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+                @if($prioritas == 'tinggi')
+                    <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs">Tinggi</span>
+                @elseif($prioritas == 'rendah')
+                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Rendah</span>
+                @else
+                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs">Sedang</span>
+                @endif
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+@else
+<div class="bg-gray-50 p-4 text-center rounded-lg">
+    <p class="text-gray-500">Belum ada data kebutuhan donasi</p>
+</div>
+@endif
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@
                 <span class="text-blue-600 text-xl font-bold">S</span>
             </div>
             <div>
-                <h1 class="text-xl font-bold text-white">SISOREL</h1>
+                <h1 class="text-xl font-bold text-white">SIRELA</h1>
                 <p class="text-[11px] text-blue-200 mt-0.5">Sistem Informasi Sosial</p>
             </div>
         </a>

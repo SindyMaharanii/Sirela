@@ -42,6 +42,10 @@ class RegisteredUserController extends Controller
             'email_lembaga' => 'required|email',
             'website' => 'nullable|url',
             
+            // ========== REKENING & BANK (WAJIB UNTUK SEMUA JENIS LEMBAGA) ==========
+            'nomor_rekening' => 'required|string',
+            'nama_bank' => 'required|string',
+            
             // ========== PERSETUJUAN (WAJIB) ==========
             'terms' => 'required',
         ];
@@ -62,7 +66,6 @@ class RegisteredUserController extends Controller
             $rules['npwp_lembaga'] = 'required|string';
             $rules['nama_pimpinan'] = 'required|string';
             $rules['nik_pimpinan'] = 'required|string|size:16';
-            $rules['rekening_lembaga'] = 'required|string';
             $rules['file_akta'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:5120';
             $rules['file_npwp'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:5120';
             $rules['file_ktp_pimpinan'] = 'required|image|mimes:jpg,jpeg,png|max:5120';
@@ -74,7 +77,6 @@ class RegisteredUserController extends Controller
             $rules['tanggal_sk'] = 'required|date';
             $rules['nama_koordinator'] = 'required|string';
             $rules['nik_koordinator'] = 'required|string|size:16';
-            $rules['rekening_komunitas'] = 'required|string';
             $rules['file_sk'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:5120';
             $rules['file_ktp_koordinator'] = 'required|image|mimes:jpg,jpeg,png|max:5120';
         }
@@ -103,68 +105,68 @@ class RegisteredUserController extends Controller
             $data['file_ktp_koordinator'] = $request->file('file_ktp_koordinator')->store('dokumen/ktp', 'public');
         }
 
-        // ========== SIMPAN KE TABEL USERS ==========
-        $userData = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'lembaga',
-            'status_akun' => 'nonaktif',
-            'jenis_lembaga' => $request->jenis_lembaga,
-            'nama_lembaga' => $request->nama_lembaga,
-            'tahun_berdiri' => $request->tahun_berdiri,
-            'alamat' => $request->alamat,
-            'provinsi' => $request->provinsi,
-            'kota' => $request->kota,
-            'kode_pos' => $request->kode_pos,
-            'telepon_lembaga' => $request->telepon_lembaga,
-            'email_lembaga' => $request->email_lembaga,
-            'website' => $request->website,
-        ];
+    $userData = [
+    'name' => $request->name,
+    'email' => $request->email,
+    'password' => Hash::make($request->password),
+    'role' => 'lembaga',
+    'status_akun' => 'nonaktif',
+    'jenis_lembaga' => $request->jenis_lembaga,
+    'nama_lembaga' => $request->nama_lembaga,
+    'tahun_berdiri' => $request->tahun_berdiri,
+    'alamat' => $request->alamat,
+    'provinsi' => $request->provinsi,
+    'kota' => $request->kota,
+    'kode_pos' => $request->kode_pos,
+    'telepon_lembaga' => $request->telepon_lembaga,
+    'email_lembaga' => $request->email_lembaga,
+    'website' => $request->website,
+    'rekening_lembaga' => $request->nomor_rekening,
+    'bank_name' => $request->nama_bank, 
+];
 
-        // Data khusus Pemerintah
-        if ($request->jenis_lembaga == 'pemerintah') {
-            $userData['kementerian'] = $request->kementerian;
-            $userData['eselon'] = $request->eselon;
-            $userData['nomor_sotk'] = $request->nomor_sotk;
-            $userData['nip_pimpinan'] = $request->nip_pimpinan;
-            $userData['file_sotk'] = $data['file_sotk'] ?? null;
-        }
+// Pemerintah
+if ($request->jenis_lembaga == 'pemerintah') {
+    $userData['kementerian'] = $request->kementerian;
+    $userData['eselon'] = $request->eselon;
+    $userData['nomor_sotk'] = $request->nomor_sotk;
+    $userData['nip_pimpinan'] = $request->nip_pimpinan;
+    $userData['file_sotk'] = $data['file_sotk'] ?? null;
+}
 
-        // Data khusus Swasta
-        if ($request->jenis_lembaga == 'swasta') {
-            $userData['tipe_swasta'] = $request->tipe_swasta;
-            $userData['nomor_akta'] = $request->nomor_akta;
-            $userData['npwp_lembaga'] = $request->npwp_lembaga;
-            $userData['nama_pimpinan'] = $request->nama_pimpinan;
-            $userData['nik_pimpinan'] = $request->nik_pimpinan;
-            $userData['rekening_lembaga'] = $request->rekening_lembaga;
-            $userData['file_akta'] = $data['file_akta'] ?? null;
-            $userData['file_npwp'] = $data['file_npwp'] ?? null;
-            $userData['file_ktp_pimpinan'] = $data['file_ktp_pimpinan'] ?? null;
-        }
+// Swasta
+if ($request->jenis_lembaga == 'swasta') {
+    $userData['tipe_swasta'] = $request->tipe_swasta;
+    $userData['nomor_akta'] = $request->nomor_akta;
+    $userData['npwp_lembaga'] = $request->npwp_lembaga;
+    $userData['nama_pimpinan'] = $request->nama_pimpinan;
+    $userData['nik_pimpinan'] = $request->nik_pimpinan;
+    $userData['file_akta'] = $data['file_akta'] ?? null;
+    $userData['file_npwp'] = $data['file_npwp'] ?? null;
+    $userData['file_ktp_pimpinan'] = $data['file_ktp_pimpinan'] ?? null;
+}
 
-        // Data khusus Komunitas
-        if ($request->jenis_lembaga == 'komunitas') {
-            $userData['nomor_sk'] = $request->nomor_sk;
-            $userData['tanggal_sk'] = $request->tanggal_sk;
-            $userData['nama_koordinator'] = $request->nama_koordinator;
-            $userData['nik_koordinator'] = $request->nik_koordinator;
-            $userData['rekening_komunitas'] = $request->rekening_komunitas;
-            $userData['file_sk'] = $data['file_sk'] ?? null;
-            $userData['file_ktp_koordinator'] = $data['file_ktp_koordinator'] ?? null;
-        }
+// Komunitas
+if ($request->jenis_lembaga == 'komunitas') {
+    $userData['nomor_sk'] = $request->nomor_sk;
+    $userData['tanggal_sk'] = $request->tanggal_sk;
+    $userData['nama_koordinator'] = $request->nama_koordinator;
+    $userData['nik_koordinator'] = $request->nik_koordinator;
+    $userData['rekening_komunitas'] = $request->nomor_rekening;
+    $userData['bank_name_komunitas'] = $request->nama_bank;
+    $userData['file_sk'] = $data['file_sk'] ?? null;
+    $userData['file_ktp_koordinator'] = $data['file_ktp_koordinator'] ?? null;
+}
 
         $user = User::create($userData);
 
-        // ========== OTOMATIS BUAT PROFIL DI TABEL LEMBAGA ==========
         Lembaga::create([
             'pengguna_id' => $user->id,
             'nama_lembaga' => $request->nama_lembaga,
             'alamat' => $request->alamat,
-            'lokasi' => $request->kota, // Gunakan kota sebagai lokasi awal
+            'lokasi' => $request->kota,
             'kontak' => $request->telepon_lembaga,
-            'visi' => null, // Bisa diisi nanti saat edit
+            'visi' => null,
             'misi' => null,
             'deskripsi' => null,
         ]);

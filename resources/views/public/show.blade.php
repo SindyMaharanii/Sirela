@@ -86,6 +86,26 @@
                 </div>
             </div>
 
+            <!-- Info Rekening Bank -->
+            @if(isset($lembaga['user']) && ($lembaga['user']->rekening_lembaga || $lembaga['user']->rekening_komunitas))
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="flex items-start gap-3 p-3 bg-yellow-50 rounded-xl border border-yellow-200">
+                    <i class="fas fa-university text-yellow-600 mt-0.5 text-lg"></i>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase tracking-wide">Nomor Rekening</p>
+                        <p class="text-gray-800 font-medium">{{ $lembaga['user']->rekening_lembaga ?? $lembaga['user']->rekening_komunitas ?? 'Belum diisi' }}</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3 p-3 bg-yellow-50 rounded-xl border border-yellow-200">
+                    <i class="fas fa-building-columns text-yellow-600 mt-0.5 text-lg"></i>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase tracking-wide">Nama Bank</p>
+                        <p class="text-gray-800 font-medium">{{ $lembaga['user']->bank_name ?? $lembaga['user']->bank_name_komunitas ?? 'Belum diisi' }}</p>
+                    </div>
+                </div>
+            </div>
+            @endif
+
             <!-- KATEGORI -->
             <div class="mb-6">
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
@@ -136,8 +156,13 @@
     @if(isset($lembaga['informasi']) && $lembaga['informasi'])
     @php 
         $info = $lembaga['informasi'];
-        $donasiList = json_decode($info['kebutuhan_donasi_list'] ?? '[]', true);
-        if(!is_array($donasiList)) $donasiList = [];
+        $donasiList = $info['kebutuhan_donasi_list'] ?? [];
+        if (is_string($donasiList)) {
+            $donasiList = json_decode($donasiList, true);
+        }
+        if (!is_array($donasiList)) {
+            $donasiList = [];
+        }
     @endphp
     
     <!-- Card Data Anak Asuh -->
@@ -183,18 +208,46 @@
                     <thead>
                         <tr class="bg-gradient-to-r from-rose-500 to-pink-600 text-white">
                             <th class="border border-gray-300 px-4 py-2 text-left">Nama Kebutuhan</th>
-                            <th class="border border-gray-300 px-4 py-2 text-center">Jumlah</th>
+                            <th class="border border-gray-300 px-4 py-2 text-center">Target</th>
+                            <th class="border border-gray-300 px-4 py-2 text-center">Terkumpul</th>
                             <th class="border border-gray-300 px-4 py-2 text-center">Satuan</th>
+                            <th class="border border-gray-300 px-4 py-2 text-center">Progress</th>
                             <th class="border border-gray-300 px-4 py-2 text-center">Prioritas</th>
-                            <th class="border border-gray-300 px-4 py-2 text-center">Aksi</th>
+                            <th class="border border-gray-300 px-4 py-2 text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($donasiList as $index => $item)
+                        @php
+                            $target = $item['target'] ?? $item['jumlah'] ?? 0;
+                            $terkumpul = $item['terkumpul'] ?? 0;
+                            $persen = $target > 0 ? min(100, round(($terkumpul / $target) * 100, 2)) : 0;
+                            $terpenuhi = $terkumpul >= $target;
+                            $jenis = $item['jenis'] ?? 'barang';
+                        @endphp
                         <tr class="hover:bg-gray-50">
                             <td class="border border-gray-300 px-4 py-2">{{ $item['nama'] ?? '-' }}</td>
-                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $item['target'] ?? $item['jumlah'] ?? 0 }}</td>
-                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $item['satuan'] ?? 'unit' }}</td>
+                            <td class="border border-gray-300 px-4 py-2 text-center">
+                                @if($jenis == 'uang')
+                                    Rp {{ number_format($target, 0, ',', '.') }}
+                                @else
+                                    {{ number_format($target, 0, ',', '.') }} {{ $item['satuan'] ?? 'unit' }}
+                                @endif
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2 text-center">
+                                @if($jenis == 'uang')
+                                    Rp {{ number_format($terkumpul, 0, ',', '.') }}
+                                @else
+                                    {{ number_format($terkumpul, 0, ',', '.') }} {{ $item['satuan'] ?? 'unit' }}
+                                @endif
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $item['satuan'] ?? ($jenis == 'uang' ? 'Rupiah' : 'unit') }}</td>
+                            <td class="border border-gray-300 px-4 py-2 text-center">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-green-600 rounded-full h-2.5" style="width: {{ $persen }}%"></div>
+                                </div>
+                                <span class="text-xs text-gray-500">{{ $persen }}%</span>
+                            </td>
                             <td class="border border-gray-300 px-4 py-2 text-center">
                                 @php $prioritas = $item['prioritas'] ?? 'sedang'; @endphp
                                 @if($prioritas == 'tinggi') <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs">Tinggi</span>
@@ -203,10 +256,29 @@
                                 @endif
                             </td>
                             <td class="border border-gray-300 px-4 py-2 text-center">
-                                <button onclick="bukaModalDonasi('{{ $info['informasi_id'] }}', '{{ $lembaga['lembaga_id'] }}', '{{ $item['id'] ?? $index }}', '{{ addslashes($item['nama']) }}', '{{ $item['satuan'] ?? 'unit' }}')"
-                                        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm transition">
-                                    <i class="fas fa-hand-holding-heart"></i> Donasi
-                                </button>
+                                @if($terpenuhi)
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+                                        <i class="fas fa-check-circle mr-1"></i> SUDAH TERPENUHI
+                                    </span>
+                                @else
+                                    @php
+                                        $bankName = $lembaga['user']->bank_name ?? $lembaga['user']->bank_name_komunitas ?? '';
+                                        $rekening = $lembaga['user']->rekening_lembaga ?? $lembaga['user']->rekening_komunitas ?? '';
+                                    @endphp
+                                    <button onclick="bukaModalDonasi(
+                                        '{{ $info['informasi_id'] }}', 
+                                        '{{ $lembaga['lembaga_id'] }}', 
+                                        '{{ $item['id'] ?? $index }}', 
+                                        '{{ addslashes($item['nama']) }}', 
+                                        '{{ $item['satuan'] ?? 'unit' }}', 
+                                        '{{ $jenis }}',
+                                        '{{ addslashes($bankName) }}',
+                                        '{{ addslashes($rekening) }}'
+                                    )"
+                                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm transition">
+                                        <i class="fas fa-hand-holding-heart"></i> Donasi
+                                    </button>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
@@ -251,13 +323,13 @@
         </div>
 
         <div class="p-6">
-            <form action="{{ route('donasi.store') }}" method="POST">
+            <form action="{{ route('donasi.store') }}" method="POST" id="formDonasiPublik" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="informasi_id" id="informasi_id">
                 <input type="hidden" name="lembaga_id" id="lembaga_id">
                 <input type="hidden" name="kebutuhan_id" id="kebutuhan_id">
                 <input type="hidden" name="kebutuhan_nama" id="kebutuhan_nama">
-                <input type="hidden" name="kebutuhan_jenis" value="barang">
+                <input type="hidden" name="kebutuhan_jenis" id="kebutuhan_jenis">
                 <input type="hidden" name="satuan" id="satuan">
                 
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 mb-5 border border-blue-200">
@@ -268,11 +340,45 @@
                     <p class="text-base font-semibold text-gray-800" id="tampilKebutuhan">-</p>
                 </div>
                 
-                <div class="mb-4">
+                <div class="mb-4" id="barangField">
                     <label class="block text-gray-700 font-semibold mb-2">Jumlah Barang (<span id="satuan_label">unit</span>)</label>
-                    <input type="number" name="jumlah_barang" id="jumlah_barang" step="0.01" 
+                    <input type="text" name="jumlah_barang" id="jumlah_barang" 
                            class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                           placeholder="Masukkan jumlah barang">
+                           placeholder="0"
+                           onkeypress="return hanyaAngka(event)"
+                           onkeyup="formatRibuan(this)">
+                </div>
+                
+                <div class="mb-4 hidden" id="uangField">
+                    <label class="block text-gray-700 font-semibold mb-2">Nominal Donasi (Rp)</label>
+                    <input type="text" name="nominal_uang" id="nominal_uang" 
+                           class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="0"
+                           onkeypress="return hanyaAngka(event)"
+                           onkeyup="formatRibuan(this)">
+                    <p class="text-xs text-gray-400 mt-1">Cukup ketik angka, akan otomatis terformat</p>
+                    
+                    <div id="uangFields" class="hidden mt-4 space-y-3">
+                        <div class="bg-gray-50 rounded-xl p-3 border border-gray-200">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Nama Bank</p>
+                            <p class="text-sm font-semibold text-gray-800" id="tampilNamaBank">-</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-3 border border-gray-200">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Nomor Rekening</p>
+                            <p class="text-sm font-semibold text-gray-800" id="tampilNomorRekening">-</p>
+                        </div>
+                        
+                        <!-- Hidden input untuk dikirim ke controller -->
+                        <input type="hidden" name="nama_rekening" id="nama_rekening">
+                        <input type="hidden" name="nama_bank" id="nama_bank">
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Upload Bukti Transfer</label>
+                            <input type="file" name="bukti_transfer" id="bukti_transfer" accept="image/*,application/pdf"
+                                   class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <p class="text-xs text-gray-400 mt-1">Upload screenshot bukti transfer (jpg, png, pdf) - maks 2MB</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="mb-4">
@@ -287,13 +393,6 @@
                     <input type="tel" name="no_hp" required
                            class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                            placeholder="08123456789">
-                </div>
-                
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">Email (Opsional)</label>
-                    <input type="email" name="email"
-                           class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                           placeholder="email@contoh.com">
                 </div>
                 
                 <div class="mb-5">
@@ -329,14 +428,65 @@
 </div>
 
 <script>
-    function bukaModalDonasi(informasiId, lembagaId, kebutuhanId, kebutuhanNama, satuan) {
+    function hanyaAngka(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+    
+    function formatRibuan(input) {
+        let value = input.value.replace(/\./g, '');
+        if (value === '') value = '0';
+        let number = parseInt(value);
+        if (isNaN(number)) number = 0;
+        input.setAttribute('data-raw', number);
+        input.value = number.toLocaleString('id-ID');
+    }
+    
+    document.getElementById('formDonasiPublik')?.addEventListener('submit', function(e) {
+        const jumlahBarang = document.getElementById('jumlah_barang');
+        const nominalUang = document.getElementById('nominal_uang');
+        
+        if (jumlahBarang) {
+            let rawValue = jumlahBarang.getAttribute('data-raw') || jumlahBarang.value.replace(/\./g, '');
+            jumlahBarang.value = rawValue;
+        }
+        
+        if (nominalUang) {
+            let rawValue = nominalUang.getAttribute('data-raw') || nominalUang.value.replace(/\./g, '');
+            nominalUang.value = rawValue;
+        }
+    });
+    
+    function bukaModalDonasi(informasiId, lembagaId, kebutuhanId, kebutuhanNama, satuan, jenis, namaBank, nomorRekening) {
         document.getElementById('informasi_id').value = informasiId;
         document.getElementById('lembaga_id').value = lembagaId;
         document.getElementById('kebutuhan_id').value = kebutuhanId;
         document.getElementById('kebutuhan_nama').value = kebutuhanNama;
+        document.getElementById('kebutuhan_jenis').value = jenis;
         document.getElementById('satuan').value = satuan;
         document.getElementById('tampilKebutuhan').innerText = kebutuhanNama;
         document.getElementById('satuan_label').innerText = satuan;
+        
+        // Set info rekening dari lembaga
+        if (jenis === 'uang') {
+            document.getElementById('tampilNamaBank').innerText = namaBank || 'Tidak tersedia';
+            document.getElementById('tampilNomorRekening').innerText = nomorRekening || 'Tidak tersedia';
+            document.getElementById('nama_rekening').value = nomorRekening || '';
+            document.getElementById('nama_bank').value = namaBank || '';
+        }
+        
+        if (jenis === 'uang') {
+            document.getElementById('barangField').classList.add('hidden');
+            document.getElementById('uangField').classList.remove('hidden');
+            document.getElementById('uangFields').classList.remove('hidden');
+        } else {
+            document.getElementById('barangField').classList.remove('hidden');
+            document.getElementById('uangField').classList.add('hidden');
+            document.getElementById('uangFields').classList.add('hidden');
+        }
         
         document.getElementById('modalDonasi').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
@@ -347,7 +497,7 @@
         document.body.style.overflow = 'auto';
     }
     
-    document.getElementById('modalDonasi').addEventListener('click', function(e) {
+    document.getElementById('modalDonasi')?.addEventListener('click', function(e) {
         if (e.target === this) tutupModal();
     });
 </script>

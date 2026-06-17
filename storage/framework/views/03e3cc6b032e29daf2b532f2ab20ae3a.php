@@ -116,10 +116,12 @@
                     <div>
                         <p class="font-semibold text-gray-700 mb-2">Daftar Kebutuhan Donasi</p>
                         <?php
-                            $donasiList = [];
-                            if(is_string($item->kebutuhan_donasi_list)) {
-                                $donasiList = json_decode($item->kebutuhan_donasi_list, true);
-                                if(!is_array($donasiList)) $donasiList = [];
+                            $donasiList = $item->kebutuhan_donasi_list ?? [];
+                            if (is_string($donasiList)) {
+                                $donasiList = json_decode($donasiList, true);
+                            }
+                            if (!is_array($donasiList)) {
+                                $donasiList = [];
                             }
                         ?>
                         <?php if(count($donasiList) > 0): ?>
@@ -129,14 +131,37 @@
                                     <th class="border border-gray-300 px-4 py-2 text-left">Nama Kebutuhan</th>
                                     <th class="border border-gray-300 px-4 py-2 text-center">Jumlah</th>
                                     <th class="border border-gray-300 px-4 py-2 text-center">Satuan</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center">Prioritas</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $__currentLoopData = $donasiList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $idx => $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php
+                                    $target = $d['target'] ?? $d['jumlah'] ?? 0;
+                                    $jenis = $d['jenis'] ?? 'barang';
+                                    $prioritas = $d['prioritas'] ?? 'sedang';
+                                ?>
                                 <tr class="<?php echo e($idx%2==0 ? 'bg-white' : 'bg-gray-50'); ?>">
                                     <td class="border border-gray-300 px-4 py-2"><?php echo e($d['nama'] ?? '-'); ?></td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center"><?php echo e($d['target'] ?? 0); ?></td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center"><?php echo e($d['satuan'] ?? 'unit'); ?></td>
+                                    <td class="border border-gray-300 px-4 py-2 text-center">
+                                        <?php if($jenis == 'uang'): ?>
+                                            Rp <?php echo e(number_format($target, 0, ',', '.')); ?>
+
+                                        <?php else: ?>
+                                            <?php echo e(number_format($target, 0, ',', '.')); ?>
+
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 text-center"><?php echo e($d['satuan'] ?? ($jenis == 'uang' ? 'Rupiah' : 'unit')); ?></td>
+                                    <td class="border border-gray-300 px-4 py-2 text-center">
+                                        <?php if($prioritas == 'tinggi'): ?>
+                                            <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs">Tinggi</span>
+                                        <?php elseif($prioritas == 'rendah'): ?>
+                                            <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Rendah</span>
+                                        <?php else: ?>
+                                            <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs">Sedang</span>
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
@@ -157,13 +182,14 @@
             <?php endif; ?>
         </div>
     <?php else: ?>
+        
         <div class="space-y-6">
             <?php $__empty_1 = true; $__currentLoopData = $informasi; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="bg-white rounded-xl shadow-md overflow-hidden">
                 <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] px-5 py-3">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-bold text-white"><?php echo e($item->lembaga->nama_lembaga ?? 'Lembaga'); ?></h3>
-                        <a href="<?php echo e(route('informasi.edit', $item->informasi_id)); ?>" class="bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded-lg text-sm">Edit</a>
+                        <a href="<?php echo e(route('informasi.edit', $item->informasi_id)); ?>" class="bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded-lg text-sm">Edit Informasi</a>
                     </div>
                 </div>
                 <div class="p-5">
@@ -195,36 +221,61 @@
                     <div>
                         <p class="font-semibold text-gray-700 mb-2">Daftar Kebutuhan Donasi</p>
                         <?php
-                            $donasiList = [];
-                            if(is_string($item->kebutuhan_donasi_list)) {
-                                $donasiList = json_decode($item->kebutuhan_donasi_list, true);
-                                if(!is_array($donasiList)) $donasiList = [];
+                            $donasiList = $item->kebutuhan_donasi_list ?? [];
+                            if (is_string($donasiList)) {
+                                $donasiList = json_decode($donasiList, true);
+                            }
+                            if (!is_array($donasiList)) {
+                                $donasiList = [];
                             }
                         ?>
                         <?php if(count($donasiList) > 0): ?>
-                        <table class="w-full border-collapse border border-gray-300">
-                            <thead>
-                                <tr class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] text-white">
-                                    <th class="border border-gray-300 px-4 py-2 text-left">Nama Kebutuhan</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-center">Jumlah</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-center">Satuan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $__currentLoopData = $donasiList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $idx => $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <tr class="<?php echo e($idx%2==0 ? 'bg-white' : 'bg-gray-50'); ?>">
-                                    <td class="border border-gray-300 px-4 py-2"><?php echo e($d['nama'] ?? '-'); ?></td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center"><?php echo e($d['target'] ?? 0); ?></td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center"><?php echo e($d['satuan'] ?? 'unit'); ?></td>
-                                </tr>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </tbody>
-                        </table>
-                        <?php else: ?>
-                        <div class="bg-gray-50 p-4 text-center rounded-lg">
-                            <p class="text-gray-500">Belum ada data kebutuhan donasi</p>
-                        </div>
-                        <?php endif; ?>
+<table class="w-full border-collapse border border-gray-300">
+    <thead>
+        <tr class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] text-white">
+            <th class="border border-gray-300 px-4 py-2 text-left">Nama Kebutuhan</th>
+            <th class="border border-gray-300 px-4 py-2 text-center">Jumlah</th>
+            <th class="border border-gray-300 px-4 py-2 text-center">Satuan</th>
+            <th class="border border-gray-300 px-4 py-2 text-center">Prioritas</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $__currentLoopData = $donasiList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $idx => $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <?php
+            $target = $d['target'] ?? $d['jumlah'] ?? 0;
+            $jenis = $d['jenis'] ?? 'barang';
+            $prioritas = $d['prioritas'] ?? 'sedang';
+        ?>
+        <tr class="<?php echo e($idx%2==0 ? 'bg-white' : 'bg-gray-50'); ?>">
+            <td class="border border-gray-300 px-4 py-2"><?php echo e($d['nama'] ?? '-'); ?></td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+                <?php if($jenis == 'uang'): ?>
+                    Rp <?php echo e(number_format($target, 0, ',', '.')); ?>
+
+                <?php else: ?>
+                    <?php echo e(number_format($target, 0, ',', '.')); ?>
+
+                <?php endif; ?>
+            </td>
+            <td class="border border-gray-300 px-4 py-2 text-center"><?php echo e($d['satuan'] ?? ($jenis == 'uang' ? 'Rupiah' : 'unit')); ?></td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+                <?php if($prioritas == 'tinggi'): ?>
+                    <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs">Tinggi</span>
+                <?php elseif($prioritas == 'rendah'): ?>
+                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Rendah</span>
+                <?php else: ?>
+                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs">Sedang</span>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </tbody>
+</table>
+<?php else: ?>
+<div class="bg-gray-50 p-4 text-center rounded-lg">
+    <p class="text-gray-500">Belum ada data kebutuhan donasi</p>
+</div>
+<?php endif; ?>
                     </div>
                 </div>
             </div>

@@ -113,7 +113,13 @@
                         <p class="text-emerald-100 text-sm">Kebutuhan Donasi</p>
                         <p class="text-3xl font-bold">
                             <?php
-                                $donasi = json_decode($lembaga->informasi->kebutuhan_donasi_list ?? '', true);
+                                $donasi = $lembaga->informasi->kebutuhan_donasi_list ?? [];
+if (is_string($donasi)) {
+    $donasi = json_decode($donasi, true);
+}
+if (!is_array($donasi)) {
+    $donasi = [];
+}
                                 echo is_array($donasi) ? count($donasi) : 0;
                             ?>
                         </p>

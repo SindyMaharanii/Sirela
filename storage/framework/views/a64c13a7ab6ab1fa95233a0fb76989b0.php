@@ -2,16 +2,15 @@
 
 <?php $__env->startSection('content'); ?>
 <div class="max-w-6xl mx-auto">
-    <!-- Hero Section -->
     <div class="text-center mb-12 relative">
         <div class="w-28 h-28 bg-gradient-to-br from-blue-500 via-cyan-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
             <i class="fas fa-book-open text-white text-4xl"></i>
         </div>
         <h1 class="text-4xl md:text-5xl font-extrabold mb-4">
             <span class="bg-gradient-to-r from-blue-600 via-cyan-600 to-indigo-600 bg-clip-text text-transparent">Panduan</span>
-            <span class="bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent"> Penggunaan</span>
+            <span class="bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent"> Penggunaan SIRELA</span>
         </h1>
-        <p class="text-blue-600/70 text-lg">Panduan lengkap menggunakan SISOREL untuk setiap peran pengguna</p>
+        <p class="text-blue-600/70 text-lg">Panduan lengkap menggunakan SIRELA untuk setiap peran pengguna</p>
     </div>
 
     <!-- Tabs Navigation -->
@@ -41,8 +40,8 @@
                                 <i class="fas fa-search text-white text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-blue-800 text-lg mb-1">Mencari Lembaga</h3>
-                                <p class="text-blue-700/70 text-sm leading-relaxed">Gunakan fitur pencarian dan filter untuk menemukan lembaga sosial berdasarkan kategori, lokasi, atau status kolaborasi.</p>
+                                <h3 class="font-bold text-blue-800 text-lg mb-1">Mencari & Filter Lembaga</h3>
+                                <p class="text-blue-700/70 text-sm leading-relaxed">Gunakan fitur pencarian dan filter untuk menemukan lembaga sosial berdasarkan kategori, lokasi, atau status kolaborasi (Dibuka/Ditutup).</p>
                             </div>
                         </div>
                     </div>
@@ -55,7 +54,7 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-cyan-800 text-lg mb-1">Lihat Detail Lembaga</h3>
-                                <p class="text-cyan-700/70 text-sm leading-relaxed">Klik "Lihat Detail" untuk melihat informasi lengkap profil, anak asuh, dan kebutuhan donasi.</p>
+                                <p class="text-cyan-700/70 text-sm leading-relaxed">Klik "Lihat Detail" untuk melihat informasi lengkap profil lembaga, data anak asuh, dan daftar kebutuhan donasi.</p>
                             </div>
                         </div>
                     </div>
@@ -68,7 +67,7 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-green-800 text-lg mb-1">Donasi & Progress</h3>
-                                <p class="text-green-700/70 text-sm leading-relaxed">Pilih kebutuhan donasi (Beras 50kg, Susu 20 box, dll), isi form, dan pantau progress donasi (target). Lembaga akan menghubungi Anda.</p>
+                                <p class="text-green-700/70 text-sm leading-relaxed">Pilih kebutuhan donasi (barang atau uang), isi form donasi, dan pantau progress donasi (target & terkumpul). Progress maksimal 100%. Untuk donasi uang, wajib upload bukti transfer.</p>
                             </div>
                         </div>
                     </div>
@@ -81,7 +80,7 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-purple-800 text-lg mb-1">Daftar Lembaga</h3>
-                                <p class="text-purple-700/70 text-sm leading-relaxed">Klik tombol 'Daftar Sekarang' berwarna oranye di menu samping kiri untuk mendaftar sebagai lembaga sosial.</p>
+                                <p class="text-purple-700/70 text-sm leading-relaxed">Klik tombol 'Daftar Sekarang' berwarna oranye di menu samping kiri untuk mendaftar sebagai lembaga sosial. Isi data lengkap termasuk legalitas dan rekening bank.</p>
                             </div>
                         </div>
                     </div>
@@ -98,8 +97,8 @@
                                 <i class="fas fa-building text-white text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-blue-800 text-lg mb-1">Isi Profil Lembaga</h3>
-                                <p class="text-blue-700/70 text-sm leading-relaxed">Lengkapi data lembaga Anda (nama, alamat, kontak, visi misi, dan kategori).</p>
+                                <h3 class="font-bold text-blue-800 text-lg mb-1">Buat & Kelola Profil Lembaga</h3>
+                                <p class="text-blue-700/70 text-sm leading-relaxed">Lengkapi data lembaga Anda (nama, alamat, kontak, visi, misi, kategori). Profil akan ditampilkan di halaman publik setelah diverifikasi admin.</p>
                             </div>
                         </div>
                     </div>
@@ -111,8 +110,8 @@
                                 <i class="fas fa-hand-holding-heart text-white text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-cyan-800 text-lg mb-1">Kelola Donasi</h3>
-                                <p class="text-cyan-700/70 text-sm leading-relaxed">Isi data anak asuh, kebutuhan donasi (nama, jumlah, satuan), dan status kolaborasi.</p>
+                                <h3 class="font-bold text-cyan-800 text-lg mb-1">Kelola Informasi Donasi</h3>
+                                <p class="text-cyan-700/70 text-sm leading-relaxed">Isi data anak asuh (jumlah, rentang usia, deskripsi), tambah kebutuhan donasi dengan target, satuan, dan prioritas (Tinggi/Sedang/Rendah). Atur status kolaborasi (Dibuka/Ditutup).</p>
                             </div>
                         </div>
                     </div>
@@ -124,8 +123,8 @@
                                 <i class="fas fa-edit text-white text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-amber-800 text-lg mb-1">Edit/Tambah Kebutuhan</h3>
-                                <p class="text-amber-700/70 text-sm leading-relaxed">Setiap kebutuhan donasi memiliki tombol Edit/Hapus sendiri, serta tombol Tambah Kebutuhan khusus.</p>
+                                <h3 class="font-bold text-amber-800 text-lg mb-1">Edit/Tambah Kebutuhan Donasi</h3>
+                                <p class="text-amber-700/70 text-sm leading-relaxed">Setiap kebutuhan donasi dapat diedit atau dihapus. Tersedia dropdown Prioritas (Tinggi/Sedang/Rendah) untuk setiap kebutuhan.</p>
                             </div>
                         </div>
                     </div>
@@ -137,8 +136,8 @@
                                 <i class="fas fa-users text-white text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-indigo-800 text-lg mb-1">Daftar Donatur</h3>
-                                <p class="text-indigo-700/70 text-sm leading-relaxed">Lihat siapa saja yang ingin berdonasi, konfirmasi, dan hubungi via WhatsApp.</p>
+                                <h3 class="font-bold text-indigo-800 text-lg mb-1">Daftar Donatur & Laporan</h3>
+                                <p class="text-indigo-700/70 text-sm leading-relaxed">Lihat daftar donatur yang telah berdonasi (barang & uang), konfirmasi donasi, dan lihat bukti transfer untuk donasi uang. Unduh laporan donasi dalam format Excel atau PDF.</p>
                             </div>
                         </div>
                     </div>
@@ -155,8 +154,8 @@
                                 <i class="fas fa-user-check text-white text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-blue-800 text-lg mb-1">Verifikasi Akun</h3>
-                                <p class="text-blue-700/70 text-sm leading-relaxed">Aktifkan akun lembaga yang mendaftar melalui menu Verifikasi Akun.</p>
+                                <h3 class="font-bold text-blue-800 text-lg mb-1">Verifikasi Akun Lembaga</h3>
+                                <p class="text-blue-700/70 text-sm leading-relaxed">Aktifkan atau nonaktifkan akun lembaga yang mendaftar. Hanya lembaga dengan status "Aktif" yang dapat mengelola donasi dan muncul di halaman publik.</p>
                             </div>
                         </div>
                     </div>
@@ -169,12 +168,11 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-cyan-800 text-lg mb-1">Kelola Kategori</h3>
-                                <p class="text-cyan-700/70 text-sm leading-relaxed">Tambah/edit kategori lembaga melalui menu Kelola Kategori.</p>
+                                <p class="text-cyan-700/70 text-sm leading-relaxed">Tambah, edit, atau hapus kategori lembaga sosial (Pendidikan, Kesehatan, Anak Yatim, dll) yang akan digunakan oleh lembaga.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Card 3 - Monitoring -->
                     <div class="group relative overflow-hidden bg-gradient-to-br from-indigo-100 via-indigo-50 to-white rounded-xl p-5 border border-indigo-200 hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-indigo-300 to-blue-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
@@ -182,8 +180,8 @@
                                 <i class="fas fa-chart-line text-white text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-indigo-800 text-lg mb-1">Monitoring</h3>
-                                <p class="text-indigo-700/70 text-sm leading-relaxed">Pantau semua lembaga melalui menu Semua Lembaga.</p>
+                                <h3 class="font-bold text-indigo-800 text-lg mb-1">Monitoring Lembaga</h3>
+                                <p class="text-indigo-700/70 text-sm leading-relaxed">Pantau semua lembaga terdaftar melalui menu "Manajemen Lembaga". Lihat detail informasi dan status verifikasi setiap lembaga.</p>
                             </div>
                         </div>
                     </div>
@@ -192,11 +190,11 @@
                         <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-purple-300 to-pink-200 rounded-full opacity-30 group-hover:scale-150 transition-transform duration-500"></div>
                         <div class="flex items-start gap-4 relative z-10">
                             <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition">
-                                <i class="fas fa-database text-white text-xl"></i>
+                                <i class="fas fa-chart-pie text-white text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-purple-800 text-lg mb-1">Informasi Donasi</h3>
-                                <p class="text-purple-700/70 text-sm leading-relaxed">Lihat semua informasi donasi dari lembaga terdaftar.</p>
+                                <h3 class="font-bold text-purple-800 text-lg mb-1">Laporan & Rekapitulasi</h3>
+                                <p class="text-purple-700/70 text-sm leading-relaxed">Lihat laporan donasi per periode (bulan/tahun) dan rekapitulasi ketercapaian target donasi dari seluruh lembaga.</p>
                             </div>
                         </div>
                     </div>

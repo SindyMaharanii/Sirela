@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<!-- FILE INI ADALAH show.blade.php - VERSION 2.0 - {{ date('Y-m-d H:i:s') }} -->
 @section('content')
 <div class="p-6">
     <div class="max-w-5xl mx-auto">
@@ -48,6 +48,7 @@
             </div>
         </div>
 
+        <!-- TABEL KEBUTUHAN DONASI DENGAN PRIORITAS DAN AKSI -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
             <div class="bg-gradient-to-r from-rose-500 to-pink-600 px-6 py-4 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-white">Daftar Kebutuhan Donasi</h2>
@@ -58,8 +59,13 @@
             </div>
             <div class="p-6">
                 @php
-                    $list = json_decode($informasi->kebutuhan_donasi_list ?? '[]', true);
-                    if(!is_array($list)) $list = [];
+                    $list = $informasi->kebutuhan_donasi_list ?? [];
+                    if (is_string($list)) {
+                        $list = json_decode($list, true);
+                    }
+                    if (!is_array($list)) {
+                        $list = [];
+                    }
                 @endphp
                 
                 @if(count($list) > 0)
@@ -76,10 +82,20 @@
                         </thead>
                         <tbody>
                             @foreach($list as $index => $item)
+                            @php
+                                $target = $item['target'] ?? $item['jumlah'] ?? 0;
+                                $jenis = $item['jenis'] ?? 'barang';
+                            @endphp
                             <tr class="hover:bg-gray-50">
                                 <td class="border border-gray-300 px-4 py-2">{{ $item['nama'] ?? '-' }}</td>
-                                <td class="border border-gray-300 px-4 py-2 text-center">{{ $item['target'] ?? $item['jumlah'] ?? 0 }}</td>
-                                <td class="border border-gray-300 px-4 py-2 text-center">{{ $item['satuan'] ?? 'unit' }}</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">
+                                    @if($jenis == 'uang')
+                                        Rp {{ number_format($target, 0, ',', '.') }}
+                                    @else
+                                        {{ number_format($target, 0, ',', '.') }}
+                                    @endif
+                                </td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">{{ $item['satuan'] ?? ($jenis == 'uang' ? 'Rupiah' : 'unit') }}</td>
                                 <td class="border border-gray-300 px-4 py-2 text-center">
                                     @php $prioritas = $item['prioritas'] ?? 'sedang'; @endphp
                                     @if($prioritas == 'tinggi')
@@ -119,6 +135,7 @@
     </div>
 </div>
 
+<!-- MODAL TAMBAH/EDIT -->
 <div id="modalKebutuhan" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 hidden">
     <div class="bg-white rounded-xl max-w-md w-full shadow-xl">
         <div class="bg-gradient-to-r from-[#0f2b5c] via-[#1e3a8a] to-[#2563eb] px-6 py-4 rounded-t-xl flex justify-between items-center">
@@ -139,7 +156,7 @@
                 
                 <div class="grid grid-cols-2 gap-3 mb-4">
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Jumlah</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Target Jumlah</label>
                         <input type="number" name="jumlah" id="jumlah" 
                                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                placeholder="0">
@@ -271,6 +288,11 @@
             if (!satuan) { alert('Silakan isi satuan'); return; }
         }
         
+        let jenis = 'barang';
+        if (satuan.toLowerCase() == 'rp' || satuan.toLowerCase() == 'rupiah' || satuan.toLowerCase() == 'uang') {
+            jenis = 'uang';
+        }
+        
         const newItem = {
             id: (index === '') ? Date.now().toString() : (currentList[parseInt(index)]?.id || Date.now().toString()),
             nama: document.getElementById('nama_kebutuhan').value,
@@ -279,7 +301,7 @@
             terkumpul: (index !== '' && currentList[parseInt(index)]?.terkumpul) || 0,
             satuan: satuan,
             prioritas: document.getElementById('prioritas').value,
-            jenis: 'barang'
+            jenis: jenis
         };
         
         if (!newItem.nama) { alert('Nama kebutuhan wajib diisi'); return; }

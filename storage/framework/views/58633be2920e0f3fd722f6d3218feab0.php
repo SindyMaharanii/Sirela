@@ -63,7 +63,7 @@
         <div class="bg-white px-5 pb-6 pt-5">
             <div class="text-center mb-5">
                 <h2 class="text-xl font-bold text-gray-800">Login</h2>
-                <p class="text-gray-400 text-xs mt-1">Masuk ke akun SISOREL Anda</p>
+                <p class="text-gray-400 text-xs mt-1">Masuk ke akun SIRELA Anda</p>
                 <div class="h-0.5 w-12 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full mx-auto mt-2"></div>
             </div>
 

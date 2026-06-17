@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'SISOREL') }} - Platform Informasi Sosial</title>
+    <title>{{ config('app.name', 'SIRELA') }} - Platform Informasi Sosial</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -128,7 +128,7 @@
 </head>
 <body>
 
-<button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
+<button class="menu-toggle">
     <i class="fas fa-bars text-white text-lg"></i>
 </button>
 
@@ -139,7 +139,7 @@
                 <span class="text-blue-600 text-2xl font-bold">S</span>
             </div>
             <div>
-                <h1 class="text-2xl font-bold text-white">SISOREL</h1>
+                <h1 class="text-2xl font-bold text-white">SIRELA</h1>
                 <p class="text-xs text-blue-200 mt-0.5">Sistem Informasi Sosial</p>
             </div>
         </a>
@@ -200,26 +200,36 @@
         </div>
         
         @if(auth()->user()->role == 'admin')
-            <a href="{{ route('verifikasi') }}" class="nav-item {{ request()->routeIs('verifikasi') ? 'active' : '' }}">
-                <i class="fas fa-user-check"></i> Verifikasi Akun
-                @php $pendingCount = \App\Models\User::where('role', 'lembaga')->where('status_akun', 'pending')->count(); @endphp
+            <a href="{{ route('kategori.index') }}" class="nav-item {{ request()->routeIs('kategori.*') ? 'active' : '' }}">
+                <i class="fas fa-tags"></i> Kelola Kategori
+            </a>
+            <a href="{{ route('lembaga.index') }}" class="nav-item {{ request()->routeIs('lembaga.*') || request()->routeIs('verifikasi') ? 'active' : '' }}">
+                <i class="fas fa-building"></i> Manajemen Lembaga
+                @php
+                    $pendingCount = \App\Models\User::where('role', 'lembaga')
+                        ->where('status_akun', 'nonaktif')
+                        ->whereHas('lembaga')
+                        ->count();
+                @endphp
                 @if($pendingCount > 0)
                     <span class="ml-auto bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">{{ $pendingCount }}</span>
                 @endif
             </a>
-            <a href="{{ route('kategori.index') }}" class="nav-item {{ request()->routeIs('kategori.*') ? 'active' : '' }}">
-                <i class="fas fa-tags"></i> Kelola Kategori
-            </a>
-            <a href="{{ route('lembaga.index') }}" class="nav-item {{ request()->routeIs('lembaga.*') ? 'active' : '' }}">
-                <i class="fas fa-building"></i> Semua Lembaga
-            </a>
             
         @elseif(auth()->user()->role == 'lembaga')
             @php
-                $userLembaga = \App\Models\Lembaga::where('pengguna_id', auth()->id())->first();
-                $lembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
-                $informasiLembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
-            @endphp
+    $userLembaga = \App\Models\Lembaga::where('pengguna_id', auth()->id())->first();
+    $lembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
+    $informasiLembagaId = $userLembaga ? $userLembaga->lembaga_id : 0;
+    
+    $pendingDonasiCountBarang = \App\Models\DonasiBarang::where('lembaga_id', $lembagaId)
+        ->where('status', 'pending')
+        ->count();
+    $pendingDonasiCountUang = \App\Models\DonasiUang::where('lembaga_id', $lembagaId)
+        ->where('status', 'pending')
+        ->count();
+    $pendingDonasiCount = $pendingDonasiCountBarang + $pendingDonasiCountUang;
+@endphp
             
             @if($lembagaId)
                 <a href="{{ route('lembaga.index') }}" class="nav-item {{ request()->routeIs('lembaga.index') ? 'active' : '' }}">
@@ -232,10 +242,23 @@
             @endif
                     
             <a href="{{ route('informasi.index') }}" class="nav-item {{ request()->routeIs('informasi.*') ? 'active' : '' }}">
-    <i class="fas fa-hand-holding-heart"></i> Informasi Donasi
-</a>
+                <i class="fas fa-hand-holding-heart"></i> Informasi Donasi
+            </a>
             <a href="{{ route('donasi.index') }}" class="nav-item {{ request()->routeIs('donasi.*') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> Daftar Donatur
+                @if($pendingDonasiCount > 0)
+                    <span class="ml-auto bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">{{ $pendingDonasiCount }}</span>
+                @endif
+            </a>
+
+            <div class="menu-divider"></div>
+
+            <div class="menu-header">
+                <i class="fas fa-chart-line"></i> LAPORAN
+            </div>
+
+            <a href="{{ route('laporan.index') }}" class="nav-item {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
+                <i class="fas fa-calendar-alt"></i> Laporan Donasi
             </a>
         @endif
 
@@ -281,7 +304,7 @@
                 <div class="w-2 h-2 bg-indigo-300 rounded-full"></div>
             </div>
             <p class="text-[10px] text-blue-200">
-                <i class="fas fa-heart text-red-300"></i> © 2026 SISOREL
+                <i class="fas fa-heart text-red-300"></i> © 2026 SIRELA
             </p>
             <p class="text-[9px] text-blue-300">Membangun Kebaikan Bersama</p>
         </div>
@@ -292,55 +315,53 @@
     @yield('content')
 </main>
 
-<div id="overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden" onclick="closeSidebar()"></div>
+<div id="overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden"></div>
 
 <script>
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('overlay');
+    var menuBtn = document.querySelector('.menu-toggle');
+    
     function closeSidebar() {
-        var sidebar = document.getElementById('sidebar');
-        var overlay = document.getElementById('overlay');
         if (sidebar) sidebar.classList.remove('open');
         if (overlay) overlay.style.display = 'none';
     }
-
-    (function() {
-        var sidebar = document.getElementById('sidebar');
-        if (sidebar) {
-            sidebar.scrollTop = 0;
-        }
-    })();
     
-    var sidebar = document.getElementById('sidebar');
-    var overlay = document.getElementById('overlay');
+    if (menuBtn) {
+        menuBtn.onclick = function(e) {
+            e.preventDefault();
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+                if (sidebar.classList.contains('open') && window.innerWidth <= 768) {
+                    if (overlay) overlay.style.display = 'block';
+                } else {
+                    if (overlay) overlay.style.display = 'none';
+                }
+            }
+            return false;
+        };
+    }
     
-    if (sidebar && overlay) {
+    if (overlay) {
+        overlay.onclick = function() {
+            closeSidebar();
+        };
+    }
+    
+    if (sidebar) {
         sidebar.addEventListener('transitionend', function() {
             if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
-                overlay.style.display = 'block';
+                if (overlay) overlay.style.display = 'block';
             } else {
-                overlay.style.display = 'none';
+                if (overlay) overlay.style.display = 'none';
             }
         });
     }
     
     window.addEventListener('resize', function() {
-        var sidebar = document.getElementById('sidebar');
-        var overlay = document.getElementById('overlay');
         if (window.innerWidth > 768 && sidebar) {
             sidebar.classList.remove('open');
             if (overlay) overlay.style.display = 'none';
-        }
-    });
-    
-    document.querySelector('.menu-toggle')?.addEventListener('click', function() {
-        var sidebar = document.getElementById('sidebar');
-        var overlay = document.getElementById('overlay');
-        if (sidebar) {
-            sidebar.classList.toggle('open');
-            if (sidebar.classList.contains('open') && window.innerWidth <= 768) {
-                if (overlay) overlay.style.display = 'block';
-            } else {
-                if (overlay) overlay.style.display = 'none';
-            }
         }
     });
 </script>

@@ -7,6 +7,7 @@ use App\Http\Controllers\LembagaController;
 use App\Http\Controllers\InformasiLembagaController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\DonasiController;
+use App\Http\Controllers\LaporanController;
 
 Route::get('/', function () {
     $lembaga = \App\Models\Lembaga::whereHas('user', function($q) {
@@ -49,7 +50,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/verifikasi', [ProfileController::class, 'verifikasi'])->name('verifikasi');
         Route::put('/verifikasi/{id}', [ProfileController::class, 'toggleStatus'])->name('verifikasi.toggle');
         Route::resource('kategori', KategoriController::class);
-        Route::get('/admin/detail-lembaga/{id}', [App\Http\Controllers\AdminController::class, 'detailLembaga'])->name('admin.detail.lembaga');
+        Route::get('/admin/detail-lembaga/{id}', function($id) {
+        $user = App\Models\User::findOrFail($id);
+        return response()->json($user);
+    })->name('admin.detail.lembaga');
     });
 
     Route::resource('lembaga', LembagaController::class);
@@ -58,6 +62,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/donasi', [DonasiController::class, 'index'])->name('donasi.index');
     Route::put('/donasi/konfirmasi/{id}', [DonasiController::class, 'konfirmasi'])->name('donasi.konfirmasi');
     Route::put('/donasi/update-terkumpul/{id}', [DonasiController::class, 'updateTerkumpulManual'])->name('donasi.updateTerkumpul');
+    Route::put('/donasi/konfirmasi-barang/{id}', [DonasiController::class, 'konfirmasiBarang'])->name('donasi.konfirmasi.barang');
+    Route::put('/donasi/konfirmasi-uang/{id}', [DonasiController::class, 'konfirmasiUang'])->name('donasi.konfirmasi.uang');
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/kebutuhan/{id}', [LaporanController::class, 'detailKebutuhan'])->name('laporan.kebutuhan');
+    Route::get('/laporan/download-excel', [LaporanController::class, 'downloadExcel'])->name('laporan.download-excel');
+    Route::get('/laporan/download-pdf', [LaporanController::class, 'downloadPdf'])->name('laporan.download-pdf');
 });
 
 Route::post('/donasi/store', [DonasiController::class, 'store'])->name('donasi.store');
@@ -75,6 +85,8 @@ Route::get('/verifikasi-test', function () {
             ];
         })
     ]);
+    Route::get('/laporan/download-excel-rekap', [LaporanController::class, 'downloadExcelRekap'])->name('laporan.download-excel-rekap');
+Route::get('/laporan/download-pdf-rekap', [LaporanController::class, 'downloadPdfRekap'])->name('laporan.download-pdf-rekap');
 });
 
 require __DIR__.'/auth.php';

@@ -25,7 +25,9 @@ class LembagaController extends Controller
     }
 
     if (Auth::user()->role == 'admin') {
-        $lembaga = Lembaga::with('kategori', 'user', 'informasi')->get();
+        $lembaga = Lembaga::with('kategori', 'user', 'informasi')
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('lembaga.index', compact('lembaga'));
     } else {
         $lembaga = Lembaga::with('kategori', 'informasi')->where('pengguna_id', Auth::id())->first();
@@ -96,7 +98,6 @@ class LembagaController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Cek verifikasi
         $redirect = $this->cekVerifikasi();
         if ($redirect) return $redirect;
 
@@ -133,6 +134,7 @@ class LembagaController extends Controller
         
         return redirect()->route('lembaga.index')->with('success', 'Lembaga berhasil dihapus');
     }
+    
     public function show($id)
 {
     $lembaga = Lembaga::with('kategori', 'user', 'informasi')->findOrFail($id);

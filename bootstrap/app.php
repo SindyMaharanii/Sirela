@@ -24,6 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'cek.status' => \App\Http\Middleware\CekStatusAkun::class,
     ]);
+    $middleware->validateCsrfTokens(except: [
+        'donasi/store',
+    ]);
 })
     ->withExceptions(function (Exceptions $exceptions): void {
         //        
